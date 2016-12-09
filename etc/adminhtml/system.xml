@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="adcurve" sortOrder="10" translate="label">
+			<label>adcurve</label>
+		</tab>
+		<section id="adcurve" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+			<label>adcurve</label>
+			<tab>adcurve</tab>
+			<resource>Adcurve_Adcurve::config_adcurve_adcurve</resource>
+			<group id="settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>settings</label>
+				<field id="enabled" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="test_mode" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>test_mode</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="shop_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>shop_id</label>
+					<comment/>
+				</field>
+				<field id="token" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>token</label>
+					<comment/>
+				</field>
+				<field id="sync" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>sync</label>
+					<comment/>
+				</field>
+				<field id="save" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>save</label>
+					<comment/>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

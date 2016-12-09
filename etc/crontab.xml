@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+	<group id="default">
+		<job instance="Adcurve\Adcurve\Cron\Updates" method="execute" name="adcurve_adcurve_updates">
+			<schedule>* * * * *</schedule>
+		</job>
+		<job instance="Adcurve\Adcurve\Cron\Batches" method="execute" name="adcurve_adcurve_batches">
+			<schedule>* * * * *</schedule>
+		</job>
+		<job instance="Adcurve\Adcurve\Cron\Sync" method="execute" name="adcurve_adcurve_sync">
+			<schedule>5 0 * * *</schedule>
+		</job>
+	</group>
+</config>

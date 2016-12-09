@@ -1,0 +1,25 @@
+{
+    "name": "adcurve/module-adcurve",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "info@mage2gen.com",
+            "name": "Mage2Gen"
+        },
+        {
+            "email": "boris@experius.nl",
+            "name": "Boris van Katwijk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Adcurve\\Adcurve\\": ""
+        }
+    }
+}
