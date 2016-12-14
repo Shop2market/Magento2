@@ -3,64 +3,93 @@ namespace Adcurve\Adcurve\Helper;
 
 class Product extends \Magento\Framework\App\Helper\AbstractHelper
 {
-	protected $productRepository;
-	protected $_product;
+	protected $productData;
 	
-	protected $_skipAttributes = array(
+	protected $storeModel;
+	
+	protected $productRepository;
+	protected $_categoryResource;
+	protected $_configurableproductResource;
+	protected $_attributeRepository;
+	protected $catalogHelper;
+	
+	protected $searchCriteria;
+    protected $filterGroup;
+    protected $filterBuilder;
+	
+	protected $priceModel;
+	protected $priceCurrency;
+	
+	protected $_product;
+	protected $_fullCategoryPathsMappingArray;
+	
+	protected $taxgimmickHelper;
+	protected $imageHelper;
+	protected $imageMediaUrl;
+	
+	protected $irrelevantAttributes = array(
 		// == General attributes ==
-        'media_gallery',
-        'category_ids',
-        'tier_price',
+		'associated_product_ids',
+		'category_ids',
+		'configurable-matrix',
+		'copy_to_stores',
+		'created_at',
+		'cross_sell_products',
 		'extension_attributes',
-        '_cache_instance_product_set_attributes',
-        'stock_data',
-        'copy_to_stores',
-        'website_ids',
-        'configurable-matrix',
-        'associated_product_ids',
-        'store_ids',
-        'related_products',
-        'cross_sell_products',
-        'up_sell_products',
-        // == Magento 1 list ==
-        // 'media_gallery_images',
-        // '_cache_editable_attributes',
-        // 'matched_rules',
-        // 'use_config_gift_message_available',
-        // 'media_attributes',
-        // 'can_save_configurable_attributes',
-        // 'can_save_custom_options',
-        // 'can_save_bundle_selections',
-        // 'type_has_options',
-        // 'type_has_required_options',
-        // 'matched_rules',
-        // 'parent_id',
-        // 'is_changed_categories',
-        // 'is_changed_websites',
-        // //'tax_class_id',
-        // //'tax_percent',
-        // 'applied_rates',
-        // 'stock_item',
-        // 'custom_design_from_is_formated',
-        // 'custom_design_to_is_formated',
-        // 'news_from_date_is_formated',
-        // 'news_to_date_is_formated',
-        // 'special_from_date_is_formated',
-        // 'special_to_date_is_formated',
-        // 'page_layout',
-        // 'entity_type_id',
-        // 'options_container',
+		'gift_message_available',
+		'media_gallery',
+		'options_container',
+		'options',
+		'quantity_and_stock_status',
+		'related_products',
+		'stock_data',
+		'store_ids',
+		'tier_price',
+		'up_sell_products',
+		'updated_at',
+		'website_ids',
+        // == Downloadable product attributes ==
+        'downloadable_links',
+        'downloadable_samples',
     );
 	
 	public function __construct(
-		\Magento\Catalog\Model\ProductRepository $productRepository
+		\Magento\Framework\App\Helper\Context $context,
+		\Magento\Store\Model\Store $storeModel,
+		\Magento\Catalog\Model\ProductRepository $productRepository,
+		\Magento\Catalog\Model\ResourceModel\Category $_categoryResource,
+		\Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable $_configurableproductResource,
+		\Magento\Catalog\Model\Product\Attribute\Repository $_attributeRepository,
+	    \Magento\Catalog\Helper\Data $catalogHelper,
+		\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria,
+	    \Magento\Framework\Api\Search\FilterGroup $filterGroup,
+	    \Magento\Framework\Api\FilterBuilder $filterBuilder,
+	    \Magento\Catalog\Model\Product\Type\Price $priceModel,
+	    \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency,
+	    \Adcurve\Adcurve\Helper\Taxgimmick $taxgimmickHelper,
+	    \Magento\Catalog\Helper\Image $imageHelper
 	){
+		parent::__construct($context);
+		
+		$this->storeModel = $storeModel;
+		
 		$this->productRepository = $productRepository;
+		$this->_categoryResource = $_categoryResource;
+		$this->_configurableproductResource = $_configurableproductResource;
+		$this->_attributeRepository = $_attributeRepository;
+		$this->catalogHelper = $catalogHelper;
+		
+		$this->searchCriteria = $searchCriteria;
+	    $this->filterGroup = $filterGroup;
+	    $this->filterBuilder = $filterBuilder;
+		
+		$this->priceModel = $priceModel;
+		$this->priceCurrency = $priceCurrency;
+		
+		$this->taxgimmickHelper = $taxgimmickHelper;
+		$this->imageHelper = $imageHelper;
 	}
 	
-	/**
-	 * Collect fuction to prepare productdata for Adcurve updates
-	 */
 	public function getProductData($product = null, $storeId)
 	{
 		if(!$product){
@@ -71,49 +100,81 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 			return false;
 		}
 		
+		$this->storeModel->setId($storeId);
+		
 		$this->_product = $this->productRepository->get($product->getSku(), false, $storeId);
 		
-		$data = $this->_product->getData();
+		$this->productData = [];
+		$this->productData = $this->_product->getData();
 		
-		$data = $this->_unsetSkipAttributes($data);
+		$this->productData['store_id'] = (int)$storeId;
+		$this->productData['entity_id'] = $this->_product->getId();
+		$this->productData['simple_id'] = $this->_product->getId();
 		
-		$data = $this->_transposeSelectAttributes($data);
+		$this->_unsetIrrelevantAttributes();
 		
-		$data = $this->_addLogicAttributes($data);
-		var_dump($data);
-		die();
-		$this->addSpecialAttributes($data);
+		// Get the labels of select and multiselect attributes
+		$this->_transposeSelectAttributes();
 		
-		return $product->getData();
+		// Adds attributes which need logic to retrieve (for example: product url, categories etc.)
+		$this->_addLogicAttributes();
+		
+		$this->_addImageAttributes();
+		
+		$this->_addPriceAttributes();
+		
+		$this->_addStockAttributes();
+		
+		ksort($this->productData);
+		
+		if(count($this->productData) < 1){
+            return false;
+        }
+		
+		return $this->productData;
 	}
 	
-	/**
-	 * Function to unset all special and irrelevant attributes
-	 */
-	private function _unsetSkipAttributes($data)
+	private function _unsetIrrelevantAttributes()
 	{
-		foreach($this->_skipAttributes as $attribute){
-			if(isset($data[$attribute])){
-				unset($data[$attribute]);
+		foreach($this->irrelevantAttributes as $attribute){
+			if(isset($this->productData[$attribute])){
+				unset($this->productData[$attribute]);
 			}
 		}
-		return $data;
+		
+		// Unset all "_cache_instance" attributetypes
+		foreach($this->productData as $key => $value){
+			if(strpos($key, '_cache_instance') === (int)0){
+				unset($this->productData[$key]);
+			}
+		}
 	}
 	
 	/**
 	 * Function to get option label's instead of value id's for select and multiselect attributes
 	 */
-	private function _transposeSelectAttributes($data, $implodeMultiselect = true)
+	private function _transposeSelectAttributes($implodeMultiselect = true)
 	{
-		foreach($data as $attributeCode => $value){
-			$attribute = $_product->getResource()->getAttribute($attributeCode);
+		foreach($this->productData as $attributeCode => $value){
+			$attribute = $this->_product->getResource()->getAttribute($attributeCode);
 			
-			if(!is_object($attribute)){
+			if(!$attribute
+				|| $attribute === (bool)false
+				|| !is_object($attribute)
+			){
 				continue;
 			}
 			
-			if (in_array($attribute->getFrontend()->getInputType(), ['select', 'multiselect'])) {
+			if(empty($value) || is_array($value)){
+				continue;
+			}
+			
+			$selectAttributes = ['select', 'multiselect'];
+			if (in_array($attribute->getFrontend()->getInputType(), $selectAttributes)) {
 				$optionText = $attribute->getSource()->getOptionText($value);
+				if($optionText instanceof \Magento\Framework\Phrase){
+					$optionText = $optionText->getText();
+				}
 				
 				if($implodeMultiselect 
 					&& $attribute->getFrontend()->getInputType() == 'multiselect'
@@ -121,19 +182,200 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 				){
 					$optionText = implode(',', $optionText);
 				}
-				$data[$attributeCode] = $optionText;
+				$this->productData[$attributeCode] = $optionText;
 			}
 		}
-		return $data;
 	}
 	
-	private function _addLogicAttributes($data, $_product)
+	private function _addLogicAttributes()
 	{
-		$data['store_id']		= (int)$store_id;
-        $data['category_path']  = $this->getCategoryPath($product);
-        $data['deeplink']       = $this->getProductUrl($product, $store_id);
-		$data['simple_id']		= $product->getId();		
-		$data['currency']		= Mage::app()->getStore($store_id)->getCurrentCurrencyCode();
+		$this->productData['enabled'] = (bool) ($this->_product->getStatus() == \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
+			&& in_array($this->productData['store_id'], $this->_product->getStoreIds());
+		
+		$parentIds = $this->_configurableproductResource->getParentIdsByChild($this->_product->getId());
+		if($this->_product->getTypeId() == \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE
+			&& isset($parentIds[0])
+			&& $parentIds[0] != $this->productData['simple_id']
+		){
+			$this->productData['configurable_id'] = $parentIds[0];
+		} else{
+			$this->productData['configurable_id'] = $this->productData['simple_id'];
+		}
+		
+        $this->productData['category_path']  = $this->getProductCategoriesArray();
+		$this->productData['deeplink'] = $this->_product->getUrlModel()->getUrl($this->_product);
+		
+		$this->productData['currency'] = $this->storeModel->getCurrentCurrencyCode();
 	}
 	
+	private function _addImageAttributes()
+	{
+		$mediaGalleryImages = $this->_product->getMediaGalleryImages();
+		
+		if($mediaGalleryImages->getSize() > 0){
+			$imageCount = 1;
+			foreach($mediaGalleryImages as $image){
+				$imageKey = 'image_' . $imageCount;
+				$this->productData[$imageKey] = $image->getUrl();
+				$imageCount++;
+			}
+		}
+		
+		// TO DO: Get all images with image helper/factory
+		$this->imageMediaUrl = $this->storeModel->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product';
+		$imageKeys = ['image', 'small_image', 'thumbnail'];
+		
+		foreach($imageKeys as $imageKey){
+			if(isset($this->productData[$imageKey])
+				&& $this->productData[$imageKey] != 'no_selection'
+				&& $this->productData[$imageKey] != false
+			){
+				$this->productData[$imageKey] = $this->imageMediaUrl . $this->productData[$imageKey];
+			}
+		}
+	}
+	
+	private function _addPriceAttributes()
+	{
+		$this->filterGroup->setFilters([
+	        $this->filterBuilder
+	            ->setField('frontend_input')
+	            ->setConditionType('eq')
+	            ->setValue('price')
+	            ->create()
+	    ]);
+		
+	    $this->searchCriteria->setFilterGroups([$this->filterGroup]);
+		
+		$priceAttributes = $this->_attributeRepository->getList($this->searchCriteria)->getItems();
+		
+		if($priceAttributes){
+			foreach($priceAttributes as $priceAttribute){
+				if(isset($this->productData[$priceAttribute->getAttributeCode()])){
+					$this->productData[$priceAttribute->getAttributeCode()] = $this->priceCurrency->convert($this->productData[$priceAttribute->getAttributeCode()]);
+				}
+			}
+		}
+		
+		if(!isset($this->productData['price'])){
+			$this->productData['price'] = '';
+		}
+		
+		if(!isset($this->productData['special_price'])){
+			$this->productData['special_price'] = '';
+		}
+		
+		if(!isset($this->productData['special_from_date'])){
+			$this->productData['special_from_date'] = '';
+		}
+		
+		if(!isset($this->productData['special_to_date'])){
+			$this->productData['special_to_date'] = '';
+		}
+		
+		$finalPrice = $this->priceModel->calculatePrice(
+			$this->productData['price'],
+	        $this->productData['special_price'],
+	        $this->productData['special_from_date'],
+	        $this->productData['special_to_date']
+		);
+		
+		$finalPriceInclTax = $this->taxgimmickHelper->getTaxPrice(
+	        $this->_product,
+	        $finalPrice,
+	        true, // incl. tax
+	        null,
+	        null,
+	        null,
+	        $this->storeModel
+	    );
+		
+		$finalPriceExclTax = $this->taxgimmickHelper->getTaxPrice(
+	        $this->_product,
+	        $finalPrice,
+	        false, // excl. tax
+	        null,
+	        null,
+	        null,
+	        $this->storeModel
+	    );
+		
+		$priceInclTax = $this->taxgimmickHelper->getTaxPrice(
+            $this->_product,
+            $this->productData['price'],
+            true, // incl. tax
+            null,
+            null,
+            null,
+            $this->storeModel
+        );
+		
+		if($priceInclTax){
+			$this->productData['price'] = number_format($priceInclTax, 4, '.', '');
+		}
+		
+		if($finalPriceInclTax){
+	        $this->productData['selling_price'] 	= number_format($finalPriceInclTax, 4, '.', '');
+		}
+		
+		if($finalPriceExclTax){
+	        $this->productData['selling_price_ex'] 	= number_format($finalPriceExclTax, 4, '.', '');
+		}
+	}
+	
+	private function _addStockAttributes()
+	{
+		$stockItem = $this->_product->getExtensionAttributes()->getStockItem();
+		
+		if($stockItem){
+			$this->productData['stock_status'] = $stockItem->getIsInStock();
+            $qty = $stockItem->getQty();
+            if (is_null($qty)) {
+                $qty = 0;
+            }
+            $this->productData['stock_amount'] = (int)$qty;
+			$this->productData['manage_stock'] = ($stockItem->getManageStock() == 1 ) ? 'Yes' : 'No';
+		}
+	}
+
+	public function getProductCategoriesArray($shiftAmount = 2, $delimiter = ' > ')
+	{
+		if(!$this->_product){
+			return false;
+		}
+		
+		$categoryCollection = $this->_product->getCategoryCollection()->addAttributeToSelect('path');
+		$categories = array();
+		foreach($categoryCollection as $category){
+			if(!isset($this->_fullCategoryPathsMappingArray[$category->getPath()])){
+				$fullCategoryName = '';
+				$categoryIds = explode('/', $category->getPath());
+				for ($i=0; $i < $shiftAmount; $i++) {
+					array_shift($categoryIds); // Shift off categories (such as Magento root, website specific or generic names)
+				}
+				if(count($categoryIds) > 0){
+					$i = 0;
+					foreach($categoryIds as $categoryId){
+						$categoryName = $this->_categoryResource->getAttributeRawValue($categoryId, 'name', $this->_product->getStoreId());
+						if($categoryName){
+							if($i > 0){
+								$fullCategoryName .= $delimiter;
+							}
+							$fullCategoryName .= $categoryName;
+							$categoryName = false;
+							$i++;
+						}
+					}
+					$this->_fullCategoryPathsMappingArray[$category->getPath()] = $fullCategoryName;
+					unset($fullCategoryName);
+				}
+			}
+			if(isset($this->_fullCategoryPathsMappingArray[$category->getPath()])
+				&& $this->_fullCategoryPathsMappingArray[$category->getPath()] != ''
+			){
+				$categories[] = $this->_fullCategoryPathsMappingArray[$category->getPath()];
+			}
+		}
+		return $categories;
+	}
 }

@@ -8,16 +8,19 @@ class ProductSaveAfter implements \Magento\Framework\Event\ObserverInterface
 	protected $updateFactory;
 	protected $updateRepository;
 	protected $productHelper;
+	protected $dateTime;
 	
 	public function __construct(
 		\Adcurve\Adcurve\Model\UpdateFactory $updateFactory,
 		\Adcurve\Adcurve\Model\UpdateRepository $updateRepository,
-		\Adcurve\Adcurve\Helper\Product $productHelper
+		\Adcurve\Adcurve\Helper\Product $productHelper,
+		\Magento\Framework\Stdlib\DateTime\DateTime $date
 	)
 	{
 		$this->updateFactory = $updateFactory;
 		$this->updateRepository = $updateRepository;
 		$this->productHelper = $productHelper;
+		$this->dateTime = $date;
 	}
 	
 	
@@ -51,6 +54,9 @@ class ProductSaveAfter implements \Magento\Framework\Event\ObserverInterface
 		$update->setProductId($product->getId());
 		$update->setStoreId($storeId);
 		$update->setProductData(serialize($preparedData));
+		$currentDateTime = $this->dateTime->gmtDate();
+		$update->setCreatedAt($currentDateTime);
+		$update->setUpdatedAt($currentDateTime);
 		$update->setStatus('update');
 		$this->updateRepository->save($update);
 	}
