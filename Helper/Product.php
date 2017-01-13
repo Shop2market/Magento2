@@ -7,6 +7,12 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 	
 	protected $storeModel;
 	
+	protected $logger;
+	
+	protected $updateFactory;
+	protected $updateRepository;
+	protected $dateTime;
+	
 	protected $productRepository;
 	protected $_categoryResource;
 	protected $_configurableproductResource;
@@ -55,7 +61,11 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 	
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
+		\Psr\Log\LoggerInterface $logger,
 		\Magento\Store\Model\Store $storeModel,
+		\Adcurve\Adcurve\Model\UpdateFactory $updateFactory,
+		\Adcurve\Adcurve\Model\UpdateRepository $updateRepository,
+		\Magento\Framework\Stdlib\DateTime\DateTime $dateTime,
 		\Magento\Catalog\Model\ProductRepository $productRepository,
 		\Magento\Catalog\Model\ResourceModel\Category $_categoryResource,
 		\Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable $_configurableproductResource,
@@ -72,6 +82,12 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		parent::__construct($context);
 		
 		$this->storeModel = $storeModel;
+		
+		$this->logger = $logger;
+		
+		$this->updateFactory = $updateFactory;
+		$this->updateRepository = $updateRepository;
+		$this->dateTime = $dateTime;
 		
 		$this->productRepository = $productRepository;
 		$this->_categoryResource = $_categoryResource;
@@ -107,7 +123,7 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		$this->productData = [];
 		$this->productData = $this->_product->getData();
 		
-		$this->productData['store_id'] = (int)$storeId;
+		$this->productData['store_id'] = $storeId;
 		$this->productData['entity_id'] = $this->_product->getId();
 		$this->productData['simple_id'] = $this->_product->getId();
 		
@@ -116,7 +132,8 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		// Get the labels of select and multiselect attributes
 		$this->_transposeSelectAttributes();
 		
-		// Adds attributes which need logic to retrieve (for example: product url, categories etc.)
+		// Adds attributes which need logic to retrieve
+		// attributes: [enabled, configurable_id, category_path, deeplink, currency]
 		$this->_addLogicAttributes();
 		
 		$this->_addImageAttributes();
@@ -132,6 +149,31 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
         }
 		
 		return $this->productData;
+	}
+	
+	public function saveUpdateForAdcurve($preparedData)
+	{
+		if(!$preparedData){
+			return false;
+		}
+		
+		if(!isset($preparedData['entity_id']) || !isset($preparedData['store_id'])){
+			return false;
+		}
+		
+		try{
+			$update = $this->updateFactory->create();
+			$update->setProductId($preparedData['entity_id']);
+			$update->setStoreId($preparedData['store_id']);
+			$update->setProductData(serialize($preparedData));
+			$currentDateTime = $this->dateTime->gmtDate();
+			$update->setCreatedAt($currentDateTime);
+			$update->setUpdatedAt($currentDateTime);
+			$update->setStatus('update');
+			$this->updateRepository->save($update);
+		} catch(\Exception $e){
+			$this->logger->addError($e);
+		}
 	}
 	
 	private function _unsetIrrelevantAttributes()
@@ -192,20 +234,27 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		$this->productData['enabled'] = (bool) ($this->_product->getStatus() == \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
 			&& in_array($this->productData['store_id'], $this->_product->getStoreIds());
 		
-		$parentIds = $this->_configurableproductResource->getParentIdsByChild($this->_product->getId());
-		if($this->_product->getTypeId() == \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE
-			&& isset($parentIds[0])
-			&& $parentIds[0] != $this->productData['simple_id']
-		){
-			$this->productData['configurable_id'] = $parentIds[0];
-		} else{
-			$this->productData['configurable_id'] = $this->productData['simple_id'];
-		}
+		$this->productData['configurable_id'] = $this->getConfigurableproductId($this->_product->getId(), $this->_product->getTypeId());
 		
-        $this->productData['category_path']  = $this->getProductCategoriesArray();
+		$categoriesArray = $this->getProductCategoriesArray(2, '>');
+		// TO DO: Create a way to send all the category paths, ask Adcurve for a possible format.
+        $this->productData['category_path'] = end($categoriesArray);
 		$this->productData['deeplink'] = $this->_product->getUrlModel()->getUrl($this->_product);
 		
 		$this->productData['currency'] = $this->storeModel->getCurrentCurrencyCode();
+	}
+	
+	public function getConfigurableproductId($productId, $productType)
+	{
+		$parentIds = $this->_configurableproductResource->getParentIdsByChild($productId);
+		if($productType == \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE
+			&& isset($parentIds[0])
+			&& $parentIds[0] != $productId
+		){
+			return $parentIds[0];
+		} else{
+			return $productId;
+		}
 	}
 	
 	private function _addImageAttributes()
@@ -315,11 +364,11 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		}
 		
 		if($finalPriceInclTax){
-	        $this->productData['selling_price'] 	= number_format($finalPriceInclTax, 4, '.', '');
+	        $this->productData['selling_price'] = number_format($finalPriceInclTax, 4, '.', '');
 		}
 		
 		if($finalPriceExclTax){
-	        $this->productData['selling_price_ex'] 	= number_format($finalPriceExclTax, 4, '.', '');
+	        $this->productData['selling_price_ex'] = number_format($finalPriceExclTax, 4, '.', '');
 		}
 	}
 	
@@ -337,7 +386,7 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 			$this->productData['manage_stock'] = ($stockItem->getManageStock() == 1 ) ? 'Yes' : 'No';
 		}
 	}
-
+	
 	public function getProductCategoriesArray($shiftAmount = 2, $delimiter = ' > ')
 	{
 		if(!$this->_product){
