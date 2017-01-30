@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Model;
 
 use Adcurve\Adcurve\Api\Data\BatchInterface;

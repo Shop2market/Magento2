@@ -165,11 +165,11 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 			$update = $this->updateFactory->create();
 			$update->setProductId($preparedData['entity_id']);
 			$update->setStoreId($preparedData['store_id']);
-			$update->setProductData(serialize($preparedData));
+			$update->setProductData($preparedData);
 			$currentDateTime = $this->dateTime->gmtDate();
 			$update->setCreatedAt($currentDateTime);
 			$update->setUpdatedAt($currentDateTime);
-			$update->setStatus('update');
+			$update->setStatus(\Adcurve\Adcurve\Model\Update::PRODUCT_UPDATE_STATUS_UPDATE);
 			$this->updateRepository->save($update);
 		} catch(\Exception $e){
 			$this->logger->addError($e);

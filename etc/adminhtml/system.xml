@@ -8,33 +8,109 @@
 			<label>adcurve</label>
 			<tab>adcurve</tab>
 			<resource>Adcurve_Adcurve::config_adcurve_adcurve</resource>
-			<group id="settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-				<label>settings</label>
+			<group id="support" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label><![CDATA[General & Support]]></label>
+				<field id="installation_guide_url" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>installation_guide_url</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="release_notes_url" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>release_notes_url</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="adcurve_kb_url" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>adcurve_kb_url</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="new_ticket_url" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>new_ticket_url</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="publishers" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>publishers</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="features" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>features</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="pricing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>pricing</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="documentation" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>documentation</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="email" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>email</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="phone" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>phone</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+			</group>
+			<group id="settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+				<label><![CDATA[General settings]]></label>
 				<field id="enabled" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>enabled</label>
-					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
 				<field id="test_mode" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>test_mode</label>
-					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
 				<field id="shop_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
 					<label>shop_id</label>
-					<comment/>
 				</field>
 				<field id="token" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
 					<label>token</label>
-					<comment/>
 				</field>
 				<field id="sync" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
 					<label>sync</label>
-					<comment/>
 				</field>
 				<field id="save" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
 					<label>save</label>
-					<comment/>
+				</field>
+				<field id="url_register_live" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>url_register_live</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="url_register_test" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>url_register_test</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="url_tag_live" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>url_tag_live</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="url_tag_test" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>url_tag_test</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+			</group>
+			<group id="api" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label">
+				<label><![CDATA[Api settings]]></label>
+				<field id="update_url_live" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>update_url_live</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="update_url_test" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>update_url_test</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="status_url_live" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>status_url_live</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="status_url_test" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>status_url_test</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
+				</field>
+				<field id="role_created_failed" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>role_created_failed</label>
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
 				</field>
 			</group>
 		</section>

@@ -27,7 +27,7 @@ class ProductSaveAfter implements \Magento\Framework\Event\ObserverInterface
 		if($product->getStoreId() == 0){ // Update all storeviews when global scope is edited
 			foreach($product->getStoreIds() as $storeId){
 				$preparedData = $this->productHelper->getProductData($product, $storeId);
-				$this->saveUpdateForAdcurve($preparedData);
+				$this->productHelper->saveUpdateForAdcurve($preparedData);
 			}
 		} else{
 			$preparedData = $this->productHelper->getProductData($product, $product->getStoreId());

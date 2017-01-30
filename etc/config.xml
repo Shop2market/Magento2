@@ -1,15 +1,38 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
-	<default>
-		<adcurve>
-			<settings>
-				<enabled/>
+    <default>
+        <adcurve>
+            <settings>
+                <enabled>1</enabled>
 				<test_mode/>
 				<shop_id/>
 				<token/>
-				<sync/>
-				<save/>
-			</settings>
+				<sync>Needs to be replaced by Sync button</sync>
+				<save>Needs to be replaced by Save button</save>
+                <url_register_live>https://beta.adcurve.com/integrations/magento/install</url_register_live>
+                <url_register_test>https://capuchin.shop2market.com/integrations/magento/install</url_register_test>
+                <url_tag_live>track.shop2market.com</url_tag_live>
+                <url_tag_test>demo.shop2market.com</url_tag_test>
+            </settings>
+            <api>
+                <update_url_live>https://api.shop2market.com/api/v1/shops/{{SHOP_ID}}/shop_products/batch</update_url_live>
+                <update_url_test>https://demo.shop2market.com/api/v1/shops/{{SHOP_ID}}/shop_products/batch</update_url_test>
+                <status_url_live>https://beta.adcurve.com/shops/{{SHOP_ID}}/external_connections/status.json</status_url_live>
+                <status_url_test>https://capuchin-staging.shop2market.com/shops/{{SHOP_ID}}/external_connections/status.json</status_url_test>
+                <role_created_failed>http://support.adcurve.com/support/solutions/articles/4000080241-maak-de-api-connectie-magento-users-</role_created_failed>
+            </api>
+            <support>
+                <installation_guide_url>https://adcurve.com/hc/nl/articles/213262677</installation_guide_url>
+                <release_notes_url>https://adcurve.com/hc/nl/articles/212611638</release_notes_url>
+                <adcurve_kb_url>https://adcurve.com/hc/nl</adcurve_kb_url>
+                <new_ticket_url>https://adcurve.com/hc/nl/requests/new</new_ticket_url>
+                <publishers>http://adcurve.com/publishers/</publishers>
+                <features>http://adcurve.com/features/</features>
+                <pricing>http://adcurve.com/pricing/</pricing>
+                <documentation>http://support.adcurve.com</documentation>
+                <email>support@adcurve.com</email>
+                <phone>+31 35 302 0050</phone>
+            </support>
 		</adcurve>
 	</default>
 </config>
