@@ -15,18 +15,25 @@ class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInt
 	
 	protected $dateTime;
 	
+	public function __construct(
+    	\Magento\Framework\Model\Context $context,
+        \Magento\Framework\Registry $registry,
+		\Magento\Framework\Stdlib\DateTime\DateTime $dateTime,
+        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        array $data = []
+	)
+    {
+    	parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+		$this->dateTime = $dateTime;
+	}
+	
     /**
      * @return void
      */
-    protected function _construct(
-    	/* TO DO: Make constructor compatible to use dateTime
-		\Magento\Framework\Model\Context $context,
-		\Magento\Framework\Stdlib\DateTime\DateTime $dateTime
-		*/
-	)
+    protected function _construct()
     {
         $this->_init('Adcurve\Adcurve\Model\ResourceModel\Update');
-		$this->dateTime = $dateTime;
     }
 
     /**
@@ -94,7 +101,6 @@ class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInt
     public function setProductData($productData)
     {
         $this->setData('product_data', serialize($productData));
-
         return $this;
     }
 	
@@ -123,7 +129,6 @@ class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInt
         $this->setStatus(self::PRODUCT_UPDATE_STATUS_ERROR);
         $this->setExceptionMessage($message);
         $this->incrementRetryCount();
-		
         $this->save();
     }
 
@@ -137,11 +142,9 @@ class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInt
      */
     public function incrementRetryCount($save = false)
     {
-        /** Set the retry count to current retry count + 1 */
         $this->setRetryCount($this->getRetryCount() + 1);
 		
-        if ($save) {
-            /** If a save is requested, save the update */
+        if($save){
             $this->save();
         }
 		

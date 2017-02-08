@@ -1,7 +1,7 @@
 <?php
 namespace Adcurve\Adcurve\Model\Rest;
 
-class UpdateRequest extends \Adcurve\Adcurve\Model\Rest\AbstractRequest
+class UpdateRequest extends AbstractRequest
 {
     /**
      * Get the product API URL
@@ -10,13 +10,13 @@ class UpdateRequest extends \Adcurve\Adcurve\Model\Rest\AbstractRequest
      *
      * @return string
      */
-    protected function _getApiUrl($store = null)
+    public function _getApiUrl($store = null)
     {
         return $this->configHelper->getProductApiUrl($store);
     }
 	
     /**
-     * Response is always empty
+     * Response is always empty, so no processing nor a return
      *
      * @param $response
      *

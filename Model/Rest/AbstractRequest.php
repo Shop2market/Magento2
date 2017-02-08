@@ -3,13 +3,10 @@ namespace Adcurve\Adcurve\Model\Rest;
 
 abstract class AbstractRequest
 {
+	/**
+	 * @var \Adcurve\Adcurve\Helper\Config
+	 */
 	protected $configHelper;
-	
-	public function __construct(
-		\Adcurve\Adcurve\Helper\Config $configHelper
-	){
-		$this->configHelper = $configHelper;
-	}
 	
     /**
      * @var resource
@@ -37,6 +34,12 @@ abstract class AbstractRequest
             'Cache-Control: no-cache',
         ),
     );
+
+	public function __construct(
+		\Adcurve\Adcurve\Helper\Config $configHelper
+	){
+		$this->configHelper = $configHelper;
+	}
 
     /**
      * @return array
@@ -79,33 +82,6 @@ abstract class AbstractRequest
     }
 
     /**
-     * @return resource
-     */
-    protected function _getCurl()
-    {
-        if (!$this->_curl) {
-            $apiUrl = $this->_getApiUrl($this->_getStore());
-
-            $this->_curl = curl_init($apiUrl);
-        }
-
-        return $this->_curl;
-    }
-
-    /**
-     * @return array
-     */
-    protected function _getCurlOptions()
-    {
-        $apiToken = $this->configHelper->getApiToken($this->_getStore());
-
-        $this->_curlOpt[CURLOPT_HTTPHEADER][]   = 'X-Api-Key: ' . $apiToken;
-        $this->_curlOpt[CURLOPT_POSTFIELDS]     = json_encode($this->_getData());
-
-        return $this->_curlOpt;
-    }
-
-    /**
      * @param $data
      *
      * @param null $store
@@ -114,7 +90,7 @@ abstract class AbstractRequest
      */
     public function sendData($data, $store = null)
     {
-        if (!$this->configHelper->isApiConfigured($store)) {
+        if(!$this->configHelper->isApiConfigured($store)){
         	throw new \Magento\Framework\Validator\Exception(__('API not configured'));
         }
 
@@ -145,13 +121,43 @@ abstract class AbstractRequest
     {
         $curl = $this->_getCurl();
         $response = curl_exec($curl);
-
+		
+		// Httpcode can be used to debug
+		//$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		
         // Check for errors
         if($response === false){
         	throw new \Magento\Framework\Validator\Exception(curl_error($this->_getCurl()));
         }
 
         return $this->_processResponse($response);
+    }
+
+	/**
+     * @return resource
+     */
+    protected function _getCurl()
+    {
+        if (!$this->_curl) {
+            $apiUrl = $this->_getApiUrl($this->_getStore());
+
+            $this->_curl = curl_init($apiUrl);
+        }
+
+        return $this->_curl;
+    }
+
+    /**
+     * @return array
+     */
+    protected function _getCurlOptions()
+    {
+        $apiToken = $this->configHelper->getApiToken($this->_getStore());
+
+        $this->_curlOpt[CURLOPT_HTTPHEADER][]   = 'X-Api-Key: ' . $apiToken;
+        $this->_curlOpt[CURLOPT_POSTFIELDS]     = json_encode($this->_getData());
+
+        return $this->_curlOpt;
     }
 
     /**

@@ -34,14 +34,13 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 	protected $imageMediaUrl;
 	
 	protected $irrelevantAttributes = array(
-		// == General attributes ==
+		/** General attributes */
 		'associated_product_ids',
 		'category_ids',
 		'configurable-matrix',
 		'copy_to_stores',
 		'created_at',
 		'cross_sell_products',
-		//'extension_attributes',
 		'gift_message_available',
 		'media_gallery',
 		'options_container',
@@ -54,7 +53,7 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		'up_sell_products',
 		'updated_at',
 		'website_ids',
-        // == Downloadable product attributes ==
+        /** Downloadable product attributes */
         'downloadable_links',
         'downloadable_samples',
     );
@@ -129,11 +128,14 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		
 		$this->_unsetIrrelevantAttributes();
 		
-		// Get the labels of select and multiselect attributes
+		/** Get the labels of select and multiselect attributes */
 		$this->_transposeSelectAttributes();
 		
-		// Adds attributes which need logic to retrieve
-		// attributes: [enabled, configurable_id, category_path, deeplink, currency]
+		/**
+		 * function _addLogicAttributes()
+		 * Adds attributes which need logic to retrieve
+		 * attributes: [enabled, configurable_id, category_path, deeplink, currency]
+		 */
 		$this->_addLogicAttributes();
 		
 		$this->_addImageAttributes();
@@ -183,14 +185,13 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 				unset($this->productData[$attribute]);
 			}
 		}
-		// Unset all "_cache_instance" attributetypes
+		/** Unset all "_cache_instance" attributetypes */
 		foreach($this->productData as $key => $value){
 			if(strpos($key, '_cache_instance') === (int)0){
 				unset($this->productData[$key]);
 			}
 		}
 		if(isset($this->productData['extension_attributes'])){
-			
 			/* TO DO: Complete extensions attribute logic
 			var_dump(get_class($this->productData['extension_attributes']));
 			var_dump(get_class_methods($this->productData['extension_attributes']));
@@ -416,7 +417,8 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 				$fullCategoryName = '';
 				$categoryIds = explode('/', $category->getPath());
 				for ($i=0; $i < $shiftAmount; $i++) {
-					array_shift($categoryIds); // Shift off categories (such as Magento root, website specific or generic names)
+					/** Shift off categories (such as Magento root, website specific or generic names) */
+					array_shift($categoryIds);
 				}
 				if(count($categoryIds) > 0){
 					$i = 0;
