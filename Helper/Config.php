@@ -6,29 +6,21 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     const XPATH_ENABLED             = 'adcurve/settings/enabled';
     const XPATH_TEST_MODE           = 'adcurve/settings/test_mode';
     const XPATH_MODE           		= 'adcurve/settings/mode';
-	
     const XPATH_SHOP_ID             = 'adcurve/settings/shop_id';
     const XPATH_SHOP_ATTRIBUTES     = 'adcurve/settings/shop_attributes';
-	
     const XPATH_API_TOKEN           = 'adcurve/settings/token';
-	
     const XPATH_CONTACT     		= 'adcurve/settings/contact';
-	
     const XPATH_REGISTER_URL_LIVE   = 'adcurve/settings/url_register_live';
     const XPATH_REGISTER_URL_TEST   = 'adcurve/settings/url_register_test';
-	
     const XPATH_TAG_URL_LIVE        = 'adcurve/settings/url_tag_live';
     const XPATH_TAG_URL_TEST        = 'adcurve/settings/url_tag_test';
 	
     const XPATH_API_IS_REGISTERED   = 'adcurve/api/is_registered';
     const XPATH_API_UPDATE_URL_LIVE = 'adcurve/api/update_url_live';
     const XPATH_API_UPDATE_URL_TEST = 'adcurve/api/update_url_test';
-	
     const XPATH_API_STATUS_URL_LIVE = 'adcurve/api/status_url_live';
     const XPATH_API_STATUS_URL_TEST = 'adcurve/api/status_url_test';
-	
 	const XPATH_TEST_SHOP_ID		= 'adcurve/api/test_shop_id';
-	
 	const XPATH_API_ROLE_CREATED_FAILED_URL = 'adcurve/api/role_created_failed';
 	
     const XPATH_PAYMENT_METHOD 		= 'payment/checkmo/active';
