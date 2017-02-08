@@ -41,7 +41,7 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		'copy_to_stores',
 		'created_at',
 		'cross_sell_products',
-		'extension_attributes',
+		//'extension_attributes',
 		'gift_message_available',
 		'media_gallery',
 		'options_container',
@@ -183,12 +183,28 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 				unset($this->productData[$attribute]);
 			}
 		}
-		
 		// Unset all "_cache_instance" attributetypes
 		foreach($this->productData as $key => $value){
 			if(strpos($key, '_cache_instance') === (int)0){
 				unset($this->productData[$key]);
 			}
+		}
+		if(isset($this->productData['extension_attributes'])){
+			
+			/* TO DO: Complete extensions attribute logic
+			var_dump(get_class($this->productData['extension_attributes']));
+			var_dump(get_class_methods($this->productData['extension_attributes']));
+			if(isset($extensionAttributes['_data']) && !empty($extensionAttributes['_data'])){
+				foreach($this->productData['extension_attributes']->getData() as $key => $attribute){
+					var_dump($key);
+					var_dump($attribute);
+					if(isset($this->productData[$key])){
+						$this->productData[$key] = $attribute;
+					}
+				}
+			}
+			*/
+			unset($this->productData['extension_attributes']);
 		}
 	}
 	
