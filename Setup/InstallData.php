@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Setup;
 
 use Magento\Framework\Setup\InstallDataInterface;
@@ -9,14 +7,10 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 
 class InstallData implements InstallDataInterface
 {
-
-    /**
-     * {@inheritdoc}
-     */
     public function install(
         ModuleDataSetupInterface $setup,
         ModuleContextInterface $context
     ) {
-        //Your install script
+        /** Nothing here at the moment */
     }
 }

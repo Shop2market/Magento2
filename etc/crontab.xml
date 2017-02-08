@@ -4,9 +4,6 @@
 		<job instance="Adcurve\Adcurve\Cron\Updates" method="execute" name="adcurve_adcurve_updates">
 			<schedule>* * * * *</schedule>
 		</job>
-		<job instance="Adcurve\Adcurve\Cron\Batches" method="execute" name="adcurve_adcurve_batches">
-			<schedule>* * * * *</schedule>
-		</job>
 		<job instance="Adcurve\Adcurve\Cron\Sync" method="execute" name="adcurve_adcurve_sync">
 			<schedule>5 0 * * *</schedule>
 		</job>

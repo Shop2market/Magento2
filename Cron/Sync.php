@@ -1,11 +1,8 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Cron;
 
 class Sync
 {
-
     protected $logger;
 
     /**
@@ -26,5 +23,6 @@ class Sync
     public function execute()
     {
         $this->logger->addInfo("Cronjob Sync is executed.");
+		/** Nothing here at the moment */
     }
 }

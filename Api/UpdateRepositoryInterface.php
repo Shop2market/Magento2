@@ -1,21 +1,16 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
 
 interface UpdateRepositoryInterface
 {
-
-
     /**
      * Save Update
      * @param \Adcurve\Adcurve\Api\Data\UpdateInterface $update
      * @return \Adcurve\Adcurve\Api\Data\UpdateInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    
     public function save(
         \Adcurve\Adcurve\Api\Data\UpdateInterface $update
     );
@@ -26,7 +21,6 @@ interface UpdateRepositoryInterface
      * @return \Adcurve\Adcurve\Api\Data\UpdateInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    
     public function getById($updateId);
 
     /**
@@ -35,7 +29,6 @@ interface UpdateRepositoryInterface
      * @return \Adcurve\Adcurve\Api\Data\UpdateSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    
     public function getList(
         \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
     );
@@ -46,7 +39,6 @@ interface UpdateRepositoryInterface
      * @return bool true on success
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    
     public function delete(
         \Adcurve\Adcurve\Api\Data\UpdateInterface $update
     );
@@ -58,6 +50,5 @@ interface UpdateRepositoryInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    
     public function deleteById($updateId);
 }

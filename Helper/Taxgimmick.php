@@ -1,5 +1,4 @@
 <?php
-
 namespace Adcurve\Adcurve\Helper;
 
 use \Magento\Catalog\Api\CategoryRepositoryInterface;
