@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Adcurve_Adcurve::adcurve" title="Adcurve" translate="title" module="Adcurve_Adcurve" parent="Magento_Backend::marketing" sortOrder="10" resource="Adurve_Adcurve::adcurve" action="adminhtml/system_config/edit/section/adcurve"/>
+    </menu>
+</config>

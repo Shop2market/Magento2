@@ -15,12 +15,12 @@
 <?php $_pricing               = $block->getPricingUrl(); ?>
 <?php $_email                 = $block->getContactEmail(); ?>
 <?php $_phone                 = $block->getContactPhone(); ?>
-<h1><?php echo sprintf(__('Adcurve plugin %s'), $_version); ?></h1>
+<span style="font-size:18px;"><strong><?php echo sprintf(__('Adcurve plugin %s'), $_version); ?></strong></span>
 <table id="supportWrap" cellpadding="0" cellspacing="0">
     <tr>
         <td>
             <div>
-                <h3><?php echo __('Adcurve introduction'); ?></h3>
+                <strong><?php echo __('Adcurve introduction'); ?></strong>
                 <p>
                     <?php echo __('Maximize the ROI of your Product Ads! Do you want to advertise your products at multiple channels in just a few minutes? Do you like to connect to channels and generate perfect channel feeds? Are you curious about the actual ROI of your product ads? Would you like to know how to optimize the profit of your ads?'); ?>
                 </p>
@@ -30,7 +30,7 @@
 			</div>
 			<br />
 			<div>
-                <h3><?php echo __('Links for more information'); ?></h3>
+                <strong><?php echo __('Links for more information'); ?></strong>
                 <ul style="list-style:none;">
                     <li><a target="_blank" href="<?php echo $_publishers; ?>" title="<?php echo $_publishers; ?>"><?php echo $_publishers; ?></a></li>
                     <li><a target="_blank" href="<?php echo $_features; ?>" title="<?php echo $_features; ?>"><?php echo $_features; ?></a></li>
@@ -41,12 +41,12 @@
         <td>&nbsp;</td>
         <td class="value">
             <div>
-                <h3><?php echo __('Documentation'); ?></h3>
+                <strong><?php echo __('Documentation'); ?></strong>
                 <p><?php echo sprintf(__('Please click <a href="%s" target="_blank">here</a> to find more support documentation.'), $_documentation); ?></p>
             </div>
             <br />
             <div>
-                <h3><?php echo __('Version compatibility'); ?></h3>
+                <strong><?php echo __('Version compatibility'); ?></strong>
                 <ul style="list-style:none;">
                     <li><?php echo __('Magento Community Edition version'); ?>: <span class="version">v2.1</span> </li>
                     <li><?php echo __('Magento Enterprise Edition version') ; ?>: <span class="version">v2.1</span> </li>
@@ -54,7 +54,7 @@
             <div>
             <br />
             <div>
-                <h3><?php echo __('Contact adcurve'); ?></h3>
+                <strong><?php echo __('Contact adcurve'); ?></strong>
 				<ul style="list-style:none;">
                     <li><?php echo __('Email'); ?>: <a href="mailto:<?php echo $_email; ?>"><?php echo $_email; ?></a></li>
                     <li><?php echo __('Phone'); ?>: <?php echo $_phone; ?></li>
