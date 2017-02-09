@@ -1,11 +1,8 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Model\ResourceModel;
 
 class Update extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
-
     /**
      * Define resource model
      *

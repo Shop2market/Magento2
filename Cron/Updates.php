@@ -145,7 +145,7 @@ class Updates
             ->addFieldToFilter('retry_count', array('lt' => 5))
             //->addFieldToFilter('exported_at', array('null' => true)) //Redundant filter, may be activated..
             ->addFieldToFilter('store_id', array('eq' => $storeId))
-			->setOrder('entity_id', 'ASC');
+			->setOrder('update_id', 'ASC');
         return $updateCollection;
     }
 }

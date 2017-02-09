@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Model;
 
 use Adcurve\Adcurve\Api\UpdateRepositoryInterface;
@@ -18,7 +16,6 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class UpdateRepository implements UpdateRepositoryInterface
 {
-
     protected $resource;
 
     protected $UpdateFactory;

@@ -153,7 +153,7 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		return $this->productData;
 	}
 	
-	public function saveUpdateForAdcurve($preparedData)
+	public function saveUpdateForAdcurve($preparedData, $status = \Adcurve\Adcurve\Model\Update::PRODUCT_UPDATE_STATUS_UPDATE)
 	{
 		if(!$preparedData){
 			return false;
@@ -171,7 +171,7 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 			$currentDateTime = $this->dateTime->gmtDate();
 			$update->setCreatedAt($currentDateTime);
 			$update->setUpdatedAt($currentDateTime);
-			$update->setStatus(\Adcurve\Adcurve\Model\Update::PRODUCT_UPDATE_STATUS_UPDATE);
+			$update->setStatus($status);
 			$this->updateRepository->save($update);
 		} catch(\Exception $e){
 			$this->logger->addError($e);
