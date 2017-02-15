@@ -1,0 +1,30 @@
+<?php if($block->configHelper->shouldRenderTags()): ?>
+    <?php
+        $_shopId    = $block->configHelper->getShopId();
+        $_baseUrl   = $block->configHelper->getTagUrl();
+    ?>
+    <!-- Start of Adcurve basic tag -->
+    <script type="text/javascript">
+        // Do not edit anything below or we cannot guarantee our tracking!
+        try{
+            var __s2m_host_prefix = (("https:" == document.location.protocol) ? "https://" : "http://");
+            var __s2m_link = "<?php echo $_baseUrl; ?>/track_visit.js?shop_code=<?php echo $_shopId; ?>&v=2.1.20150811";
+            var __s2m_js = document.createElement('script');
+            __s2m_js.type = 'text/javascript'; __s2m_js.async = true;
+            __s2m_js.src = __s2m_host_prefix + __s2m_link;
+            __s2m_js.onerror = function(){
+                if( typeof( __s2mPixel ) === "undefined" &&
+                    typeof( window.OnS2MPixelFail ) === "function" ){OnS2MPixelFail();}
+            }
+            var __s2m_script = document.getElementsByTagName('script')[0];
+            __s2m_script.parentNode.insertBefore( __s2m_js, __s2m_script );
+        }
+        catch(err){}
+    </script>
+    <!-- End of Adcurve basic tag -->
+    <!-- Start of Adcurve backup "image tracking" tag -->
+    <noscript>
+        <img src="//<?php echo $_baseUrl; ?>/v3/tvi.gif?shop_code=<?php echo $_shopId; ?>&v=2.1.20150811" height="1" width="1" border="0" style="border:0px;display:block;" />
+    </noscript>
+    <!-- End of Adcurve backup "image tracking" tag -->
+<?php endif; ?>

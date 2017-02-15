@@ -1,0 +1,26 @@
+<?php if($block->configHelper->shouldRenderTags()): ?>
+    <!-- Start of Adcurve cart tag -->
+    <script type="text/javascript">
+        window.s2m_configuration = new Object();
+        window.s2m_configuration.s2m_page = "cart";
+        window.s2m_configuration.s2m_customer_id = "<?php echo $block->tagHelper->getCustomerId(); ?>";
+        window.s2m_configuration.s2m_email_hash = "<?php echo $block->tagHelper->getCustomerEmailHash(); ?>";
+        window.s2m_configuration.s2m_cart_items = [];
+        <?php $count = 0; ?>
+        <?php foreach($block->getItems() as $item): ?>
+            <?php
+                $_productPriceInclTax = $block->tagHelper->getProductPriceInclTax($item->getProduct());
+                $_productPriceExclTax = $block->tagHelper->getProductPriceExclTax($item->getProduct());
+            ?>
+            var cart_item = new Object();
+            cart_item.s2m_product_id = "<?php echo $item->getProductId(); ?>";
+            cart_item.s2m_name = "<?php echo htmlspecialchars($item->getProduct()->getName(), ENT_QUOTES); ?>";
+            cart_item.s2m_quantity = "<?php echo round($item->getQty()); ?>";
+            cart_item.s2m_amount_1 = "<?php echo $_productPriceInclTax; ?>";
+            cart_item.s2m_amount_2 = "<?php echo $_productPriceExclTax; ?>";
+            window.s2m_configuration.s2m_cart_items.push(cart_item);
+            <?php $count++; if($count == 5){ break; } ?>
+        <?php endforeach; ?>
+    </script>
+    <!-- End of Adcurve cart tag -->
+<?php endif; ?>

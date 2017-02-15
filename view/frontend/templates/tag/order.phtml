@@ -1,0 +1,63 @@
+<?php if($block->configHelper->shouldRenderTags()): ?>
+    <?php
+        $_shopId        = $block->configHelper->getShopId();
+        $_baseUrl       = $block->configHelper->getTagUrl();
+        $orderInfo      = $block->getOrderInfo();
+        $itemsInfo      = $block->getItemsInfo();
+        $customerInfo   = $block->getCustomerInfo();
+    ?>
+    <!-- Start of Adcurve order tag -->
+    <script type="text/javascript">
+        <!--
+        function _s2m_t()
+        {
+            var s2m_shop = S2MOrderTransaction( <?php echo $_shopId; ?>, "4.1.20150811" );
+            var orderInfo = new Object();
+            orderInfo.trans_id     = "<?php echo $orderInfo['trans_id']; ?>";
+            orderInfo.trans_type   = "<?php echo $orderInfo['trans_type']; ?>";
+            orderInfo.amount_1     = "<?php echo $orderInfo['price_including_tax']; ?>";
+            orderInfo.amount_2     = "<?php echo $orderInfo['price_excluding_tax']; ?>";
+            orderInfo.amount_3     = "<?php echo $orderInfo['shipping_cost']; ?>";
+            orderInfo.coupon_code  = "<?php echo $orderInfo['coupon_code']; ?>";
+            s2m_shop.set_order_info( orderInfo );
+
+            <?php foreach($itemsInfo as $itemInfo): ?>
+                var itemInfo1 = new Object();
+                itemInfo1.trans_id      = "<?php echo $orderInfo['trans_id']; ?>";
+                itemInfo1.item_id       = "<?php echo $itemInfo['product_id']; ?>";
+                itemInfo1.item_info_1   = "<?php echo $itemInfo['product_name']; ?>";
+                itemInfo1.item_amount_1 = "<?php echo $itemInfo['price_including_tax']; ?>";
+                itemInfo1.item_amount_2 = "<?php echo $itemInfo['price_excluding_tax']; ?>";
+                itemInfo1.quantity      = "<?php echo $itemInfo['qty']; ?>";
+                s2m_shop.add_item_info( itemInfo1 );
+            <?php endforeach; ?>
+
+            var userInfo = new Object();
+            userInfo.user_email      = "<?php echo $customerInfo['email']; ?>";
+            userInfo.customer_id     = "<?php echo $customerInfo['id']; ?>";
+            userInfo.new_customer    = "<?php echo $customerInfo['is_new']; ?>";
+            s2m_shop.set_user_info( userInfo );
+            s2m_shop.transact();
+        }
+        try{
+            var __s2m_host = "<?php echo $_baseUrl; ?>";
+            var __s2m_js = document.createElement('script');
+            __s2m_js.type = 'text/javascript'; __s2m_js.async = true;
+            __s2m_js.src = (("https:" == document.location.protocol) ? "https://" : "http://") + __s2m_host + "/javascripts/s2m.js";
+            __s2m_js.onload = _s2m_t;
+            __s2m_js.onreadystatechange = function () {
+                if (this.readyState == 'complete'|| this.readyState == 'loaded') _s2m_t();
+            }
+            var __s2m_script = document.getElementsByTagName('script')[0];
+            __s2m_script.parentNode.insertBefore( __s2m_js, __s2m_script );
+        }catch(err){}
+        -->
+    </script>
+    <!-- End of Adcurve order tag -->
+    <!-- Start of Adcurve backup "image tracking" tag -->
+    <?php $orderParams = $block->getOrderUrlParams(); ?>
+    <?php $itemsParams = $block->getItemsUrlParams(); ?>
+    <?php $customerParams = $block->getCustomerUrlParams(); ?>
+    <img src="https://<?php echo $_baseUrl; ?>/toi.gif?shop_code=<?php echo $_shopId; ?>&v=4.1.20150811<?php echo $orderParams . $itemsParams . $customerParams; ?>" alt="Shop2market Order Tag " />
+    <!-- End of Adcurve backup "image tracking" tag -->
+<?php endif; ?>

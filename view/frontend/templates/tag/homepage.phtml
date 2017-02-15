@@ -1,0 +1,10 @@
+<?php if($block->configHelper->shouldRenderTags()): ?>
+    <!-- Start of Adcurve homepage tag -->
+    <script type="text/javascript">
+        window.s2m_configuration = new Object();
+        window.s2m_configuration.s2m_page = "home";
+        window.s2m_configuration.s2m_customer_id = "<?php echo $block->tagHelper->getCustomerId(); ?>";
+        window.s2m_configuration.s2m_email_hash = "<?php echo $block->tagHelper->getCustomerEmailHash(); ?>";
+    </script>
+    <!-- End of Adcurve homepage tag -->
+<?php endif; ?>
