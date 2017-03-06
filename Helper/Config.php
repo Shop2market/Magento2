@@ -25,13 +25,18 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 	
     const XPATH_PAYMENT_METHOD 		= 'payment/checkmo/active';
 	
+	protected $scopeConfig;
+	protected $resourceInterface;
+	
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
-		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+		\Magento\Framework\Module\ResourceInterface $resourceInterface
 	){
 		parent::__construct($context);
 		
 		$this->scopeConfig = $scopeConfig;
+		$this->resourceInterface = $resourceInterface;
 	}
 	
 	/**
@@ -266,7 +271,8 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return string
      */
-    public function getShopAttributes($store = null) {
+    public function getShopAttributes($store = null)
+    {
         return $this->scopeConfig->getValue(self::XPATH_SHOP_ATTRIBUTES);
     }
 	
@@ -277,7 +283,19 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return string
      */
-    public function getTestShopId($store = null) {
+    public function getTestShopId($store = null)
+    {
         return $this->scopeConfig->getValue(self::XPATH_TEST_SHOP_ID);
+    }
+	
+	
+    /**
+     * Returns the current version of the Module.
+     *
+     * @return string
+     */
+    public function getModuleVersion()
+    {
+    	return $this->resourceInterface->getDbVersion('Adcurve_Adcurve');
     }
 }

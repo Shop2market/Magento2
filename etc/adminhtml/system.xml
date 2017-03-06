@@ -57,7 +57,13 @@
 				</field>
 				-->
 			</group>
-			<group id="settings" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20" translate="label">
+			<group id="registration" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30" translate="label">
+				<label><![CDATA[Register in Adcurve]]></label>
+				<field id="registrationform" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10" translate="label">
+					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\RegistrationForm</frontend_model>
+				</field>
+			</group>
+			<group id="settings" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="40" translate="label">
 				<label><![CDATA[General settings]]></label>
 				<field id="enabled" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10" translate="label" type="select">
 					<label>Module enabled</label>
@@ -102,7 +108,7 @@
 					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
 				</field>
 			</group>
-			<group id="api" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="30" translate="label">
+			<group id="api" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="50" translate="label">
 				<label><![CDATA[Api settings]]></label>
 				<field id="update_url_live" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="10" translate="label" type="text">
 					<label>Live update url</label>

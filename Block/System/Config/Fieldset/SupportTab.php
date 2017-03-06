@@ -17,7 +17,7 @@ class SupportTab
     const PHONE_CONTACT 				= 'adcurve/support/phone';
 	
 	protected $scopeConfig;
-	protected $resourceInterface;
+	public $configHelper;
     protected $_template = 'Adcurve_Adcurve::system/config/fieldset/supporttab.phtml';
 
 	/**
@@ -28,28 +28,15 @@ class SupportTab
      */
 	public function __construct(
 		\Magento\Backend\Block\Template\Context $context,
+		\Adcurve\Adcurve\Helper\Config $configHelper,
 		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-		\Magento\Framework\Module\ResourceInterface $resourceInterface,
 		array $data = []
 	){
 		parent::__construct($context, $data);
-		$this->resourceInterface = $resourceInterface;
+		
+		$this->configHelper = $configHelper;
 		$this->scopeConfig = $scopeConfig;
 	}
-	
-    /**
-     * Returns the current version of the Module.
-     *
-     * @return string
-     */
-    public function getModuleVersion()
-    {
-    	return $this->resourceInterface->getDbVersion('Adcurve_Adcurve');
-    	// TO DO: Implement helper for module version get
-        /** @var Adcurve_Adcurve_Helper_Data $helper */
-        //$helper = Mage::helper('adcurve_adcurve');		
-        //return $helper->getModuleVersion();
-    }
 
     /**
      * Returns the URL to get more information about publisher.
