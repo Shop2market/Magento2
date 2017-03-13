@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<virtualType name="Adcurve\Adcurve\Model\ResourceModel\Connection\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">adcurve_connection</argument>
+			<argument name="resourceModel" xsi:type="string">Adcurve\Adcurve\Model\ResourceModel\Connection\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="adcurve_connection_grid_data_source" xsi:type="string">Adcurve\Adcurve\Model\ResourceModel\Connection\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+	<preference for="Adcurve\Adcurve\Api\ConnectionRepositoryInterface" type="Adcurve\Adcurve\Model\ConnectionRepository"/>
+	<preference for="Adcurve\Adcurve\Api\Data\ConnectionInterface" type="Adcurve\Adcurve\Model\Connection"/>
+	<preference for="Adcurve\Adcurve\Api\Data\ConnectionSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+</config>

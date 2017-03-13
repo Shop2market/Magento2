@@ -10,6 +10,12 @@
 						</resource>
 					</resource>
 				</resource>
+				<resource id="Adcurve_Adcurve::Connection" sortOrder="10" title="Connection">
+					<resource id="Adcurve_Adcurve::Connection_save" sortOrder="10" title="Save Connection"/>
+					<resource id="Adcurve_Adcurve::Connection_delete" sortOrder="20" title="Delete Connection"/>
+					<resource id="Adcurve_Adcurve::Connection_update" sortOrder="30" title="Update Connection"/>
+					<resource id="Adcurve_Adcurve::Connection_view" sortOrder="40" title="View Connection"/>
+				</resource>
 			</resource>
 		</resources>
 	</acl>

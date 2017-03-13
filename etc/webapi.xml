@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+	<route method="POST" url="/V1/adcurve-adcurve/connection">
+		<service class="Adcurve\Adcurve\Api\ConnectionRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Adcurve_Adcurve::Connection_save"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/adcurve-adcurve/search">
+		<service class="Adcurve\Adcurve\Api\ConnectionRepositoryInterface" method="getList"/>
+		<resources>
+			<resource ref="Adcurve_Adcurve::Connection_view"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/adcurve-adcurve/:connectionId">
+		<service class="Adcurve\Adcurve\Api\ConnectionRepositoryInterface" method="getById"/>
+		<resources>
+			<resource ref="Adcurve_Adcurve::Connection_view"/>
+		</resources>
+	</route>
+	<route method="PUT" url="/V1/adcurve-adcurve/:connectionId">
+		<service class="Adcurve\Adcurve\Api\ConnectionRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Adcurve_Adcurve::Connection_update"/>
+		</resources>
+	</route>
+	<route method="DELETE" url="/V1/adcurve-adcurve/:connectionId">
+		<service class="Adcurve\Adcurve\Api\ConnectionRepositoryInterface" method="deleteById"/>
+		<resources>
+			<resource ref="Adcurve_Adcurve::Connection_delete"/>
+		</resources>
+	</route>
+</routes>
