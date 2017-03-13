@@ -6,9 +6,7 @@ class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
 	public $configHelper;
 	public $tagHelper;
 	
-	protected $registry;
 	protected $categoryResource;
-	protected $storeManager;
 	
 	protected $categoryInfo;
 	protected $_productCollection;
@@ -21,15 +19,11 @@ class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
         \Magento\Framework\Url\Helper\Data $urlHelper,
         \Adcurve\Adcurve\Helper\Config $configHelper,
 		\Adcurve\Adcurve\Helper\Tag $tagHelper,
-		\Magento\Framework\Registry $registry,
 		\Magento\Catalog\Model\ResourceModel\Category $categoryResource,
-		\Magento\Store\Model\StoreManagerInterface $storeManager,
 		array $data = []
 	){
 		$this->configHelper = $configHelper;
 		$this->tagHelper = $tagHelper;
-		$this->registry = $registry;
-		$this->storeManager = $storeManager;
 		$this->categoryResource = $categoryResource;
 		
 		parent::__construct($context, $postDataHelper, $layerResolver, $categoryRepository, $urlHelper, $data);
@@ -52,7 +46,7 @@ class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
 	 */
 	public function setCategoryInfo()
 	{
-		$storeId = $this->storeManager->getStore()->getId();
+		$storeId = $this->_storeManager->getStore()->getId();
         $path = $this->getCurrentCategory()->getPath();
         $categoryIds = explode('/', $path);
         array_shift($categoryIds); // Shift off Magento root category

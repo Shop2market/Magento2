@@ -7,8 +7,6 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 	
 	protected $storeModel;
 	
-	protected $logger;
-	
 	protected $updateFactory;
 	protected $updateRepository;
 	protected $dateTime;
@@ -60,7 +58,6 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 	
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
-		\Psr\Log\LoggerInterface $logger,
 		\Magento\Store\Model\Store $storeModel,
 		\Adcurve\Adcurve\Model\UpdateFactory $updateFactory,
 		\Adcurve\Adcurve\Model\UpdateRepository $updateRepository,
@@ -81,8 +78,6 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		parent::__construct($context);
 		
 		$this->storeModel = $storeModel;
-		
-		$this->logger = $logger;
 		
 		$this->updateFactory = $updateFactory;
 		$this->updateRepository = $updateRepository;
@@ -174,7 +169,7 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 			$update->setStatus($status);
 			$this->updateRepository->save($update);
 		} catch(\Exception $e){
-			$this->logger->addError($e);
+			$this->_logger->addError($e);
 		}
 	}
 	

@@ -9,7 +9,6 @@ class RegistrationForm
     const INSTALLATION_TYPE_TEST 	= 'test';
     const INSTALLATION_TYPE_LIVE 	= 'live';
 	
-	protected $scopeConfig;
 	protected $storeManager;
 	protected $resourceInterface;
 	public $configHelper;
@@ -26,8 +25,6 @@ class RegistrationForm
      */
 	public function __construct(
 		\Magento\Backend\Block\Template\Context $context,
-		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-		\Magento\Store\Model\StoreManagerInterface $storeManager,
 		\Adcurve\Adcurve\Helper\Config $configHelper,
 		\Adcurve\Adcurve\Helper\Connection $connectionHelper,
 		\Adcurve\Adcurve\Model\Rest\StatusRequest $statusRequest,
@@ -35,8 +32,6 @@ class RegistrationForm
 		array $data = []
 	){
 		parent::__construct($context, $data);
-		$this->scopeConfig = $scopeConfig;
-		$this->storeManager = $storeManager;
 		$this->configHelper = $configHelper;
 		$this->connectionHelper = $connectionHelper;
 		$this->statusRequest = $statusRequest;
@@ -78,7 +73,7 @@ class RegistrationForm
      */
     public function getDefaultStore()
     {
-        return $this->storeManager->getDefaultStoreView();
+        return $this->_storeManager->getDefaultStoreView();
     }
 	
 	/**
@@ -86,7 +81,7 @@ class RegistrationForm
 	 */
 	public function getAllStores()
 	{
-		return $this->storeManager->getStores();
+		return $this->_storeManager->getStores();
 	}
 	
     /**
@@ -94,7 +89,7 @@ class RegistrationForm
      */
     public function getWsdlEndpoint()
     {
-        return $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK) . self::API_WSDL_ENDPOINT;
+        return $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK) . self::API_WSDL_ENDPOINT;
     }
 
     /**

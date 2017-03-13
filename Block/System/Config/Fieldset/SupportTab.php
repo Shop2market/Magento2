@@ -16,7 +16,6 @@ class SupportTab
     const EMAIL_CONTACT 				= 'adcurve/support/email';
     const PHONE_CONTACT 				= 'adcurve/support/phone';
 	
-	protected $scopeConfig;
 	public $configHelper;
     protected $_template = 'Adcurve_Adcurve::system/config/fieldset/supporttab.phtml';
 
@@ -29,13 +28,11 @@ class SupportTab
 	public function __construct(
 		\Magento\Backend\Block\Template\Context $context,
 		\Adcurve\Adcurve\Helper\Config $configHelper,
-		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
 		array $data = []
 	){
 		parent::__construct($context, $data);
 		
 		$this->configHelper = $configHelper;
-		$this->scopeConfig = $scopeConfig;
 	}
 
     /**
@@ -45,7 +42,7 @@ class SupportTab
      */
     public function getPublishersUrl()
     {
-        return $this->scopeConfig->getValue(self::PUBLISHERS_URL_XPATH);
+        return $this->_scopeConfig->getValue(self::PUBLISHERS_URL_XPATH);
     }
 
     /**
@@ -55,7 +52,7 @@ class SupportTab
      */
     public function getFeaturesUrl()
     {
-        $url = $this->scopeConfig->getValue(self::FEATURES_URL_XPATH);
+        $url = $this->_scopeConfig->getValue(self::FEATURES_URL_XPATH);
 
         return $url;
     }
@@ -67,7 +64,7 @@ class SupportTab
      */
     public function getPricingUrl()
     {
-        $url = $this->scopeConfig->getValue(self::PRICING_URL_XPATH);
+        $url = $this->_scopeConfig->getValue(self::PRICING_URL_XPATH);
 
         return $url;
     }
@@ -79,7 +76,7 @@ class SupportTab
      */
     public function getDocumentationUrl()
     {
-        $url = $this->scopeConfig->getValue(self::DOCUMENTATION_URL_XPATH);
+        $url = $this->_scopeConfig->getValue(self::DOCUMENTATION_URL_XPATH);
 
         return $url;
     }
@@ -91,7 +88,7 @@ class SupportTab
      */
     public function getContactEmail()
     {
-        $url = $this->scopeConfig->getValue(self::EMAIL_CONTACT);
+        $url = $this->_scopeConfig->getValue(self::EMAIL_CONTACT);
 
         return $url;
     }
@@ -103,7 +100,7 @@ class SupportTab
      */
     public function getContactPhone()
     {
-        $url = $this->scopeConfig->getValue(self::PHONE_CONTACT);
+        $url = $this->_scopeConfig->getValue(self::PHONE_CONTACT);
 
         return $url;
     }
@@ -115,7 +112,7 @@ class SupportTab
      */
     public function getNewTicketUrl()
     {
-        $url = $this->scopeConfig->getValue(self::NEW_TICKET_URL_XPATH);
+        $url = $this->_scopeConfig->getValue(self::NEW_TICKET_URL_XPATH);
 
         return $url;
     }
@@ -127,7 +124,7 @@ class SupportTab
      */
     public function getInstallationManualUrl()
     {
-        $url = $this->scopeConfig->getValue(self::INSTALLATION_MANUAL_URL_XPATH);
+        $url = $this->_scopeConfig->getValue(self::INSTALLATION_MANUAL_URL_XPATH);
 
         return $url;
     }
@@ -139,7 +136,7 @@ class SupportTab
      */
     public function getChangelogUrl()
     {
-        $url = $this->scopeConfig->getValue(self::RELEASE_NOTES_URL_XPATH);
+        $url = $this->_scopeConfig->getValue(self::RELEASE_NOTES_URL_XPATH);
 
         return $url;
     }
@@ -151,7 +148,7 @@ class SupportTab
      */
     public function getKbUrl()
     {
-        $url = $this->scopeConfig->getValue(self::KB_URL_XPATH);
+        $url = $this->_scopeConfig->getValue(self::KB_URL_XPATH);
 
         return $url;
     }

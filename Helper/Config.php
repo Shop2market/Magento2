@@ -25,17 +25,14 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 	
     const XPATH_PAYMENT_METHOD 		= 'payment/checkmo/active';
 	
-	protected $scopeConfig;
 	protected $resourceInterface;
 	
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
-		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
 		\Magento\Framework\Module\ResourceInterface $resourceInterface
 	){
 		parent::__construct($context);
 		
-		$this->scopeConfig = $scopeConfig;
 		$this->resourceInterface = $resourceInterface;
 	}
 	

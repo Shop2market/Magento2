@@ -15,7 +15,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
 	const XPATH_DESIGN_HEADER_LOGO_SRC 	= 'design/header/logo_src';
 	
 	protected $storeManager;
-	protected $urlBuilder;
+	protected $backendUrlBuilder;
 	protected $configHelper;
 	protected $countries;
     protected $apiRoleResources;
@@ -23,13 +23,13 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
 		\Magento\Store\Model\StoreManagerInterface $storeManager,
-		\Magento\Backend\Model\UrlInterface $urlBuilder,
+		\Magento\Backend\Model\UrlInterface $backendUrlBuilder,
 		\Adcurve\Adcurve\Helper\Config $configHelper
 	){
 		parent::__construct($context);
 		
 		$this->storeManager = $storeManager;
-		$this->urlBuilder = $urlBuilder;
+		$this->backendUrlBuilder = $backendUrlBuilder;
 		$this->configHelper = $configHelper;
 	}
 	
@@ -179,7 +179,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getSuccessUrl($storeId = null)
     {
-        return $this->urlBuilder->getUrl('adminhtml/adcurveAdminhtml_registration/success', array('store_id' => $storeId));
+        return $this->backendUrlBuilder->getUrl('adminhtml/adcurveAdminhtml_registration/success', array('store_id' => $storeId));
     }
 
     /**
@@ -189,7 +189,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getFailUrl()
     {
-        return $this->urlBuilder->getUrl('adminhtml/adcurveAdminhtml_registration/failed');
+        return $this->backendUrlBuilder->getUrl('adminhtml/adcurveAdminhtml_registration/failed');
     }
 
     /**
