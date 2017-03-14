@@ -1,6 +1,8 @@
 <?php
 namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
+use Magento\Framework\Exception\LocalizedException;
+
 class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 {
 	protected $_storeManager;
@@ -38,10 +40,22 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 			$connection = $this->connectionFactory->create();
 	        $connection->load($store->getId(), 'store_id');
 			
-			if(!$connection->getId()){
+			if(!$connection->getId() || true){
 				$connection->setStoreId($store->getId());
+				$connection->setStoreCode($store->getCode());
 				//@TODO - Add all data nessecairy
-				$connection->save();
+				try {
+					$connection->save();
+	                $this->messageManager->addSuccess(__('Store: %1 (%2) was succesfully saved', [$store->getName(), $store->getCode()]));
+	            } catch (LocalizedException $e) {
+	                $this->messageManager->addError($e->getMessage());
+	            } catch (\Exception $e) {
+	                $this->messageManager->addException($e, __('Something went wrong while saving the Connection.'));
+	            }
+				
+				
+				
+				
 			}
 			
 	        if ($connection->getId()) {
@@ -49,6 +63,9 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 	        	continue;
 			}
 		}
-		//@TODO - Complete redirect and messaging
+		//@TODO - Complete messaging
+		
+		
+		return $resultRedirect->setPath('*/*/');
 	}
 }

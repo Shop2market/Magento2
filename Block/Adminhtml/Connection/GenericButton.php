@@ -1,5 +1,5 @@
 <?php
-namespace Adcurve\Adcurve\Block\Adminhtml\Connection\Edit;
+namespace Adcurve\Adcurve\Block\Adminhtml\Connection;
 
 use Magento\Backend\Block\Widget\Context;
 

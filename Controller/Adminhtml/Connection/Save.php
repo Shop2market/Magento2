@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
 use Magento\Framework\Exception\LocalizedException;

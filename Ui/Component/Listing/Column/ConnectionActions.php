@@ -5,9 +5,10 @@ class ConnectionActions extends \Magento\Ui\Component\Listing\Columns\Column
 {
 
     protected $urlBuilder;
-    const URL_PATH_EDIT = 'adcurve_adcurve/connection/edit';
-    const URL_PATH_DELETE = 'adcurve_adcurve/connection/delete';
-    const URL_PATH_DETAILS = 'adcurve_adcurve/connection/details';
+    const URL_PATH_EDIT 			= 'adcurve_adcurve/connection/edit';
+    const URL_PATH_DELETE 			= 'adcurve_adcurve/connection/delete';
+    const URL_PATH_DETAILS 			= 'adcurve_adcurve/connection/details';
+	const URL_PATH_CONNECTION_SETUP = 'adcurve_adcurve/connection/setup';
 
     /**
      * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
@@ -39,6 +40,15 @@ class ConnectionActions extends \Magento\Ui\Component\Listing\Columns\Column
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['connection_id'])) {
                     $item[$this->getData('name')] = [
+                        'setup' => [
+                            'href' => $this->urlBuilder->getUrl(
+                                static::URL_PATH_CONNECTION_SETUP,
+                                [
+                                    'connection_id' => $item['connection_id']
+                                ]
+                            ),
+                            'label' => __('Setup Adcurve Connection')
+                        ],
                         'edit' => [
                             'href' => $this->urlBuilder->getUrl(
                                 static::URL_PATH_EDIT,

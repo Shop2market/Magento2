@@ -12,7 +12,7 @@
 		</item>
 		<item name="template" xsi:type="string">templates/form/collapsible</item>
 		<item name="buttons" xsi:type="array">
-			<item name="back" xsi:type="string">Adcurve\Adcurve\Block\Adminhtml\Connection\Edit\BackButton</item>
+			<item name="back" xsi:type="string">Adcurve\Adcurve\Block\Adminhtml\Connection\BackButton</item>
 			<item name="delete" xsi:type="string">Adcurve\Adcurve\Block\Adminhtml\Connection\Edit\DeleteButton</item>
 			<item name="save" xsi:type="string">Adcurve\Adcurve\Block\Adminhtml\Connection\Edit\SaveButton</item>
 			<item name="save_and_continue" xsi:type="string">Adcurve\Adcurve\Block\Adminhtml\Connection\Edit\SaveAndContinueButton</item>

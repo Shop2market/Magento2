@@ -53,6 +53,7 @@
 		<paging name="listing_paging"/>
 	</listingToolbar>
 	<columns name="adcurve_connection_columns">
+		<!-- Inline editing disabled
 		<argument name="data" xsi:type="array">
 			<item name="config" xsi:type="array">
 				<item name="editorConfig" xsi:type="array">
@@ -76,6 +77,8 @@
 				</item>
 			</item>
 		</argument>
+		-->
+		<!-- Selection column disabled
 		<selectionsColumn name="ids">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
@@ -83,6 +86,8 @@
 				</item>
 			</argument>
 		</selectionsColumn>
+		-->
+		<!-- Only serves as auto increment, therefore disabled from view
 		<column name="connection_id">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
@@ -98,26 +103,12 @@
 				</item>
 			</argument>
 		</column>
-		<column name="connection_id">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">connection_id</item>
-				</item>
-			</argument>
-		</column>
-		<actionsColumn class="Adcurve\Adcurve\Ui\Component\Listing\Column\ConnectionActions" name="actions">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="indexField" xsi:type="string">connection_id</item>
-				</item>
-			</argument>
-		</actionsColumn>
+		-->
 		<column name="store_id">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">store_id</item>
+					<item name="label" translate="true" xsi:type="string">Store ID</item>
 					<item name="editor" xsi:type="array">
 						<item name="editorType" xsi:type="string">text</item>
 						<item name="validation" xsi:type="array">
@@ -131,7 +122,7 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">store_code</item>
+					<item name="label" translate="true" xsi:type="string">Store code</item>
 					<item name="editor" xsi:type="array">
 						<item name="editorType" xsi:type="string">text</item>
 						<item name="validation" xsi:type="array">
@@ -145,7 +136,7 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">adcurve_shop_id</item>
+					<item name="label" translate="true" xsi:type="string">Adcurve Shop ID</item>
 					<item name="editor" xsi:type="array">
 						<item name="editorType" xsi:type="string">text</item>
 						<item name="validation" xsi:type="array">
@@ -159,7 +150,7 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">adcurve_token</item>
+					<item name="label" translate="true" xsi:type="string">Adcurve Token</item>
 					<item name="editor" xsi:type="array">
 						<item name="editorType" xsi:type="string">text</item>
 						<item name="validation" xsi:type="array">
@@ -173,7 +164,7 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">enabled</item>
+					<item name="label" translate="true" xsi:type="string">Enabled</item>
 					<item name="editor" xsi:type="array">
 						<item name="editorType" xsi:type="string">text</item>
 						<item name="validation" xsi:type="array">
@@ -187,7 +178,7 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">status</item>
+					<item name="label" translate="true" xsi:type="string">Connection status</item>
 					<item name="editor" xsi:type="array">
 						<item name="editorType" xsi:type="string">text</item>
 						<item name="validation" xsi:type="array">
@@ -201,7 +192,7 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">suggestion</item>
+					<item name="label" translate="true" xsi:type="string">Suggestion</item>
 					<item name="editor" xsi:type="array">
 						<item name="editorType" xsi:type="string">text</item>
 						<item name="validation" xsi:type="array">
@@ -211,11 +202,12 @@
 				</item>
 			</argument>
 		</column>
+		<!-- Api User Info disabled
 		<column name="api_user_info">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">api_user_info</item>
+					<item name="label" translate="true" xsi:type="string">Api User Info</item>
 					<item name="editor" xsi:type="array">
 						<item name="editorType" xsi:type="string">text</item>
 						<item name="validation" xsi:type="array">
@@ -225,11 +217,12 @@
 				</item>
 			</argument>
 		</column>
+		-->
 		<column name="updated_at">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">updated_at</item>
+					<item name="label" translate="true" xsi:type="string">Updated At</item>
 					<item name="editor" xsi:type="array">
 						<item name="editorType" xsi:type="string">text</item>
 						<item name="validation" xsi:type="array">
@@ -239,5 +232,12 @@
 				</item>
 			</argument>
 		</column>
+		<actionsColumn class="Adcurve\Adcurve\Ui\Component\Listing\Column\ConnectionActions" name="actions">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="indexField" xsi:type="string">connection_id</item>
+				</item>
+			</argument>
+		</actionsColumn>
 	</columns>
 </listing>

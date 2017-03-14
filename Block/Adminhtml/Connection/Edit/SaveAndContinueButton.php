@@ -2,10 +2,10 @@
 namespace Adcurve\Adcurve\Block\Adminhtml\Connection\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+use Adcurve\Adcurve\Block\Adminhtml\Connection\GenericButton;
 
 class SaveAndContinueButton extends GenericButton implements ButtonProviderInterface
 {
-
     /**
      * @return array
      */
