@@ -29,11 +29,9 @@ class Setup extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
      */
     public function execute()
     {
-        // 1. Get ID and create model
         $id = $this->getRequest()->getParam('connection_id');
         $connection = $this->connectionFactory->create();
         
-        // 2. Initial checking
         if ($id) {
             $connection->load($id);
             if (!$connection->getId()) {
@@ -45,12 +43,10 @@ class Setup extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
         }
         $this->_coreRegistry->register('adcurve_adcurve_connection', $connection);
 		
-        // 5. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->addBreadcrumb(__('Setup Adcurve Connection'), __('Setup Adcurve Connection'));
-        $resultPage->getConfig()->getTitle()->prepend(__('Connection'));
-        $resultPage->getConfig()->getTitle()->prepend(__('Manage connection "%1"', [$connection->getStoreCode()]));
+        $resultPage->getConfig()->getTitle()->prepend(__('Setup connection for %1 (%2).', [$connection->getStoreName(), $connection->getStoreCode()]));
         return $resultPage;
     }
 }

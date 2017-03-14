@@ -44,14 +44,25 @@ class InstallSchema implements InstallSchemaInterface
         		'unsigned' 	=> true,
 			), 'Connection ID'
 		);
+		$adcurveConnectionTable->addColumn('enabled', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Enabled');
 		$adcurveConnectionTable->addColumn('store_id', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Store ID');
+		$adcurveConnectionTable->addColumn('store_name', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Store Name');
         $adcurveConnectionTable->addColumn('store_code', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Shop Code');
 		$adcurveConnectionTable->addColumn('adcurve_shop_id', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Adcurve Shop ID');
 		$adcurveConnectionTable->addColumn('adcurve_token', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Adcurve Token');
-		$adcurveConnectionTable->addColumn('enabled', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Enabled');
 		$adcurveConnectionTable->addColumn('status', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Status');
 		$adcurveConnectionTable->addColumn('suggestion', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Suggestion');
 		$adcurveConnectionTable->addColumn('api_user_info', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Api User Info');
+		$adcurveConnectionTable->addColumn('contact_firstname', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Contact First Name');
+		$adcurveConnectionTable->addColumn('contact_lastname', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Contact Last Name');
+		$adcurveConnectionTable->addColumn('contact_email', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Contact Email');
+		$adcurveConnectionTable->addColumn('contact_telephone', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Contact Telephone');
+		$adcurveConnectionTable->addColumn('company_name', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Company Name');
+		$adcurveConnectionTable->addColumn('company_address', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Company Address');
+		$adcurveConnectionTable->addColumn('company_zipcode', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Company Zipcode');
+		$adcurveConnectionTable->addColumn('company_city', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Company City');
+		$adcurveConnectionTable->addColumn('company_region', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Company Region');
+		$adcurveConnectionTable->addColumn('company_country', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Company Country');
 		$adcurveConnectionTable->addColumn('updated_at', \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP, null, [], 'Updated At');
 		
         $setup->getConnection()->createTable($adcurveConnectionTable);

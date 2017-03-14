@@ -11,12 +11,6 @@
 		</item>
 		<item name="spinner" xsi:type="string">adcurve_connection_columns</item>
 		<item name="buttons" xsi:type="array">
-			<item name="add" xsi:type="array">
-				<item name="name" xsi:type="string">add</item>
-				<item name="label" xsi:type="string">Add new Connection</item>
-				<item name="class" xsi:type="string">primary</item>
-				<item name="url" xsi:type="string">*/*/new</item>
-			</item>
 			<item name="refresh" xsi:type="array">
 				<item name="name" xsi:type="string">refresh</item>
 				<item name="label" xsi:type="string">Refresh stores</item>
@@ -94,12 +88,6 @@
 					<item name="filter" xsi:type="string">text</item>
 					<item name="sorting" xsi:type="string">asc</item>
 					<item name="label" translate="true" xsi:type="string">ID</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
 				</item>
 			</argument>
 		</column>
@@ -109,12 +97,14 @@
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Store ID</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
+				</item>
+			</argument>
+		</column>
+		<column name="store_name">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Store name</item>
 				</item>
 			</argument>
 		</column>
@@ -123,12 +113,6 @@
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Store code</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
 				</item>
 			</argument>
 		</column>
@@ -137,40 +121,24 @@
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Adcurve Shop ID</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
 				</item>
 			</argument>
 		</column>
+		<!-- Adcurve token disabled in grid
 		<column name="adcurve_token">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Adcurve Token</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
 				</item>
 			</argument>
 		</column>
+		-->
 		<column name="enabled">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Enabled</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
 				</item>
 			</argument>
 		</column>
@@ -179,12 +147,6 @@
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Connection status</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
 				</item>
 			</argument>
 		</column>
@@ -193,27 +155,15 @@
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Suggestion</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
 				</item>
 			</argument>
 		</column>
-		<!-- Api User Info disabled
+		<!-- Api User Info disabled in grid
 		<column name="api_user_info">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Api User Info</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
 				</item>
 			</argument>
 		</column>
@@ -223,12 +173,6 @@
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Updated At</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
 				</item>
 			</argument>
 		</column>

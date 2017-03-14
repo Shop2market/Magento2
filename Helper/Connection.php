@@ -265,25 +265,25 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getCountriesList(){
     	if(!$this->countries){
-    		$this->countries = array(
-		        array("value" => "AT", "label" => "Austria"),
-		        array("value" => "BE", "label" => "Belgium"),
-		        array("value" => "DK", "label" => "Denmark"),
-		        array("value" => "FI", "label" => "Finland"),
-		        array("value" => "FR", "label" => "France"),
-		        array("value" => "DE", "label" => "Germany"),
-		        array("value" => "IT", "label" => "Italy"),
-		        array("value" => "LU", "label" => "Luxembourg"),
-		        array("value" => "MT", "label" => "Malta"),
-		        array("value" => "NL", "label" => "Netherlands"),
-		        array("value" => "NO", "label" => "Norway"),
-		        array("value" => "PL", "label" => "Poland"),
-		        array("value" => "PT", "label" => "Portugal"),
-		        array("value" => "ES", "label" => "Spain"),
-		        array("value" => "SE", "label" => "Sweden"),
-		        array("value" => "CH", "label" => "Switzerland"),
-		        array("value" => "GB", "label" => "United Kingdom")
-	        );
+    		$this->countries = [
+		        ['value' => 'AT', 'label' => 'Austria'],
+		        ['value' => 'BE', 'label' => 'Belgium'],
+		        ['value' => 'DK', 'label' => 'Denmark'],
+		        ['value' => 'FI', 'label' => 'Finland'],
+		        ['value' => 'FR', 'label' => 'France'],
+		        ['value' => 'DE', 'label' => 'Germany'],
+		        ['value' => 'IT', 'label' => 'Italy'],
+		        ['value' => 'LU', 'label' => 'Luxembourg'],
+		        ['value' => 'MT', 'label' => 'Malta'],
+		        ['value' => 'NL', 'label' => 'Netherlands'],
+		        ['value' => 'NO', 'label' => 'Norway'],
+		        ['value' => 'PL', 'label' => 'Poland'],
+		        ['value' => 'PT', 'label' => 'Portugal'],
+		        ['value' => 'ES', 'label' => 'Spain'],
+		        ['value' => 'SE', 'label' => 'Sweden'],
+		        ['value' => 'CH', 'label' => 'Switzerland'],
+		        ['value' => 'GB', 'label' => 'United Kingdom']
+	        ];
     	}
 		return $this->countries;
     }

@@ -20,12 +20,13 @@ class RegisterButton extends GenericButton implements ButtonProviderInterface
     }
 	
     /**
-     * Get URL for back (reset) button
+     * Get URL to register using form submit
      *
      * @return string
      */
     public function getRegisterUrl()
     {
+    	// @TODO Change this to register url
         return $this->getUrl('*/*/');
     }
 }

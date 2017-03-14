@@ -40,31 +40,30 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 			$connection = $this->connectionFactory->create();
 	        $connection->load($store->getId(), 'store_id');
 			
-			if(!$connection->getId() || true){
+			if(!$connection->getId()){
 				$connection->setStoreId($store->getId());
+				$connection->setStoreName($store->getName());
 				$connection->setStoreCode($store->getCode());
-				//@TODO - Add all data nessecairy
+				//@TODO - Add all extra nessecairy data
 				try {
 					$connection->save();
-	                $this->messageManager->addSuccess(__('Store: %1 (%2) was succesfully saved', [$store->getName(), $store->getCode()]));
+	                $this->messageManager->addSuccess(__('<strong>%1 (%2)</strong> was succesfully created.', [$connection->getStoreName(), $connection->getStoreCode()]));
 	            } catch (LocalizedException $e) {
 	                $this->messageManager->addError($e->getMessage());
 	            } catch (\Exception $e) {
-	                $this->messageManager->addException($e, __('Something went wrong while saving the Connection.'));
+	                $this->messageManager->addException($e, __('Something went wrong while trying to create <strong>%1 (%2)</strong>.', [$store->getName(), $store->getCode()]));
 	            }
-				
-				
-				
-				
+			} else{
+				$this->messageManager->addSuccess(__('<strong>%1 (%2)</strong> already exists, creation skipped.', [$connection->getStoreName(), $connection->getStoreCode()]));
 			}
 			
-	        if ($connection->getId()) {
+	        if($connection->getStatus() && $connection->getAdcurveShopId()){
 	        	//@TODO - Add connection check here for existing stores
 	        	continue;
+			} else{
+				$this->messageManager->addNotice(__('Registration for <strong>%1 (%2)</strong> is not complete.', [$connection->getStoreName(), $connection->getStoreCode()]));
 			}
 		}
-		//@TODO - Complete messaging
-		
 		
 		return $resultRedirect->setPath('*/*/');
 	}
