@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
 class Index extends \Magento\Backend\App\Action
@@ -30,7 +28,7 @@ class Index extends \Magento\Backend\App\Action
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-            $resultPage->getConfig()->getTitle()->prepend(__("Connection"));
-            return $resultPage;
+        $resultPage->getConfig()->getTitle()->prepend(__('Connection'));
+        return $resultPage;
     }
 }

@@ -25,8 +25,7 @@
 			<argument name="requestFieldName" xsi:type="string">connection_id</argument>
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
-					<!-- TODO: change to Adcurve url submit -->
-					<item name="submit_url" path="*/*/register" xsi:type="url"/>
+					<item name="submit_url" path="https://app.adcurve.com/integrations/magento/install" xsi:type="url"/>
 				</item>
 			</argument>
 		</argument>

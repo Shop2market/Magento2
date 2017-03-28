@@ -7,9 +7,7 @@
 				<test_mode/>
 				<shop_id/>
 				<token/>
-				<sync>Needs to be replaced by Sync button</sync>
-				<save>Needs to be replaced by Save button</save>
-                <url_register_live>https://beta.adcurve.com/integrations/magento/install</url_register_live>
+                <url_register_live>https://app.adcurve.com/integrations/magento/install</url_register_live>
                 <url_register_test>https://capuchin.shop2market.com/integrations/magento/install</url_register_test>
                 <url_tag_live>track.shop2market.com</url_tag_live>
                 <url_tag_test>demo.shop2market.com</url_tag_test>

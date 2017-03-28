@@ -1,0 +1,113 @@
+<?php echo $block->getForm(); ?>
+<button id="adcurve_submit_button" class="save primary" onclick="confirm();">
+    <span><?php echo __('Confirm'); ?></span>
+</button>
+<?php //** @TODO: Move styling to correct place (css file include) */ ?>
+<style>
+	#popup_form_terms {
+		background-color: #ebebeb;
+		display: none;
+		height: 260px;
+		left: 20%;
+		padding: 15px;
+		position: fixed;
+		top: 33%;
+		width: 515px;
+		z-index: 1;
+	}
+	#popup_form_terms ol li {
+		margin-left: 20px;
+	}
+	#popup_form_terms button {
+		display: inline-block;
+		float: right;
+	}
+</style>
+<div id="popup_form_terms">
+	<span class="admin__legend"><?php echo __('Thanks for your registration in Adcurve!'); ?></span>
+	<span>
+		<?php echo __('Adcurve helps you to advertise your products and to make your ads profitable.'); ?>
+		<?php echo __('Adcurve also offers the option to insert orders in Magento.'); ?>
+		<?php echo __('In order to do that, we ask you to grant access to:'); ?>
+	</span>
+	<ol>
+		<li><?php echo __('Read product information to advertise your products and boost your sales'); ?></li>
+		<li><?php echo __('Read order information to calculate the profitability of your ads'); ?></li>
+		<li><?php echo __('Create a SOAP API user to insert orders in Magento from marketplaces'); ?></li>
+	</ol>
+	<button id="accepted" class="save primary" onclick="processForm();"><span><span><?php echo __('Accept');?></span></span></button>
+</div>
+<script type="text/javascript">
+    //    <![CDATA[
+    function showForm(id)
+    {
+    	require(['jquery'], function($){
+	        $('#popup_form_terms').show();
+	        return false;
+		});
+    }
+    
+    function confirm() {
+        require(['jquery'], function($){
+	        var storeIdValue = $('#shop\\[store_id\\]').val();
+	        if (storeIdValue == "" || storeIdValue == null){
+	            return false;
+	        }
+	        
+	        // @TODO: Add validation the Magento form way
+	        if (true || form.validator && form.validator.validate()){
+	            showForm('popup_form_terms');
+	        }
+	        
+	        return false;
+		});
+    }
+	
+	/**
+	 * @TODO: Save all attributes of a shop before or after return from Adcurve
+	 */
+    function processForm(){
+    	require(['jquery'], function($){
+	        var storeIdValue = $('#shop\\[store_id\\]').val();
+	        var installation_type = $('#shop\\[installation_type\\]').val();
+	        
+	        if (storeIdValue == "" || storeIdValue == null){
+	            return false;
+	        }
+	        $('#adcurve_registration_form').submit();
+	        
+	        /* Redundant contact information save
+	        var c_fname = $('#contact_firstname').val();
+	        var c_lname = $('#contact_lastname').val();
+	        var c_email = $('#contact_email').val();
+	        var c_phone = $('#contact_telephone').val();
+	        var contact = {first_name:c_fname, last_name:c_lname, email:c_email, phone:c_phone};
+	        */
+			
+	        //var attributesValue = $(document.getElementById('product_attributes')).getValue();
+	        //var saveAttributesUrl = '<?php //echo Mage::helper("adminhtml")->getUrl("adminhtml/adcurveAdminhtml_registration/saveShopAttributes") ?>';
+	        
+	        /*
+	        new Ajax.Request(saveAttributesUrl,
+	            {
+	                method: 'post',
+	                parameters: {
+	                	"id_store": storeIdValue,
+	                	"installation_type": installation_type,
+	                	"shop_attributes": JSON.stringify(attributesValue),
+	                	"contact" : JSON.stringify(contact)
+                	},
+	                onSuccess: function (data) {
+	                    var result = data.responseText.evalJSON(true);
+	                    var failedValidationCount = document.getElementsByClassName('validation-failed').length;
+	                    if (result.status == 'success' && failedValidationCount <= 0) {
+	                        var isUserCreated = createUser();
+	                    }
+	                }
+	        	}
+	        );
+	        */
+        });
+    }
+    //]]>
+</script>

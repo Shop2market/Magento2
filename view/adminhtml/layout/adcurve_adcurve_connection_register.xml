@@ -3,7 +3,7 @@
 	<update handle="styles"/>
 	<body>
 		<referenceContainer name="content">
-			<uiComponent name="adcurve_connection_setup_form"/>
-		</referenceContainer>
+            <block class="Adcurve\Adcurve\Block\Adminhtml\Connection\Register" name="Register" template="Adcurve_Adcurve::connection/register.phtml" />
+        </referenceContainer>
 	</body>
 </page>

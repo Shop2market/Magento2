@@ -6,6 +6,7 @@ use Magento\Framework\Exception\LocalizedException;
 class Register extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 {
 	protected $_storeManager;
+	protected $resultPageFactory;
 	protected $connectionFactory;
 	
 	/**
@@ -15,29 +16,44 @@ class Register extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Adcurve\Adcurve\Model\ConnectionFactory $connectionFactory
     ) {
     	$this->_storeManager = $storeManager;
+		$this->resultPageFactory = $resultPageFactory;
 		$this->connectionFactory = $connectionFactory;
         parent::__construct($context, $coreRegistry);
     }
 	
 	/**
-     * Refreshes all store connections with Adcurve
+     * Register a shop to Adcurve and establish a connection
 	 * 
-	 * Creates new entites is stores are missing and checks connection if store exists and is enabled
-     *
      * @return void
      */
     public function execute()
     {
-    	/** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
-        $resultRedirect = $this->resultRedirectFactory->create();
+    	// 1. Get ID and create model
+        $id = $this->getRequest()->getParam('connection_id');
+        $connection = $this->connectionFactory->create();
+        
+        // 2. Initial checking
+        if ($id) {
+            $connection->load($id);
+            if (!$connection->getId()) {
+                $this->messageManager->addError(__('This Connection no longer exists.'));
+                /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+                $resultRedirect = $this->resultRedirectFactory->create();
+                return $resultRedirect->setPath('*/*/');
+            }
+        }
 		
-		$data = $this->getRequest()->getPostValue();
-		/** @TODO Complete registration
-		var_dump($data);
-		die();
-	 	*/
-	}
+		$this->_coreRegistry->register('adcurve_adcurve_connection', $connection);
+		
+        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        $resultPage = $this->resultPageFactory->create();
+        $this->initPage($resultPage)->addBreadcrumb(__('Setup Adcurve Connection'), __('Setup Adcurve Connection'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Setup connection for %1 (%2).', [$connection->getStoreName(), $connection->getStoreCode()]));
+        return $resultPage;
+		
+    }
 }

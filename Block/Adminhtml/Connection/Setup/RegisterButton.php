@@ -12,21 +12,21 @@ class RegisterButton extends GenericButton implements ButtonProviderInterface
     public function getButtonData()
     {
         return [
-            'label' => __('Register shop in Adcurve'),
+            'label' => __('Register in Adcurve'),
             'on_click' => sprintf("location.href = '%s';", $this->getRegisterUrl()),
             'class' => 'save primary',
-            'sort_order' => 10
+            'sort_order' => 0
         ];
     }
 	
-    /**
-     * Get URL to register using form submit
+	/**
+     * Get URL for Adcurve registration form post
      *
      * @return string
      */
     public function getRegisterUrl()
     {
-    	// @TODO Change this to register url
-        return $this->getUrl('*/*/');
+    	// @TODO Replace by url getter to get url from configuration
+        return 'https://app.adcurve.com/integrations/magento/install';
     }
 }

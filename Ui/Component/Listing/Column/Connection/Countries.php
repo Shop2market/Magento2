@@ -19,6 +19,7 @@ class Countries implements OptionSourceInterface
     {
 		if ($this->options === null) {
 			$this->options = [
+				['value' => '', 'label' => __('Please select')],
 		        ['value' => 'AT', 'label' => __('Austria')],
 		        ['value' => 'BE', 'label' => __('Belgium')],
 		        ['value' => 'DK', 'label' => __('Denmark')],
