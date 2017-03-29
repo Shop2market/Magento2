@@ -57,9 +57,10 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create(
             ['data' => [
-            	'id' => 'adcurve_registration_form',
-            	'action' => $this->getData('action'),
-            	'method' => 'post'
+            	'id' 		=> 'adcurve_registration_form',
+            	'action' 	=> $this->getData('action'),
+            	'method' 	=> 'post',
+            	'enctype' 	=> 'multipart/form-data'
     		]]
         );
 		
@@ -189,19 +190,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 		);
 		
 		$shopFieldset->addField(
-			'shop[url]',
-			'text',
-			[
-				'name' 	=> 'shop[url]',
-				'label' => __('Url'),
-				'title' => __('Url'),
-				'required' => true,
-				'value' => $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB, $model->getStoreId()),
-				'disabled' => true
-			]
-		);
-		
-		$shopFieldset->addField(
 			'shop[soap_username]',
 			'text',
 			[
@@ -209,7 +197,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'label' => __('API username'),
 				'title' => __('API username'),
 				'required' => true,
-				'value' => ''
+				'value' => $model->getSoapUsername()
 			]
 		);
 		
@@ -221,7 +209,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'label' => __('API key'),
 				'title' => __('API key'),
 				'required' => true,
-				'value' => ''
+				'value' => $model->getSoapApiKey()
 			]
 		);
 		
@@ -231,10 +219,10 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         );
 		
 		$contactFieldset->addField(
-			'contact_firstname',
+			'contact[first_name]',
 			'text',
 			[
-				'name' => 'contact_firstname',
+				'name' => 'contact[first_name]',
 				'label' => __('First name'),
 				'title' => __('First name'),
 				'required' => true,
@@ -243,10 +231,10 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 		);
 		
 		$contactFieldset->addField(
-			'contact_lastname',
+			'contact[last_name]',
 			'text',
 			[
-				'name' => 'contact_lastname',
+				'name' => 'contact[last_name]',
 				'label' => __('Last name'),
 				'title' => __('Last name'),
 				'required' => true,
@@ -255,10 +243,10 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 		);
 		
 		$contactFieldset->addField(
-			'contact_email',
+			'contact[email]',
 			'text',
 			[
-				'name' => 'contact_email',
+				'name' => 'contact[email]',
 				'label' => __('Email address'),
 				'title' => __('Email address'),
 				'required' => true,
@@ -268,10 +256,10 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 		);
 		
 		$contactFieldset->addField(
-			'contact_telephone',
+			'contact[phone]',
 			'text',
 			[
-				'name' => 'contact_telephone',
+				'name' => 'contact[phone]',
 				'label' => __('Telephone'),
 				'title' => __('Telephone'),
 				'required' => true,
@@ -283,6 +271,18 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             'hidden_fieldset',
             ['legend' => __('Hidden information'), 'class' => 'hidden']
         );
+		
+		$hiddenFieldset->addField(
+			'shop[url]',
+			'text',
+			[
+				'name' 	=> 'shop[url]',
+				'label' => __('Url'),
+				'title' => __('Url'),
+				'required' => true,
+				'value' => $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB, $model->getStoreId()),
+			]
+		);
 		
 		$hiddenFieldset->addField(
 			'success_url',
@@ -316,7 +316,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'label' => __('WSDL Endpoint'),
 				'title' => __('WSDL Endpoint'),
 				'required' => true,
-				'value' => 'test' // @TODO: Get correct wsdl endpoint url
+				'value' => 'test' // @TODO: Get correct wsdl endpoint url('s) (multiple for Magento 2)
 			]
 		);
 		

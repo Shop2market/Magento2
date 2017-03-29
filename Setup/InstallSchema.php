@@ -52,7 +52,8 @@ class InstallSchema implements InstallSchemaInterface
 		$adcurveConnectionTable->addColumn('adcurve_token', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Adcurve Token');
 		$adcurveConnectionTable->addColumn('status', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Status');
 		$adcurveConnectionTable->addColumn('suggestion', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Suggestion');
-		$adcurveConnectionTable->addColumn('api_user_info', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Api User Info');
+		$adcurveConnectionTable->addColumn('soap_username', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Api User Name');
+		$adcurveConnectionTable->addColumn('soap_api_key', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Api Api Key');
 		$adcurveConnectionTable->addColumn('contact_firstname', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Contact First Name');
 		$adcurveConnectionTable->addColumn('contact_lastname', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Contact Last Name');
 		$adcurveConnectionTable->addColumn('contact_email', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Contact Email');
