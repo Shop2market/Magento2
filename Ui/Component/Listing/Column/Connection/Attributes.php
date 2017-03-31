@@ -5,7 +5,7 @@ use Magento\Framework\Data\OptionSourceInterface;
 
 class Attributes implements OptionSourceInterface
 {
-	protected $attributeCollection;
+	protected $attributeCollectionFactory;
     protected $options;
 	
 	/**
@@ -14,13 +14,13 @@ class Attributes implements OptionSourceInterface
 	 * @return void
 	 */
 	public function __construct(
-		\Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection $attributeCollection
+		\Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory $attributeCollectionFactory
 	){
-		$this->attributeCollection = $attributeCollection;
+		$this->attributeCollectionFactory = $attributeCollectionFactory;
 	}
 	
     /**
-     * Get all Adcurve country options
+     * Get all product attributes that have a frontend label
      *
      * @return array
      */
@@ -28,33 +28,18 @@ class Attributes implements OptionSourceInterface
     {
 		if ($this->options === null) {
 			
-			$this->attributeCollection
-				->addFieldToFilter('frontend_label', array('neq' => ''))
-	            ->addFieldToFilter('is_visible', array('eq' => '1'))
-	            ->getItems();
+			$attributeCollection = $this->attributeCollectionFactory->create()
+				->addFieldToSelect('attribute_code', 'frontend_label')
+				->addFieldToFilter('frontend_label', ['neq' => '']);
 			
-			// @TODO: Continue here with attribute collection getter for product attributes
-			
-			$this->options = [
-				['value' => '', 'label' => __('Please select')],
-		        ['value' => 'AT', 'label' => __('Austria')],
-		        ['value' => 'BE', 'label' => __('Belgium')],
-		        ['value' => 'DK', 'label' => __('Denmark')],
-		        ['value' => 'FI', 'label' => __('Finland')],
-		        ['value' => 'FR', 'label' => __('France')],
-		        ['value' => 'DE', 'label' => __('Germany')],
-		        ['value' => 'IT', 'label' => __('Italy')],
-		        ['value' => 'LU', 'label' => __('Luxembourg')],
-		        ['value' => 'MT', 'label' => __('Malta')],
-		        ['value' => 'NL', 'label' => __('Netherlands')],
-		        ['value' => 'NO', 'label' => __('Norway')],
-		        ['value' => 'PL', 'label' => __('Poland')],
-		        ['value' => 'PT', 'label' => __('Portugal')],
-		        ['value' => 'ES', 'label' => __('Spain')],
-		        ['value' => 'SE', 'label' => __('Sweden')],
-		        ['value' => 'CH', 'label' => __('Switzerland')],
-		        ['value' => 'GB', 'label' => __('United Kingdom')]
-	        ];
+			$options = [];
+			foreach($attributeCollection as $attribute){
+				$options[] = [
+					'value' => $attribute->getAttributecode(),
+					'label' => $attribute->getFrontendLabel()
+				];
+			}
+			$this->options = $options;
         }
 		
         return $this->options;

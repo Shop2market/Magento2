@@ -5,6 +5,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 {
 	protected $authSession;
 	protected $countryOptions;
+	protected $productAttributeOptions;
 	protected $configHelper;
 	protected $connectionHelper;
 	
@@ -21,12 +22,14 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         \Magento\Framework\Data\FormFactory $formFactory,
         \Magento\Backend\Model\Auth\Session $authSession,
         \Adcurve\Adcurve\Ui\Component\Listing\Column\Connection\Countries $countryOptions,
+        \Adcurve\Adcurve\Ui\Component\Listing\Column\Connection\Attributes $productAttributeOptions,
         \Adcurve\Adcurve\Helper\Config $configHelper,
         \Adcurve\Adcurve\Helper\Connection $connectionHelper,
         array $data = []
     ) {
 		$this->authSession = $authSession;
     	$this->countryOptions = $countryOptions;
+		$this->productAttributeOptions = $productAttributeOptions;
 		$this->configHelper = $configHelper;
 		$this->connectionHelper = $connectionHelper;
         parent::__construct($context, $registry, $formFactory, $data);
@@ -317,10 +320,23 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'title' => __('WSDL Endpoint'),
 				'required' => true,
 				'value' => 'test' // @TODO: Get correct wsdl endpoint url('s) (multiple for Magento 2)
+				// Structure is http://<magento.host>/soap/<optional_store_code>?wsdl&services=<service_name_1>,<service_name_2>
+				// This is saved in the config, but a solution first has to be discussed with the adcurve software team
 			]
 		);
 		
-		/** TODO: Add underwater attributes input */
+		$hiddenFieldset->addField(
+			'attributes[]',
+			'multiselect',
+			[
+				'name' => 'attributes[]',
+				'label' => __('Product attributes'),
+				'title' => __('Product attributes'),
+				'required' => true,
+				'values' => $this->productAttributeOptions->toOptionArray(),
+				'class' => 'multiselect'
+			]
+		);
 		
         $form->setAction($this->configHelper->getRegisterUrl());
         $form->setUseContainer(true);
