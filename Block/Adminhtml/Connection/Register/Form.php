@@ -292,10 +292,10 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 			'text',
 			[
 				'name' => 'success_url',
-				'label' => __('Checkout success url'),
-				'title' => __('Checkout success url'),
+				'label' => __('Successful registration return url'),
+				'title' => __('Successful registration return url'),
 				'required' => true,
-				'value' => $this->connectionHelper->getSuccessUrl($model->getStoreId())
+				'value' => $this->connectionHelper->getSuccessUrl()
 			]
 		);
 		
@@ -304,8 +304,8 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 			'text',
 			[
 				'name' => 'fail_url',
-				'label' => __('Checkout fail url'),
-				'title' => __('Checkout fail url'),
+				'label' => __('Failed registration return url'),
+				'title' => __('Failed registration return url'),
 				'required' => true,
 				'value' => $this->connectionHelper->getFailUrl()
 			]
@@ -326,10 +326,10 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 		);
 		
 		$hiddenFieldset->addField(
-			'attributes[]',
+			'shop[attributes][]',
 			'multiselect',
 			[
-				'name' => 'attributes[]',
+				'name' => 'shop[attributes][]',
 				'label' => __('Product attributes'),
 				'title' => __('Product attributes'),
 				'required' => true,

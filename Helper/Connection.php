@@ -177,9 +177,10 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return mixed
      */
-    public function getSuccessUrl($storeId = null)
+    public function getSuccessUrl()
     {
-        return $this->backendUrlBuilder->getUrl('adminhtml/adcurveAdminhtml_registration/success', array('store_id' => $storeId));
+    	// @TODO: Create controller for successful registration
+        return $this->backendUrlBuilder->getUrl('adcurve_adcurve/connection/index');
     }
 
     /**
@@ -189,7 +190,8 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getFailUrl()
     {
-        return $this->backendUrlBuilder->getUrl('adminhtml/adcurveAdminhtml_registration/failed');
+    	// @TODO: Create controller for failed registration
+        return $this->backendUrlBuilder->getUrl('adcurve_adcurve/connection/index');
     }
 
     /**
