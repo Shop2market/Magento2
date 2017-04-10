@@ -34,10 +34,43 @@ class StatusRequest extends AbstractRequest
         $this->_setStore($store);
         $this->_prepareRequest();
         $result = $this->_sendRequest();
-
+		
+		/* @TODO: Complete connection status logic.
+		// OLD function logic below for reference
+		$apiStatus = $this->statusRequest->getConnectionStatus($storeId);
+		
+        switch ($apiStatus['status']) {
+            case \Adcurve\Adcurve\Model\Rest\StatusRequest::STATUS_ERROR_CONNECTION_TO_ADCURVE:
+                $statusResult['stepsCompleted'] = 1;
+                $message = 'Something went wrong with the installation, please contact support';
+                $statusResult['suggestion'] = __($message);
+                break;
+            case \Adcurve\Adcurve\Model\Rest\StatusRequest::STATUS_ERROR_RESULT_FROM_ADCURVE:
+                $statusResult['stepsCompleted'] = 2;
+                $msgStep2 = 'Connection with AdCurve API not established yet. Please follow this %s for more information';
+                $urlRF = $this->configHelper->getApiRoleCreatedFailedUrl($storeId);
+                $msgStep2D = "<a target='_blank' class='manual-url' href='" . $urlRF . "'>" . __('manual') . "</a>";
+                $statusResult['suggestion'] = __($msgStep2, $msgStep2D);
+                break;
+            case \Adcurve\Adcurve\Model\Rest\StatusRequest::STATUS_SUCCESS:
+                $statusResult['stepsCompleted'] = 3;
+                if ($this->configHelper->isTestMode($storeId) == true) {
+                    $msgStep3 = 'Ready for testing. Please make sure you install the live version';
+                    $msgStep3 .= ' using the registration form bellow to enjoy all the functionality!';
+                    $statusResult['suggestion'] = __($msgStep3);
+                } else {
+                    $msgStep3 = 'Connection successfully established. No further action is needed.';
+                    $statusResult['suggestion'] = __($msgStep3);
+                }
+                break;
+        }
+		*/
+		
+		
+		
         return $result;
     }
-
+	
     /**
      * The ping API merely wants to show the connection status, and not throw an exception when something goes wrong
      *

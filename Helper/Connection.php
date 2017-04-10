@@ -452,14 +452,14 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
             }
             
             return $data = array(
-                        "account_created" => $accountCreated,
-                        "email_sent" => $emailSent,
-                        "attribut_sent" => $attributSent,
-                        "cron_checked" => $cronChecked,
-                        "tag_implemented" => $tagImplemented,
-                        "api_user_created" => $apiUserCreated,
-                        "api_role_created" => $apiRoleCreated,
-                        );
+	            "account_created" => $accountCreated,
+	            "email_sent" => $emailSent,
+	            "attribut_sent" => $attributSent,
+	            "cron_checked" => $cronChecked,
+	            "tag_implemented" => $tagImplemented,
+	            "api_user_created" => $apiUserCreated,
+	            "api_role_created" => $apiRoleCreated,
+            );
         }
     }
     
@@ -477,9 +477,11 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return string
      */
+     // @TODO: Replace by connection model function
     public function getShopContactEmailTo($storeId){
-        $data = unserialize($this->configHelper->getContact($storeId));
-        return $data->email;
+       //$data = unserialize($this->configHelper->getContact($storeId));
+       //return $data->email;
+       return false;
     }
     
     /**
@@ -487,62 +489,21 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return string
      */
+    // @TODO: Replace by connection model function
     public function getShopContactName($storeId){
-        $data = unserialize($this->configHelper->getContact($storeId));
-        return $data->first_name.' '.$data->last_name;
+        //$data = unserialize($this->configHelper->getContact($storeId));
+        //return $data->first_name.' '.$data->last_name;
+        return false;
     }
     
     /**
      * Return list of all installed stores mode, current store mode status and current store test_shop_id
      *
      * @return array
-     */    
-    public function getStoresInstallationModeList($currentStoreCode = "")
-    {
-        $storeList = $this->storeManager->getStores();
-        $data = array(
-            $this->getInstallationTypeLive() => array(), 
-            $this->getInstallationTypeTest() => array(),
-            'current_store_mode_status' => '',
-            'current_store_test_shop_id' => '',
-            'not_installed' => array(),
-        );
-        
-        /** @var Mage_Core_Model_Store $storeObject */
-        foreach ($storeList as $storeObject){
-        
-            $storeId = $storeObject->getId();
-            if($storeId == 0){
-                continue;
-            }
-            if(!$this->configHelper->getShopId($storeId) || !$this->configHelper->getApiToken($storeId)){
-                continue;
-            }
-            
-            $storeCode = $storeObject->getCode();
-            $mode = $this->configHelper->getMode($storeId);
-            $testShopId = $this->configHelper->getTestShopId($storeId);
-            
-            if ($storeCode == $currentStoreCode){
-                $data['current_store_mode_status'] = $mode;
-                $data['current_store_test_shop_id'] = $testShopId;
-            }
-            
-            if ($mode == $this->getInstallationTypeLive()){
-
-                $data[$this->getInstallationTypeLive()][] = $storeId.":".$storeObject->getName();
-
-            } elseif($mode == $this->getInstallationTypeTest()){
-
-                $data[$this->getInstallationTypeTest()][] = $storeId.":".$storeObject->getName();
-
-            }            
-            else {
-                $data['not_installed'][] = $storeId.":".$storeObject->getName();
-            }
-            
-        }
-        
-        return $data;
-    }
+     */
+    // Deprecated since Magento 2 plugin, resolved in Connection model    
+    public function getStoresInstallationModeList($currentStoreCode = ""){
+    	return false;
+	}
+    
 }

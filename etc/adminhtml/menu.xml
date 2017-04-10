@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-    <menu>
-    <add id="Adcurve::top_level" module="Adcurve_Adcurve" resource="Magento_Backend::content" sortOrder="9999" title="Adcurve"/>
-		<add action="adcurve_adcurve/connection/index" id="Adcurve::adcurve_connection" module="Adcurve_Adcurve" parent="Adcurve::top_level" resource="Magento_Backend::content" sortOrder="9999" title="Connection"/>
-        <add id="Adcurve_Adcurve::adcurve" title="Adcurve" translate="title" module="Adcurve_Adcurve" parent="Magento_Backend::marketing" sortOrder="10" resource="Adurve_Adcurve::adcurve" action="adminhtml/system_config/edit/section/adcurve"/>
-    </menu>
+	<menu>
+		<add id="Magento_Backend::marketing_adcurve" title="Adcurve" translate="title" module="Adcurve_Adcurve"
+			sortOrder="0" parent="Magento_Backend::marketing" resource="Magento_Backend::marketing" />
+		<add id="Adcurve_Adcurve::connection" title="Connections" translate="title" module="Adcurve_Adcurve"
+			sortOrder="10" parent="Magento_Backend::marketing_adcurve"
+			action="adcurve_adcurve/connection/index" resource="Adcurve_Adcurve::connection" />
+		<add id="Adcurve_Adcurve::settings" title="Settings" translate="title" module="Adcurve_Adcurve"
+			sortOrder="20" parent="Magento_Backend::marketing_adcurve"
+			action="adminhtml/system_config/edit/section/adcurve" resource="Magento_Backend::stores_settings" />
+	</menu>
 </config>

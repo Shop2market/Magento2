@@ -6,7 +6,7 @@
 			<label>Adcurve</label>
 		</tab>
 		<section id="adcurve" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10" translate="label">
-			<label>Adcurve</label>
+			<label>Settings</label>
 			<tab>adcurve</tab>
 			<resource>Adcurve_Adcurve::config_adcurve_adcurve</resource>
 			<group id="support" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10" translate="label">
@@ -57,12 +57,6 @@
 				</field>
 				-->
 			</group>
-			<group id="registration" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30" translate="label">
-				<label><![CDATA[Register in Adcurve]]></label>
-				<field id="registrationform" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10" translate="label">
-					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\RegistrationForm</frontend_model>
-				</field>
-			</group>
 			<group id="settings" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="40" translate="label">
 				<label><![CDATA[General settings]]></label>
 				<field id="enabled" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10" translate="label" type="select">
@@ -73,17 +67,12 @@
 					<label>Test modus</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+				<!-- Deprecated since Magento 2 plugin
 				<field id="shop_id" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30" translate="label" type="text">
 					<label>Adcurve shop ID</label>
-					<!-- Enabled for now, development in progress
-					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
-					-->
 				</field>
 				<field id="token" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="40" translate="label" type="text">
 					<label>Adcurve shop token</label>
-					<!-- Enabled for now, development in progress
-					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
-					-->
 				</field>
 				<field id="sync" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="50" translate="label" type="text">
 					<label>Synchonise all products</label>
@@ -107,6 +96,7 @@
 					<label>Test tracking tag url</label>
 					<frontend_model>Adcurve\Adcurve\Block\System\Config\Form\Field\Disable</frontend_model>
 				</field>
+				-->
 			</group>
 			<group id="api" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="50" translate="label">
 				<label><![CDATA[Api settings]]></label>

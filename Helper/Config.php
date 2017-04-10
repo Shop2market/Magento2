@@ -74,18 +74,6 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     }
 	
     /**
-     * get the contact info for the shop
-     *
-     * @param null|int $store
-     *
-     * @return string
-     */
-    public function getContact($store = null)
-    {
-        return $this->scopeConfig->getValue(self::XPATH_CONTACT);
-    }
-	
-    /**
      * get the extension mode
      *
      * @param null|int $store
