@@ -12,194 +12,224 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
     {
         $this->_init('Adcurve\Adcurve\Model\ResourceModel\Connection');
     }
-
-    /**
-     * Get connection_id
-     * @return string
-     */
+	
     public function getConnectionId()
     {
-        return $this->getData(self::CONNECTION_ID);
-    }
-
-    /**
-     * Set connection_id
-     * @param string $connectionId
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
+    	return $this->getData(self::CONNECTION_ID);
+	}
+	
     public function setConnectionId($connectionId)
     {
-        return $this->setData(self::CONNECTION_ID, $connectionId);
-    }
+    	return $this->setData(self::CONNECTION_ID, $connectionId);
+	}
 
-    /**
-     * Get store_id
-     * @return string
-     */
-    public function getStoreId()
-    {
-        return $this->getData(self::STORE_ID);
-    }
+	public function getEnabled()
+	{
+		return $this->getData(self::ENABLED);
+	}
+	
+	public function setEnabled($enabled)
+	{
+		return $this->setData(self::ENABLED, $enabled);
+	}
 
-    /**
-     * Set store_id
-     * @param string $storeId
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
-    public function setStoreId($storeId)
-    {
-        return $this->setData(self::STORE_ID, $storeId);
-    }
+	public function getStoreId()
+	{
+		return $this->getData(self::STORE_ID);
+	}
+	
+	public function setStoreId($storeId)
+	{
+		return $this->setData(self::STORE_ID, $storeId);
+	}
 
-    /**
-     * Get store_code
-     * @return string
-     */
-    public function getStoreCode()
-    {
-        return $this->getData(self::STORE_CODE);
-    }
+	public function getStoreName()
+	{
+		return $this->getData(self::STORE_NAME);
+	}
+	
+	public function setStoreName($storeName)
+	{
+		return $this->setData(self::STORE_NAME, $storeName);
+	}
 
-    /**
-     * Set store_code
-     * @param string $store_code
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
-    public function setStoreCode($store_code)
-    {
-        return $this->setData(self::STORE_CODE, $store_code);
-    }
+	public function getStoreCode()
+	{
+		return $this->getData(self::STORE_CODE);
+	}
+	
+	public function setStoreCode($storeCode)
+	{
+		return $this->setData(self::STORE_CODE, $storeCode);
+	}
 
-    /**
-     * Get adcurve_shop_id
-     * @return string
-     */
-    public function getAdcurveShopId()
-    {
-        return $this->getData(self::ADCURVE_SHOP_ID);
-    }
+	public function getAdcurveShopId()
+	{
+		return $this->getData(self::ADCURVE_SHOP_ID);
+	}
+	
+	public function setAdcurveShopId($adcurveShopId)
+	{
+		return $this->setData(self::ADCURVE_SHOP_ID, $adcurveShopId);
+	}
 
-    /**
-     * Set adcurve_shop_id
-     * @param string $adcurveShopId
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
-    public function setAdcurveShopId($adcurveShopId)
-    {
-        return $this->setData(self::ADCURVE_SHOP_ID, $adcurveShopId);
-    }
+	public function getAdcurveToken()
+	{
+		return $this->getData(self::ADCURVE_TOKEN);
+	}
+	
+	public function setAdcurveToken($adcurveToken)
+	{
+		return $this->setData(self::ADCURVE_TOKEN, $adcurveToken);
+	}
 
-    /**
-     * Get adcurve_token
-     * @return string
-     */
-    public function getAdcurveToken()
-    {
-        return $this->getData(self::ADCURVE_TOKEN);
-    }
+	public function getStatus()
+	{
+		return $this->getData(self::STATUS);
+	}
+	
+	public function setStatus($status)
+	{
+		return $this->setData(self::STATUS, $status);
+	}
 
-    /**
-     * Set adcurve_token
-     * @param string $adcurve_token
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
-    public function setAdcurveToken($adcurve_token)
-    {
-        return $this->setData(self::ADCURVE_TOKEN, $adcurve_token);
-    }
+	public function getSuggestion()
+	{
+		return $this->getData(self::SUGGESTION);
+	}
+	
+	public function setSuggestion($suggestion)
+	{
+		return $this->setData(self::SUGGESTION, $suggestion);
+	}
 
-    /**
-     * Get enabled
-     * @return string
-     */
-    public function getEnabled()
-    {
-        return $this->getData(self::ENABLED);
-    }
+	public function getSoapUsername()
+	{
+		return $this->getData(self::SOAP_USERNAME);
+	}
+	
+	public function setSoapUsername($soapUsername)
+	{
+		return $this->setData(self::SOAP_USERNAME, $soapUsername);
+	}
 
-    /**
-     * Set enabled
-     * @param string $enabled
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
-    public function setEnabled($enabled)
-    {
-        return $this->setData(self::ENABLED, $enabled);
-    }
+	public function getSoapApiKey()
+	{
+		return $this->getData(self::SOAP_API_KEY);
+	}
+	
+	public function setSoapApiKey($soapApiKey)
+	{
+		return $this->setData(self::SOAP_API_KEY, $soapApiKey);
+	}
 
-    /**
-     * Get status
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->getData(self::STATUS);
-    }
+	public function getContactFirstname()
+	{
+		return $this->getData(self::CONTACT_FIRSTNAME);
+	}
+	
+	public function setContactFirstname($contactFirstname)
+	{
+		return $this->setData(self::CONTACT_FIRSTNAME, $contactFirstname);
+	}
 
-    /**
-     * Set status
-     * @param string $status
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
-    public function setStatus($status)
-    {
-        return $this->setData(self::STATUS, $status);
-    }
+	public function getContactLastname()
+	{
+		return $this->getData(self::CONTACT_LASTNAME);
+	}
+	
+	public function setContactLastname($contactLastname)
+	{
+		return $this->setData(self::CONTACT_LASTNAME, $contactLastname);
+	}
 
-    /**
-     * Get suggestion
-     * @return string
-     */
-    public function getSuggestion()
-    {
-        return $this->getData(self::SUGGESTION);
-    }
+	public function getContactEmail()
+	{
+		return $this->getData(self::CONTACT_EMAIL);
+	}
+	
+	public function setContactEmail($contactEmail)
+	{
+		return $this->setData(self::CONTACT_EMAIL, $contactEmail);
+	}
 
-    /**
-     * Set suggestion
-     * @param string $suggestion
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
-    public function setSuggestion($suggestion)
-    {
-        return $this->setData(self::SUGGESTION, $suggestion);
-    }
+	public function getContactTelephone()
+	{
+		return $this->getData(self::CONTACT_TELEPHONE);
+	}
+	
+	public function setContactTelephone($contactTelephone)
+	{
+		return $this->setData(self::CONTACT_TELEPHONE, $contactTelephone);
+	}
 
-    /**
-     * Get api_user_info
-     * @return string
-     */
-    public function getApiUserInfo()
-    {
-        return $this->getData(self::API_USER_INFO);
-    }
+	public function getCompanyName()
+	{
+		return $this->getData(self::COMPANY_NAME);
+	}
+	
+	public function setCompanyName($companyName)
+	{
+		return $this->setData(self::COMPANY_NAME, $companyName);
+	}
 
-    /**
-     * Set api_user_info
-     * @param string $apiUserInfo
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
-    public function setApiUserInfo($apiUserInfo)
-    {
-        return $this->setData(self::API_USER_INFO, $apiUserInfo);
-    }
+	public function getCompanyAddress()
+	{
+		return $this->getData(self::COMPANY_ADDRESS);
+	}
+	
+	public function setCompanyAddress($companyAddress)
+	{
+		return $this->setData(self::COMPANY_ADDRESS, $companyAddress);
+	}
 
-    /**
-     * Get updated_at
-     * @return string
-     */
-    public function getUpdatedAt()
-    {
-        return $this->getData(self::UPDATED_AT);
-    }
+	public function getCompanyZipcode()
+	{
+		return $this->getData(self::COMPANY_ZIPCODE);
+	}
+	
+	public function setCompanyZipcode($companyZipcode)
+	{
+		return $this->setData(self::COMPANY_ZIPCODE, $companyZipcode);
+	}
 
-    /**
-     * Set updated_at
-     * @param string $updatedAt
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        return $this->setData(self::UPDATED_AT, $updatedAt);
-    }
+	public function getCompanyCity()
+	{
+		return $this->getData(self::COMPANY_CITY);
+	}
+	
+	public function setCompanyCity($companyCity)
+	{
+		return $this->setData(self::COMPANY_CITY, $companyCity);
+	}
+
+	public function getCompanyRegion()
+	{
+		return $this->getData(self::COMPANY_REGION);
+	}
+	
+	public function setCompanyRegion($companyRegion)
+	{
+		return $this->setData(self::COMPANY_REGION, $companyRegion);
+	}
+
+	public function getCompanyCountry()
+	{
+		return $this->getData(self::COMPANY_COUNTRY);
+	}
+	
+	public function setCompanyCountry($companyCountry)
+	{
+		return $this->setData(self::COMPANY_COUNTRY, $companyCountry);
+	}
+
+	public function getUpdatedAt()
+	{
+		return $this->getData(self::UPDATED_AT);
+	}
+	
+	public function setUpdatedAt($updatedAt)
+	{
+		return $this->setData(self::UPDATED_AT, $updatedAt);
+	}
 }
