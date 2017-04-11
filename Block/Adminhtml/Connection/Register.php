@@ -8,6 +8,7 @@ class Register
     const API_WSDL_ENDPOINT 		= 'soap/default?wsdl_list=1';
     const INSTALLATION_TYPE_TEST 	= 'test';
     const INSTALLATION_TYPE_LIVE 	= 'live';
+	const URL_PATH_ADCURVE_CONNECTION_SAVE = 'adcurve_adcurve/connection/ajaxSave';
 	
 	protected $storeManager;
 	protected $resourceInterface;
@@ -194,4 +195,14 @@ class Register
     {
         return $this->getLayout()->createBlock('Adcurve\Adcurve\Block\Adminhtml\Connection\Register\Form')->toHtml();
     }
+	
+	/**
+	 * Return connection save url for Ajax saving the form data
+	 * 
+	 * @return string $formSaveUrl
+	 */
+	public function getAjaxSaveUrl()
+	{
+		return $this->_urlBuilder->getUrl(self::URL_PATH_ADCURVE_CONNECTION_SAVE);
+	}
 }

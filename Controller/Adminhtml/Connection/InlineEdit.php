@@ -1,11 +1,8 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
 class InlineEdit extends \Magento\Backend\App\Action
 {
-
     protected $jsonFactory;
 
     /**

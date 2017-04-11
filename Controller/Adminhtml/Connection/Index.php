@@ -3,7 +3,6 @@ namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
 class Index extends \Magento\Backend\App\Action
 {
-
     protected $resultPageFactory;
 
     /**

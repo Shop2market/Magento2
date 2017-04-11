@@ -8,20 +8,30 @@ abstract class AbstractRequest
 	 */
 	protected $configHelper;
 	
+	/**
+	 * @var \Adcurve\Adcurve\Model\ConnectionFactory
+	 */
+	protected $connectionFactory;
+	
     /**
      * @var resource
      */
     protected $_curl;
-
+	
     /**
      * @var array
      */
     protected $_data;
-
+	
     /**
      * @var
      */
     protected $_store = null;
+	
+	/**
+	 * @var \Adcurve\Adcurve\Model\Connection
+	 */
+	protected $_connectionModel;
 
     /**
      * @var array
@@ -36,9 +46,11 @@ abstract class AbstractRequest
     );
 
 	public function __construct(
-		\Adcurve\Adcurve\Helper\Config $configHelper
+		\Adcurve\Adcurve\Helper\Config $configHelper,
+		\Adcurve\Adcurve\Model\ConnectionFactory $connectionFactory
 	){
 		$this->configHelper = $configHelper;
+		$this->connectionFactory = $connectionFactory;
 	}
 
     /**
@@ -69,6 +81,26 @@ abstract class AbstractRequest
         return $this->_store;
     }
 
+	/**
+	 * @return \Adcurve\Adcurve\Model\Connection
+	 */
+	protected function _getConnectionModel()
+	{
+		return $this->_connectionModel;
+	}
+
+	/**
+     * @param $connection
+     *
+     * @return $this
+     */
+    protected function _setConnectionModel($connection)
+    {
+        $this->_connectionModel = $connection;
+
+        return $this;
+    }
+
     /**
      * @param $store
      *
@@ -90,13 +122,16 @@ abstract class AbstractRequest
      */
     public function sendData($data, $store = null)
     {
-        if(!$this->configHelper->isApiConfigured($store)){
+        $this->_setStore($store);
+    	$connection = $this->connectionFactory->create()->load($this->_getStore());
+    	$this->_setConnectionModel($connection);
+		
+        if(!$this->configHelper->isApiConfigured($this->_getConnectionModel())){
         	throw new \Magento\Framework\Validator\Exception(__('API not configured'));
         }
-
+		
         $this->_setData($data);
-        $this->_setStore($store);
-
+		
         $this->_prepareRequest()
             ->_sendRequest();
 
@@ -139,11 +174,12 @@ abstract class AbstractRequest
     protected function _getCurl()
     {
         if (!$this->_curl) {
-            $apiUrl = $this->_getApiUrl($this->_getStore());
-
+        	$shopId = $this->_getConnectionModel()->getAdcurveShopId();
+            $apiUrl = $this->_getApiUrl($shopId);
+			
             $this->_curl = curl_init($apiUrl);
         }
-
+		
         return $this->_curl;
     }
 
@@ -152,11 +188,11 @@ abstract class AbstractRequest
      */
     protected function _getCurlOptions()
     {
-        $apiToken = $this->configHelper->getApiToken($this->_getStore());
-
+        $apiToken = $this->_getConnectionModel()->getAdcurveToken();
+		
         $this->_curlOpt[CURLOPT_HTTPHEADER][]   = 'X-Api-Key: ' . $apiToken;
         $this->_curlOpt[CURLOPT_POSTFIELDS]     = json_encode($this->_getData());
-
+		
         return $this->_curlOpt;
     }
 
@@ -176,5 +212,5 @@ abstract class AbstractRequest
      *
      * @return mixed
      */
-    abstract protected function _getApiUrl($store = null);
+    abstract protected function _getApiUrl($shopId);
 }

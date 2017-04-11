@@ -1,11 +1,8 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
 class NewAction extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 {
-
     protected $resultForwardFactory;
 
     /**

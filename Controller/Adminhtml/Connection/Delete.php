@@ -3,7 +3,6 @@ namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
 class Delete extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 {
-
     /**
      * Delete action
      *

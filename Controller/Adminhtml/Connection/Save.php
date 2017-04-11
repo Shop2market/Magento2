@@ -5,7 +5,6 @@ use Magento\Framework\Exception\LocalizedException;
 
 class Save extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 {
-
     protected $dataPersistor;
 
     /**

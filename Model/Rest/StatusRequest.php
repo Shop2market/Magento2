@@ -8,32 +8,32 @@ class StatusRequest extends AbstractRequest
     const STATUS_ERROR_CONNECTION_TO_ADCURVE = '3';
     const STATUS_ERROR_RESULT_FROM_ADCURVE = '4';
 	
-	/**
-	 * @var \Adcurve\Adcurve\Helper\Config
-	 */
-	protected $configHelper;
-	
-	public function __construct(
-		\Adcurve\Adcurve\Helper\Config $configHelper
-	){
-		$this->configHelper = $configHelper;
-	}
-	
     /**
      * @param null $store
      *
      * @return mixed
      * @throws \Magento\Framework\Validator\Exception
      */
-    public function getConnectionStatus($store = null)
+    public function getConnectionStatus($store = null, $connectionId = null)
     {
-        if(!$this->configHelper->isApiConfigured($store)){
+    	if (!$connectionId) {
+    		throw new \Magento\Framework\Validator\Exception(__('Connection model is required'));
+    	}
+		
+        $this->_setStore($store);
+		$connection = $this->connectionFactory->create()->load($connectionId);
+		$this->_setConnectionModel($connection);
+		
+        if(!$this->configHelper->isApiConfigured($this->_getConnectionModel())){
         	throw new \Magento\Framework\Validator\Exception(__('API not configured'));
         }
-
-        $this->_setStore($store);
+		
+		var_dump($this->_getConnectionModel()->getAdcurveShopId());
+		var_dump($this->_getConnectionModel()->getAdcurveToken());
         $this->_prepareRequest();
         $result = $this->_sendRequest();
+		
+		
 		
 		/* @TODO: Complete connection status logic.
 		// OLD function logic below for reference
@@ -80,7 +80,7 @@ class StatusRequest extends AbstractRequest
     {
         $curl = $this->_getCurl();
         $response = curl_exec($curl);
-
+		
         return $this->_processResponse($response);
     }
 
@@ -91,7 +91,7 @@ class StatusRequest extends AbstractRequest
      */
     protected function _getCurlOptions()
     {
-        $apiToken = $this->configHelper->getApiToken($this->_getStore());
+        $apiToken = $this->_getConnectionModel()->getAdcurveToken();
 		
         $this->_curlOpt[CURLOPT_HTTPHEADER][] = 'X-Api-Key: ' . $apiToken;
         $this->_curlOpt[CURLOPT_POST] = false;
@@ -106,9 +106,10 @@ class StatusRequest extends AbstractRequest
      *
      * @return string
      */
-    protected function _getApiUrl($store = null)
+    protected function _getApiUrl($shopId)
     {
-        return $this->configHelper->getStatusApiUrl($store);
+    	$shopId = $this->_getConnectionModel()->getAdcurveShopId();
+        return $this->configHelper->getStatusApiUrl($shopId);
     }
 
     /**
@@ -121,22 +122,22 @@ class StatusRequest extends AbstractRequest
         $result = array(
             'status' => self::STATUS_SUCCESS,
         );
-
+		
         $responseJson = json_decode($response);
         if (json_last_error() !== JSON_ERROR_NONE) {
             $result['status'] = self::STATUS_ERROR_CONNECTION_TO_ADCURVE;
             $result['error'] = 'Could not establish a connection with Adcurve';
-
+			
             return $result;
         }
-
+		
         if (!isset($responseJson->connected) || $responseJson->connected === false) {
             $result['status'] = self::STATUS_ERROR_RESULT_FROM_ADCURVE;
             $result['error'] = 'Adcurve could not establish a connection with the Storeview';
-
+			
             return $result;
         }
-
+		
         return $result;
     }
 }

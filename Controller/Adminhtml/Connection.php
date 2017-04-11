@@ -3,7 +3,7 @@ namespace Adcurve\Adcurve\Controller\Adminhtml;
 
 abstract class Connection extends \Magento\Backend\App\Action
 {
-    const ADMIN_RESOURCE = 'Adcurve_Adcurve::top_level';
+    const ADMIN_RESOURCE = 'Adcurve_Adcurve::connection';
 	
     protected $_coreRegistry;
 
@@ -28,7 +28,7 @@ abstract class Connection extends \Magento\Backend\App\Action
     {
         $resultPage->setActiveMenu('Experius_Test::top_level')
             ->addBreadcrumb(__('Adcurve'), __('Adcurve'))
-            ->addBreadcrumb(__('Connection'), __('Connection'));
+            ->addBreadcrumb(__('Connection'), __('Connections'));
         return $resultPage;
     }
 }

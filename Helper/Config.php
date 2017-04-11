@@ -156,24 +156,24 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @param null $store
+     * @param \Adcurve\Adcurve\Model\Connection $connection
      *
      * @return bool
      */
-    public function isApiConfigured($store = null)
+    public function isApiConfigured($connection)
     {
-        if (!$this->isEnabled($store)) {
+        if (!$connection->getEnabled()) {
             /** If module is disabled, can't use API */
             return false;
         }
-
-        if (!$this->getShopId($store)) {
-            /** If no ShopId is set, can't use API */
+		
+        if (!$connection->getAdcurveShopId()) {
+            /** If no Adcurve ShopId is set, can't use API */
             return false;
         }
-
-        if (!$this->getApiToken($store)) {
-            /** If no ApiToken is set, can't use API */
+		
+        if (!$connection->getAdcurveShopId()) {
+            /** If no Adcurve ApiToken is set, can't use API */
             return false;
         }
 
@@ -187,17 +187,16 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return string
      */
-    public function getProductApiUrl($store = null)
+    public function getProductApiUrl($shopId)
     {
         if ($this->isTestMode()) {
             $apiUrl = $this->scopeConfig->getValue(self::XPATH_API_UPDATE_URL_TEST);
         } else {
             $apiUrl = $this->scopeConfig->getValue(self::XPATH_API_UPDATE_URL_LIVE);
         }
-
-        $shopId = $this->getShopId($store);
+		
         $apiUrl = str_replace('{{SHOP_ID}}', $shopId, $apiUrl);
-
+		
         return $apiUrl;
     }
 	

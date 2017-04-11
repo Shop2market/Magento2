@@ -47,13 +47,16 @@ class Register extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
             }
         }
 		
+		var_dump($connection->getData());
+		die();
+		
 		$this->_coreRegistry->register('adcurve_adcurve_connection', $connection);
 		
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->addBreadcrumb(__('Setup Adcurve Connection'), __('Setup Adcurve Connection'));
         $resultPage->getConfig()->getTitle()->prepend(__('Setup connection for %1 (%2).', [$connection->getStoreName(), $connection->getStoreCode()]));
-        return $resultPage;
 		
+        return $resultPage;
     }
 }

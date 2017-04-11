@@ -9,6 +9,7 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 	protected $connectionFactory;
 	protected $adminUser;
 	protected $soapPassword;
+	protected $statusRequest;
 	
 	/**
      * @param \Magento\Backend\App\Action\Context $context
@@ -18,11 +19,13 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Adcurve\Adcurve\Model\ConnectionFactory $connectionFactory,
-        \Adcurve\Adcurve\Model\AdminUser $adminUser
+        \Adcurve\Adcurve\Model\AdminUser $adminUser,
+        \Adcurve\Adcurve\Model\Rest\StatusRequest $statusRequest
     ) {
     	$this->_storeManager = $storeManager;
 		$this->connectionFactory = $connectionFactory;
 		$this->adminUser = $adminUser;
+		$this->statusRequest = $statusRequest;
         parent::__construct($context, $coreRegistry);
     }
 	
@@ -88,6 +91,9 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 					$this->soapPassword = $connection->getSoapApiKey();
 				}
 				$this->messageManager->addSuccess(__('<strong>%1 (%2)</strong> already exists, creation skipped.', [$connection->getStoreName(), $connection->getStoreCode()]));
+				$result = $this->statusRequest->getConnectionStatus($connection->getStoreId(), $connection->getId());
+				var_dump($result);
+				die();
 			}
 			
 	        if($connection->getStatus() && $connection->getAdcurveShopId()){

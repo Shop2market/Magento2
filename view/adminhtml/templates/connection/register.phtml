@@ -1,5 +1,5 @@
 <?php echo $block->getForm(); ?>
-<button id="adcurve_submit_button" class="save primary" onclick="confirm();">
+<button id="adcurve_submit_button" class="save primary a-right" onclick="confirm();">
     <span><?php echo __('Confirm'); ?></span>
 </button>
 <?php //** @TODO: Move styling to correct place (css file include) */ ?>
@@ -41,6 +41,24 @@
     //    <![CDATA[
     function showForm(id)
     {
+    	require(["jquery"], function($) {
+            var connectionSaveUrl = "<?php echo $block->getAjaxSaveUrl(); ?>";
+            var connectionFormData = JSON.stringify( $('#adcurve_registration_form').serializeArray() );
+            $.ajax({
+                url: connectionSaveUrl,
+                type: 'POST',
+                dataType: 'json',
+                data: connectionFormData,
+            	complete: function(response) {
+	            	console.log(response);
+	            },
+                error: function (xhr, status, errorThrown) {
+                    console.log('Error happens. Try again.');
+                }
+            });
+        });
+    	return false;
+    	
     	require(['jquery'], function($){
 	        $('#popup_form_terms').show();
 	        return false;
