@@ -5,6 +5,21 @@ use Adcurve\Adcurve\Api\Data\ConnectionInterface;
 
 class Connection extends \Magento\Framework\Model\AbstractModel implements ConnectionInterface
 {
+	protected $encryptor;
+
+	public function __construct(
+		\Magento\Framework\Model\Context $context,
+        \Magento\Framework\Registry $registry,
+        \Adcurve\Adcurve\Model\ResourceModel\Connection $resource,
+        \Adcurve\Adcurve\Model\ResourceModel\Connection\Collection $resourceCollection,
+		\Magento\Framework\Encryption\EncryptorInterface $encryptor,
+        array $data = []
+	)
+	{
+		$this->encryptor = $encryptor;
+		parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+	}
+	
     /**
      * @return void
      */
@@ -75,12 +90,14 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 
 	public function getAdcurveToken()
 	{
-		return $this->getData(self::ADCURVE_TOKEN);
+		$data = $this->getData(self::ADCURVE_TOKEN);
+		return $this->encryptor->decrypt($data);
 	}
 
 	public function setAdcurveToken($adcurveToken)
 	{
-		return $this->setData(self::ADCURVE_TOKEN, $adcurveToken);
+		$data = $this->encryptor->encrypt($adcurveToken);
+		return $this->setData(self::ADCURVE_TOKEN, $data);
 	}
 
 	public function getIsTestmode()

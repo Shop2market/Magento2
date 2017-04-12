@@ -3,7 +3,6 @@ namespace Adcurve\Adcurve\Model\ResourceModel;
 
 class Connection extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
-
     /**
      * Define resource model
      *

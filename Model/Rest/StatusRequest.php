@@ -16,23 +16,18 @@ class StatusRequest extends AbstractRequest
      */
     public function getConnectionStatus($connection)
     {
-    	if (!$connectionId) {
-    		throw new \Magento\Framework\Validator\Exception(__('Connection model is required'));
+    	if (!$connection->getId()) {
+    		throw new \Magento\Framework\Validator\Exception(__('A valid Adcurve Connection model is required'));
     	}
 		
-		$connection = $this->connectionFactory->create()->load($connectionId);
 		$this->_setConnectionModel($connection);
 		
         if(!$this->configHelper->isApiConfigured($this->_getConnectionModel())){
         	throw new \Magento\Framework\Validator\Exception(__('API not configured'));
         }
 		
-		var_dump($this->_getConnectionModel()->getAdcurveShopId());
-		var_dump($this->_getConnectionModel()->getAdcurveToken());
         $this->_prepareRequest();
         $result = $this->_sendRequest();
-		
-		
 		
 		/* @TODO: Complete connection status logic.
 		// OLD function logic below for reference
@@ -101,14 +96,13 @@ class StatusRequest extends AbstractRequest
     /**
      * Get the product API Url by Adcurve shop ID
      *
-     * @param string $shopId
+     * @param \Adcurve\Adcurve\Model\Connection $connection
      *
      * @return string $url
      */
-    protected function _getApiUrl($shopId)
+    protected function _getApiUrl($connection)
     {
-    	$shopId = $this->_getConnectionModel()->getAdcurveShopId();
-        return $this->configHelper->getStatusApiUrl($shopId);
+        return $this->configHelper->getStatusApiUrl($connection);
     }
 
     /**
@@ -132,7 +126,7 @@ class StatusRequest extends AbstractRequest
 		
         if (!isset($responseJson->connected) || $responseJson->connected === false) {
             $result['status'] = self::STATUS_ERROR_RESULT_FROM_ADCURVE;
-            $result['error'] = 'Adcurve could not establish a connection with the Storeview';
+            $result['error'] = 'Adcurve could not establish a connection with the storeview';
 			
             return $result;
         }

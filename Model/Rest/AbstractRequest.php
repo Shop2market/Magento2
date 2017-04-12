@@ -113,8 +113,7 @@ abstract class AbstractRequest
     protected function _getCurl()
     {
         if (!$this->_curl) {
-        	$shopId = $this->_getConnectionModel()->getAdcurveShopId();
-            $apiUrl = $this->_getApiUrl($shopId);
+            $apiUrl = $this->_getApiUrl($this->_getConnectionModel());
 			
             $this->_curl = curl_init($apiUrl);
         }
@@ -147,7 +146,9 @@ abstract class AbstractRequest
     /**
      * Get the API Url based on Adcurve shop ID
      *
+	 * @param \Adcurve\Adcurve\Model\Connection $connection
+	 * 
      * @return string $apiUrl
      */
-    abstract protected function _getApiUrl($shopId);
+    abstract protected function _getApiUrl($connection);
 }

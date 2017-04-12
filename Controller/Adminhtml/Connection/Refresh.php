@@ -91,7 +91,7 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 					$this->soapPassword = $connection->getSoapApiKey();
 				}
 				$this->messageManager->addSuccess(__('<strong>%1 (%2)</strong> already exists, creation skipped.', [$connection->getStoreName(), $connection->getStoreCode()]));
-				$result = $this->statusRequest->getConnectionStatus($connection->getStoreId(), $connection->getId());
+				$result = $this->statusRequest->getConnectionStatus($connection);
 				var_dump($result);
 				die();
 			}
