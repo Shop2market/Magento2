@@ -61,8 +61,8 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         $form = $this->_formFactory->create(
             ['data' => [
             	'id' 		=> 'adcurve_registration_form',
-            	'action' 	=> $this->getData('action'),
             	'method' 	=> 'post',
+            	'action' 	=> $this->getData('action'),
             	'enctype' 	=> 'multipart/form-data'
     		]]
         );
@@ -142,7 +142,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'required' => true,
 				'class' => 'select',
 				'values' => $this->countryOptions->toOptionArray(),
-				'value' => $model->getCompanyCountry()
+				'value' => ($model->getCompanyCountry()) ? $model->getCompanyCountry() : 'NL'
 			]
 		);
 		
@@ -161,9 +161,10 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'required' => true,
 				'class' => 'select',
 				'values' => [
-					['value' => $this->connectionHelper->getInstallationTypeLive(), 'label' => __('Live')],
-					['value' => $this->connectionHelper->getInstallationTypeTest(), 'label' => __('Test')],
-				]
+					['value' => 'live', 'label' => __('Live')],
+					['value' => 'test', 'label' => __('Test')],
+				],
+				'value' => ($model->getIsTestmode()) ? 'test' : 'live'
 			]
 		);
 		
@@ -334,11 +335,12 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'title' => __('Product attributes'),
 				'required' => true,
 				'values' => $this->productAttributeOptions->toOptionArray(),
+				'value' => $this->productAttributeOptions->getAllValues(),
 				'class' => 'multiselect'
 			]
 		);
 		
-        $form->setAction($this->configHelper->getRegisterUrl());
+        $form->setAction($this->configHelper->getRegisterUrl($model));
         $form->setUseContainer(true);
         $this->setForm($form);
 		

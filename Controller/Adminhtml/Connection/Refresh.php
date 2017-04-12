@@ -67,40 +67,61 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 				if($this->soapPassword){
 					$connection->setSoapApiKey($this->soapPassword);
 				}
+				$connection->setIsTestmode('1');
+				//$connection->setAdcurveToken('vayqshRlRl1kaCZ6oOzl4Io5hOWn2D6jYe0yH4XbsjOCO0gA0E5wK0k1578dZe61LiejggxE0IM3KLz9w0xF8LvFHi13fXdYsCJkFNx05i3c8E54cJvjlJzj0G_DJ2p1AGw3EA');
+				//$connection->setAdcurveShopId('1952');
 				//@TODO - Add all extra nessecairy data
 				try {
 					$connection->save();
-	                $this->messageManager->addSuccess(__('<strong>%1 (%2)</strong> was succesfully created.', [$connection->getStoreName(), $connection->getStoreCode()]));
+	                $this->messageManager->addSuccess(__(
+	                	'<strong>%1 (%2)</strong> was succesfully created.',
+	                	[$connection->getStoreName(), $connection->getStoreCode()]
+					));
 	            } catch (LocalizedException $e) {
 	                $this->messageManager->addError($e->getMessage());
 	            } catch (\Exception $e) {
-	                $this->messageManager->addException($e, __('Something went wrong while trying to create <strong>%1 (%2)</strong>.', [$store->getName(), $store->getCode()]));
+	                $this->messageManager->addException($e, __(
+	                	'Something went wrong while trying to create <strong>%1 (%2)</strong>.',
+	                	[$store->getName(), $store->getCode()]
+					));
 	            }
 			} elseif(!$connection->getSoapApiKey() && $this->soapPassword){
 				$connection->setSoapApiKey($this->soapPassword);
 				try {
 					$connection->save();
-					$this->messageManager->addSuccess(__('<strong>%1 (%2)</strong> was missing an Api key and was succesfully resaved with the correct key.', [$connection->getStoreName(), $connection->getStoreCode()]));
+					$this->messageManager->addSuccess(__(
+						'<strong>%1 (%2)</strong> was missing an Api key and was succesfully resaved with the correct key.',
+						[$connection->getStoreName(), $connection->getStoreCode()]
+					));
 				} catch (LocalizedException $e) {
 	                $this->messageManager->addError($e->getMessage());
 	            } catch (\Exception $e) {
-	                $this->messageManager->addException($e, __('Something went wrong while trying to resave <strong>%1 (%2)</strong> with the correct api_key.', [$store->getName(), $store->getCode()]));
+	                $this->messageManager->addException($e, __(
+	                	'Something went wrong while trying to resave <strong>%1 (%2)</strong> with the correct api_key.',
+	                	[$store->getName(), $store->getCode()]
+					));
 	            }
 			} else{
 				if(!$this->soapPassword && $connection->getSoapApiKey()){
 					$this->soapPassword = $connection->getSoapApiKey();
 				}
-				$this->messageManager->addSuccess(__('<strong>%1 (%2)</strong> already exists, creation skipped.', [$connection->getStoreName(), $connection->getStoreCode()]));
-				$result = $this->statusRequest->getConnectionStatus($connection);
-				var_dump($result);
-				die();
+				$this->messageManager->addSuccess(__(
+					'<strong>%1 (%2)</strong> already exists, creation skipped.',
+					[$connection->getStoreName(), $connection->getStoreCode()]
+				));
 			}
 			
-	        if($connection->getStatus() && $connection->getAdcurveShopId()){
-	        	//@TODO - Add connection check here for existing stores
+			// @TODO: Manage status of connection to Adcurve somehow
+	        if($connection->getStatus() && $connection->getAdcurveShopId() && $connection->getAdcurveToken()){
+	        	//@TODO - Finish connection check and save the status herefor existing Adcurve connections
+	        	$result = $this->statusRequest->getConnectionStatus($connection);
+				var_dump($result);
 	        	continue;
 			} else{
-				$this->messageManager->addNotice(__('Registration for <strong>%1 (%2)</strong> is not complete.', [$connection->getStoreName(), $connection->getStoreCode()]));
+				$this->messageManager->addNotice(__(
+					'Registration for <strong>%1 (%2)</strong> is not complete.',
+					[$connection->getStoreName(), $connection->getStoreCode()]
+				));
 			}
 		}
 		

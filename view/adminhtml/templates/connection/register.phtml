@@ -44,15 +44,18 @@
     	require(["jquery"], function($) {
             var connectionSaveUrl = "<?php echo $block->getAjaxSaveUrl(); ?>";
             var connectionFormData = JSON.stringify( $('#adcurve_registration_form').serializeArray() );
+            
             $.ajax({
+            	showLoader: true,
                 url: connectionSaveUrl,
                 type: 'POST',
                 dataType: 'json',
                 data: connectionFormData,
             	complete: function(response) {
-	            	console.log(response);
+            		console.log(response.responseText);
 	            },
                 error: function (xhr, status, errorThrown) {
+                	console.log(xhr.responseText);
                     console.log('Error happens. Try again.');
                 }
             });

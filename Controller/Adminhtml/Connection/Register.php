@@ -47,9 +47,6 @@ class Register extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
             }
         }
 		
-		var_dump($connection->getData());
-		die();
-		
 		$this->_coreRegistry->register('adcurve_adcurve_connection', $connection);
 		
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */

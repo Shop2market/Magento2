@@ -3,23 +3,20 @@ namespace Adcurve\Adcurve\Helper;
 
 class Connection extends \Magento\Framework\App\Helper\AbstractHelper
 {
-	const INSTALLATION_TYPE_TEST = 'test';
-    const INSTALLATION_TYPE_LIVE = 'live';
-	
     const API_ROLE_NAME 				= 'AdCurve API Role';
     const EMAIL_SUCCESS_REG_TEMPLATE_ID = 'adcurve_store_installation';
     const CRON_CHECK_FILE_NAME 			= 'cron_checked.log';
-	
+
 	const XPATH_DESIGN_PACKAGE_NAME 	= 'design/package/name';
 	const XPATH_DESIGN_THEME_DEFAULT 	= 'design/theme/default';
 	const XPATH_DESIGN_HEADER_LOGO_SRC 	= 'design/header/logo_src';
-	
+
 	protected $storeManager;
 	protected $backendUrlBuilder;
 	protected $configHelper;
 	protected $countries;
     protected $apiRoleResources;
-	
+
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
 		\Magento\Store\Model\StoreManagerInterface $storeManager,
@@ -32,23 +29,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
 		$this->backendUrlBuilder = $backendUrlBuilder;
 		$this->configHelper = $configHelper;
 	}
-	
-	/**
-	 * @return string
-	 */
-	public function getInstallationTypeTest()
-	{
-		return self::INSTALLATION_TYPE_TEST;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getInstallationTypeLive()
-	{
-		return self::INSTALLATION_TYPE_LIVE;
-	}
-	
+
     /**
      * @return string
      */
@@ -56,7 +37,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return self::API_ROLE_NAME;
     }
-	
+
     /**
      * @return string
      */
@@ -65,7 +46,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
     	//@TODO: At api role creation, specify the correct role for Magento 2 here
         return 'G';//Mage_Api_Model_Acl::ROLE_TYPE_GROUP;
     }
-	
+
     /**
      * @return array
      */
@@ -109,7 +90,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
     	}
         return $this->apiRoleResources;
     }
-    	
+
     /**
      * Saves the shop id and activates both the feed and tagging
      *
@@ -259,7 +240,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
         }
         return $difference;
     }
-    
+
     /**
      * Return list of countries used on shop registration
 	 * 
@@ -289,7 +270,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
     	}
 		return $this->countries;
     }
-    
+
     /**
      * Saves the shop settings
      *
@@ -388,11 +369,11 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
             return Mage::helper("adcurve_adcurve")->__("Failed");
         }
     }
+
     /**
      * Return status of API Role is created or not
      * @return string
      */    
-    
     public function isApiRoleCreated()
     {
         $roleId = 0;
@@ -411,7 +392,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
             return false;
         }
     }
-    
+
     /**
      * Return data for email after successfully store installation 
      *
@@ -422,7 +403,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
      * @param int |null $storeId
      *
      * @return array
-     */    
+     */
     public function getDataAfterSuccessInstall($shopId, $apiToken, $storeId)
     {
         $configHelper = Mage::helper("adcurve_adcurve/config");
@@ -431,22 +412,22 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
         
         if ($shopId > 0 && $apiToken !="" && $storeId > 0) {
             
-            $mode            = $configHelper->getMode($storeId);
-            $emailTo         = $this->getShopContactEmailTo($storeId);
+            $mode = $configHelper->getMode($storeId);
+            $emailTo = $this->getShopContactEmailTo($storeId);
             
             $accountCreated  = $helper->__("Your %s account was successfully created!", $mode);
-            $emailSent       = $helper->__("We sent an email to %s", $emailTo);
-            $cronChecked       = $helper->__("Cron check: ");
-            $cronChecked      .= (is_file(Mage::getBaseDir('log').'/'.self::CRON_CHECK_FILE_NAME)) ? "OK" : $helper->__("Failed"."<br />The cron job seems to be disabled. You need to enable it to be able to send products to AdCurve. Please follow these steps to make it work");
+            $emailSent = $helper->__("We sent an email to %s", $emailTo);
+            $cronChecked = $helper->__("Cron check: ");
+            $cronChecked .= (is_file(Mage::getBaseDir('log').'/'.self::CRON_CHECK_FILE_NAME)) ? "OK" : $helper->__("Failed"."<br />The cron job seems to be disabled. You need to enable it to be able to send products to AdCurve. Please follow these steps to make it work");
             
             $tagImplemented  = $helper->__("Tags implemented: OK");
             $apiUserCreated = $helper->__("API user created: %s", $this->isApiUserCreated($storeId));
             $apiRoleCreated = $helper->__("API role created: ");
             
             if(!$this->isApiRoleCreated()) {
-                $apiRoleCreated.= $helper->__("Something went wrong when trying to create or associate the API role to the API user. Please follow <a href='%s' target='_blank'>these</a> steps to make it work", $configHelper->getApiRoleCreatedFailedUrl());
+                $apiRoleCreated .= $helper->__("Something went wrong when trying to create or associate the API role to the API user. Please follow <a href='%s' target='_blank'>these</a> steps to make it work", $configHelper->getApiRoleCreatedFailedUrl());
             } else {
-                $apiRoleCreated.= $helper->__("OK");
+                $apiRoleCreated .= $helper->__("OK");
             }
             
             return $data = array(
@@ -483,7 +464,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
         //return $data->first_name.' '.$data->last_name;
         return false;
     }
-    
+
     /**
      * Return list of all installed stores mode, current store mode status and current store test_shop_id
      *
@@ -493,5 +474,4 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
     public function getStoresInstallationModeList($currentStoreCode = ""){
     	return false;
 	}
-    
 }

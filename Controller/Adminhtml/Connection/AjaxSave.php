@@ -32,8 +32,11 @@ class AjaxSave extends \Magento\Backend\App\Action
         $error = false;
         $messages = [];
 		$postItems = $this->getRequest()->getParam('items', []);
-		echo '<pre>';
-		print_r($this->getRequest()->getPostValue());
+		/** @var Magento\Framework\App\Request\Http */
+		return $resultJson->setData([
+			'success' => true,
+			'messages' => implode(',', $this->getRequest()->getPostValue())
+		]);
 		die();
         if ($this->getRequest()->getParam('isAjax')) {
             $postItems = $this->getRequest()->getParam('items', []);

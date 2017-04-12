@@ -7,6 +7,7 @@ class Attributes implements OptionSourceInterface
 {
 	protected $attributeCollectionFactory;
     protected $options;
+	protected $allValues;
 	
 	/**
 	 * Constructor
@@ -29,7 +30,7 @@ class Attributes implements OptionSourceInterface
 		if ($this->options === null) {
 			
 			$attributeCollection = $this->attributeCollectionFactory->create()
-				->addFieldToSelect('attribute_code', 'frontend_label')
+				->addFieldToSelect(['attribute_code', 'frontend_label'])
 				->addFieldToFilter('frontend_label', ['neq' => '']);
 			
 			$options = [];
@@ -44,4 +45,17 @@ class Attributes implements OptionSourceInterface
 		
         return $this->options;
     }
+	
+	public function getAllValues()
+	{
+		if (!$this->allValues) {
+			$options = $this->toOptionArray();
+			$allValues = [];
+			foreach ($options as $option) {
+				$allValues[] = $option['value'];
+			}
+			$this->allValues = $allValues;
+		}
+		return $this->allValues;
+	}
 }
