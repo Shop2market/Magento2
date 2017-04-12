@@ -46,19 +46,26 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 	 */
 	public function getAdcurveConnection()
 	{
-		if($this->adcurveConnection == 'not-available') {
+		if (!$this->adcurveConnection) {
+			// @TODO: Look into a more secure method for try catch to avoid crash at all time
+			try{
+				$storeId = $this->storeManager->getStore()->getId();
+				$connection = $this->connectionRepository->getByStoreId($storeId);
+				if ($connection->getId()) {
+					$this->adcurveConnection = $connection;
+				} else {
+					$this->adcurveConnection = 'n/a';
+				}
+			} catch (Exception $e) {
+				// No logging here for now.
+				$this->adcurveConnection = 'n/a';
+			}
+		}
+		
+		if($this->adcurveConnection == 'n/a') {
 			return false;
 		}
 		
-		if (!$this->adcurveConnection) {
-			$storeId = $this->storeManager->getStore()->getId();
-			$connection = $this->connectionRepository->getByStoreId($storeId);
-			if ($connection->getId()) {
-				$this->adcurveConnection = $connection;
-			} else {
-				$this->adcurveConnection = 'not-available';
-			}
-		}
 		return $this->adcurveConnection;
 	}
 
