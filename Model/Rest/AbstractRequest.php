@@ -3,39 +3,11 @@ namespace Adcurve\Adcurve\Model\Rest;
 
 abstract class AbstractRequest
 {
-	/**
-	 * @var \Adcurve\Adcurve\Helper\Config
-	 */
 	protected $configHelper;
-	
-	/**
-	 * @var \Adcurve\Adcurve\Model\ConnectionFactory
-	 */
-	protected $connectionFactory;
-	
-    /**
-     * @var resource
-     */
     protected $_curl;
-	
-    /**
-     * @var array
-     */
     protected $_data;
-	
-    /**
-     * @var
-     */
     protected $_store = null;
-	
-	/**
-	 * @var \Adcurve\Adcurve\Model\Connection
-	 */
 	protected $_connectionModel;
-
-    /**
-     * @var array
-     */
     protected $_curlOpt = array(
         CURLOPT_POST => true,
         CURLOPT_RETURNTRANSFER => true,
@@ -46,39 +18,21 @@ abstract class AbstractRequest
     );
 
 	public function __construct(
-		\Adcurve\Adcurve\Helper\Config $configHelper,
-		\Adcurve\Adcurve\Model\ConnectionFactory $connectionFactory
+		\Adcurve\Adcurve\Helper\Config $configHelper
 	){
 		$this->configHelper = $configHelper;
-		$this->connectionFactory = $connectionFactory;
 	}
 
-    /**
-     * @return array
-     */
     protected function _getData()
     {
         return $this->_data;
     }
 
-    /**
-     * @param $data
-     *
-     * @return $this
-     */
     protected function _setData($data)
     {
         $this->_data = $data;
 
         return $this;
-    }
-
-    /**
-     * @return null|int
-     */
-    protected function _getStore()
-    {
-        return $this->_store;
     }
 
 	/**
@@ -102,28 +56,13 @@ abstract class AbstractRequest
     }
 
     /**
-     * @param $store
+     * @param array $data
+     * @param \Adcurve\Adcurve\Model\Connection $connection
      *
      * @return $this
      */
-    protected function _setStore($store)
+    public function sendData($data, $connection)
     {
-        $this->_store = $store;
-
-        return $this;
-    }
-
-    /**
-     * @param $data
-     *
-     * @param null $store
-     *
-     * @return $this
-     */
-    public function sendData($data, $store = null)
-    {
-        $this->_setStore($store);
-    	$connection = $this->connectionFactory->create()->load($this->_getStore());
     	$this->_setConnectionModel($connection);
 		
         if(!$this->configHelper->isApiConfigured($this->_getConnectionModel())){
@@ -132,9 +71,9 @@ abstract class AbstractRequest
 		
         $this->_setData($data);
 		
-        $this->_prepareRequest()
-            ->_sendRequest();
-
+        $this->_prepareRequest();
+        $this->_sendRequest();
+		
         return $this;
     }
 
@@ -201,16 +140,14 @@ abstract class AbstractRequest
      *
      * @param $response
      *
-     * @return mixed
+     * @return json $response
      */
     abstract protected function _processResponse($response);
 
     /**
-     * Get the API URL
+     * Get the API Url based on Adcurve shop ID
      *
-     * @param null $store
-     *
-     * @return mixed
+     * @return string $apiUrl
      */
     abstract protected function _getApiUrl($shopId);
 }

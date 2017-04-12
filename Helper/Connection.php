@@ -433,11 +433,9 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
             
             $mode            = $configHelper->getMode($storeId);
             $emailTo         = $this->getShopContactEmailTo($storeId);
-            $totalAttributes = $this->getSentAttributes($storeId);
             
             $accountCreated  = $helper->__("Your %s account was successfully created!", $mode);
             $emailSent       = $helper->__("We sent an email to %s", $emailTo);
-            $attributSent       = $helper->__("Attributes sent: %s of %s OK", $totalAttributes, $totalAttributes);
             $cronChecked       = $helper->__("Cron check: ");
             $cronChecked      .= (is_file(Mage::getBaseDir('log').'/'.self::CRON_CHECK_FILE_NAME)) ? "OK" : $helper->__("Failed"."<br />The cron job seems to be disabled. You need to enable it to be able to send products to AdCurve. Please follow these steps to make it work");
             
@@ -454,7 +452,6 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
             return $data = array(
 	            "account_created" => $accountCreated,
 	            "email_sent" => $emailSent,
-	            "attribut_sent" => $attributSent,
 	            "cron_checked" => $cronChecked,
 	            "tag_implemented" => $tagImplemented,
 	            "api_user_created" => $apiUserCreated,
@@ -462,16 +459,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
             );
         }
     }
-    
-    /**
-     * Return size of attributes sent to Adcurve
-     * @return int
-     */
-    public function getSentAttributes($storeId){
-        $totalAttributes = count(unserialize($this->configHelper->getShopAttributes($storeId)));    
-        return $totalAttributes;
-    }
-    
+
     /**
      * Return email address of shop contact 
      *
@@ -483,7 +471,7 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
        //return $data->email;
        return false;
     }
-    
+
     /**
      * Return email address of shop contact 
      *

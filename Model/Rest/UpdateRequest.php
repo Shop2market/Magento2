@@ -10,9 +10,9 @@ class UpdateRequest extends AbstractRequest
      *
      * @return string
      */
-    public function _getApiUrl($store = null)
+    public function _getApiUrl($shopId)
     {
-        return $this->configHelper->getProductApiUrl($store);
+        return $this->configHelper->getProductApiUrl($shopId);
     }
 	
     /**

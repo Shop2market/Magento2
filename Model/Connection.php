@@ -12,12 +12,12 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
     {
         $this->_init('Adcurve\Adcurve\Model\ResourceModel\Connection');
     }
-	
+
     public function getConnectionId()
     {
     	return $this->getData(self::CONNECTION_ID);
 	}
-	
+
     public function setConnectionId($connectionId)
     {
     	return $this->setData(self::CONNECTION_ID, $connectionId);
@@ -27,7 +27,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::ENABLED);
 	}
-	
+
 	public function setEnabled($enabled)
 	{
 		return $this->setData(self::ENABLED, $enabled);
@@ -37,7 +37,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::STORE_ID);
 	}
-	
+
 	public function setStoreId($storeId)
 	{
 		return $this->setData(self::STORE_ID, $storeId);
@@ -47,7 +47,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::STORE_NAME);
 	}
-	
+
 	public function setStoreName($storeName)
 	{
 		return $this->setData(self::STORE_NAME, $storeName);
@@ -57,7 +57,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::STORE_CODE);
 	}
-	
+
 	public function setStoreCode($storeCode)
 	{
 		return $this->setData(self::STORE_CODE, $storeCode);
@@ -67,7 +67,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::ADCURVE_SHOP_ID);
 	}
-	
+
 	public function setAdcurveShopId($adcurveShopId)
 	{
 		return $this->setData(self::ADCURVE_SHOP_ID, $adcurveShopId);
@@ -77,17 +77,27 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::ADCURVE_TOKEN);
 	}
-	
+
 	public function setAdcurveToken($adcurveToken)
 	{
 		return $this->setData(self::ADCURVE_TOKEN, $adcurveToken);
+	}
+
+	public function getIsTestmode()
+	{
+		return $this->getData(self::IS_TESTMODE);
+	}
+
+	public function setIsTestmode($isTestmode)
+	{
+		return $this->setData(self::IS_TESTMODE, $isTestmode);
 	}
 
 	public function getStatus()
 	{
 		return $this->getData(self::STATUS);
 	}
-	
+
 	public function setStatus($status)
 	{
 		return $this->setData(self::STATUS, $status);
@@ -97,7 +107,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::SUGGESTION);
 	}
-	
+
 	public function setSuggestion($suggestion)
 	{
 		return $this->setData(self::SUGGESTION, $suggestion);
@@ -107,7 +117,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::SOAP_USERNAME);
 	}
-	
+
 	public function setSoapUsername($soapUsername)
 	{
 		return $this->setData(self::SOAP_USERNAME, $soapUsername);
@@ -117,7 +127,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::SOAP_API_KEY);
 	}
-	
+
 	public function setSoapApiKey($soapApiKey)
 	{
 		return $this->setData(self::SOAP_API_KEY, $soapApiKey);
@@ -127,7 +137,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::CONTACT_FIRSTNAME);
 	}
-	
+
 	public function setContactFirstname($contactFirstname)
 	{
 		return $this->setData(self::CONTACT_FIRSTNAME, $contactFirstname);
@@ -137,7 +147,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::CONTACT_LASTNAME);
 	}
-	
+
 	public function setContactLastname($contactLastname)
 	{
 		return $this->setData(self::CONTACT_LASTNAME, $contactLastname);
@@ -147,7 +157,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::CONTACT_EMAIL);
 	}
-	
+
 	public function setContactEmail($contactEmail)
 	{
 		return $this->setData(self::CONTACT_EMAIL, $contactEmail);
@@ -157,7 +167,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::CONTACT_TELEPHONE);
 	}
-	
+
 	public function setContactTelephone($contactTelephone)
 	{
 		return $this->setData(self::CONTACT_TELEPHONE, $contactTelephone);
@@ -167,7 +177,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::COMPANY_NAME);
 	}
-	
+
 	public function setCompanyName($companyName)
 	{
 		return $this->setData(self::COMPANY_NAME, $companyName);
@@ -177,7 +187,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::COMPANY_ADDRESS);
 	}
-	
+
 	public function setCompanyAddress($companyAddress)
 	{
 		return $this->setData(self::COMPANY_ADDRESS, $companyAddress);
@@ -187,7 +197,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::COMPANY_ZIPCODE);
 	}
-	
+
 	public function setCompanyZipcode($companyZipcode)
 	{
 		return $this->setData(self::COMPANY_ZIPCODE, $companyZipcode);
@@ -197,7 +207,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::COMPANY_CITY);
 	}
-	
+
 	public function setCompanyCity($companyCity)
 	{
 		return $this->setData(self::COMPANY_CITY, $companyCity);
@@ -207,7 +217,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::COMPANY_REGION);
 	}
-	
+
 	public function setCompanyRegion($companyRegion)
 	{
 		return $this->setData(self::COMPANY_REGION, $companyRegion);
@@ -217,7 +227,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::COMPANY_COUNTRY);
 	}
-	
+
 	public function setCompanyCountry($companyCountry)
 	{
 		return $this->setData(self::COMPANY_COUNTRY, $companyCountry);
@@ -227,7 +237,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		return $this->getData(self::UPDATED_AT);
 	}
-	
+
 	public function setUpdatedAt($updatedAt)
 	{
 		return $this->setData(self::UPDATED_AT, $updatedAt);

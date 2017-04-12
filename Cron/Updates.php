@@ -29,13 +29,15 @@ class Updates
     	\Magento\Store\Model\StoreManagerInterface $storeManager,
     	\Adcurve\Adcurve\Model\UpdateFactory $updateFactory,
     	\Adcurve\Adcurve\Model\Rest\UpdateRequest $updateRequest,
-    	\Adcurve\Adcurve\Helper\Config $configHelper
+    	\Adcurve\Adcurve\Helper\Config $configHelper,
+    	\Adcurve\Adcurve\Model\ConnectionRepository $connectionRepository
 	){
         $this->logger = $logger;
 		$this->storeManager = $storeManager;
 		$this->updateFactory = $updateFactory;
 		$this->updateRequest = $updateRequest;
 		$this->configHelper = $configHelper;
+		$this->connectionRepository = $connectionRepository;
     }
 
     /**
@@ -50,7 +52,10 @@ class Updates
 		$stores = $this->storeManager->getStores();
         $startTime = microtime(true);
         foreach ($stores as $store) {
-            if(!$this->configHelper->isApiConfigured($store->getId())) {
+        	
+			$connection = $this->connectionRepository->getByStoreId($store->getId());
+			
+            if(!$this->configHelper->isApiConfigured($connection)) {
                 continue;
             }
 			
@@ -107,7 +112,7 @@ class Updates
         $error = false;
         try {
             /** Send the batch to Adcurve, an empty response is given on succes */
-            $response = $this->updateRequest->sendData($productData, $storeId);
+            $response = $this->updateRequest->sendData($productData, $connection);
         } catch (Exception $e) {
             $this->logger->addError($e->getMessage());
             $error = true;

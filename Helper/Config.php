@@ -5,8 +5,6 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {
     const XPATH_ENABLED             = 'adcurve/settings/enabled';
     const XPATH_TEST_MODE           = 'adcurve/settings/test_mode';
-    const XPATH_MODE           		= 'adcurve/settings/mode';
-    const XPATH_SHOP_ID             = 'adcurve/settings/shop_id';
     const XPATH_SHOP_ATTRIBUTES     = 'adcurve/settings/shop_attributes';
     const XPATH_API_TOKEN           = 'adcurve/settings/token';
     const XPATH_CONTACT     		= 'adcurve/settings/contact';
@@ -14,106 +12,83 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     const XPATH_REGISTER_URL_TEST   = 'adcurve/settings/url_register_test';
     const XPATH_TAG_URL_LIVE        = 'adcurve/settings/url_tag_live';
     const XPATH_TAG_URL_TEST        = 'adcurve/settings/url_tag_test';
-	
-    const XPATH_API_IS_REGISTERED   = 'adcurve/api/is_registered';
+
     const XPATH_API_UPDATE_URL_LIVE = 'adcurve/api/update_url_live';
     const XPATH_API_UPDATE_URL_TEST = 'adcurve/api/update_url_test';
     const XPATH_API_STATUS_URL_LIVE = 'adcurve/api/status_url_live';
     const XPATH_API_STATUS_URL_TEST = 'adcurve/api/status_url_test';
-	const XPATH_TEST_SHOP_ID		= 'adcurve/api/test_shop_id';
 	const XPATH_API_ROLE_CREATED_FAILED_URL = 'adcurve/api/role_created_failed';
-	
+
     const XPATH_PAYMENT_METHOD 		= 'payment/checkmo/active';
-	
+
+	protected $storeManager;
 	protected $resourceInterface;
-	
+	protected $connectionRepository;
+	protected $adcurveConnection;
+
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
-		\Magento\Framework\Module\ResourceInterface $resourceInterface
+		\Magento\Store\Model\StoreManagerInterface $storeManager,
+		\Magento\Framework\Module\ResourceInterface $resourceInterface,
+		\Adcurve\Adcurve\Model\ConnectionRepository $connectionRepository
 	){
 		parent::__construct($context);
 		
+		$this->storeManager = $storeManager;
 		$this->resourceInterface = $resourceInterface;
+		$this->connectionRepository = $connectionRepository;
 	}
-	
+
 	/**
-     * Return the shop id in shop2market configured
-     *
-     * @param null|int $store
-     *
-     * @return int
-     */
-    public function getShopId($store = null)
-    {
-        return $this->scopeConfig->getValue(self::XPATH_SHOP_ID);
-    }
-	
-    /**
-     * Return the true if shop is registered
-     *
-     * @param null|int $store
-     *
-     * @return bool
-     */
-    public function getShopIsRegistered($store = null)
-    {
-        $isRegistered = $this->scopeConfig->getValue(self::XPATH_API_IS_REGISTERED);
-		return ($isRegistered == '1' ? '1' : '0');
-    }
-	
-    /**
-     * Is the extension enabled
-     *
-     * @param null|int $store
-     *
-     * @return bool
-     */
-    public function isEnabled($store = null)
-    {
-        return $this->scopeConfig->isSetFlag(self::XPATH_ENABLED);
-    }
-	
-    /**
-     * get the extension mode
-     *
-     * @param null|int $store
-     *
-     * @return string
-     */
-    public function getMode($store = null)
-    {
-        return $this->scopeConfig->getValue(self::XPATH_MODE);
-    }
-	
-    /**
-     * Is the extension currently in test mode
-     *
-     * @param null|int $store
-     *
-     * @return bool
-     */
-    public function isTestMode($store = null)
-    {
-    	return false;
-		//return ($this->getMode($store) == Adcurve_Adcurve_Block_Adminhtml_Registration::INSTALLATION_TYPE_TEST)? true : false;
-        //return $this->scopeConfig->isSetFlag(self::XPATH_TEST_MODE);
-    }
+	 * Get Adcurve connection model if one exists for the current store
+	 * 
+	 * @return \Adcurve\Adcurve\Model\Connection
+	 */
+	public function getAdcurveConnection()
+	{
+		if($this->adcurveConnection == 'not-available') {
+			return false;
+		}
+		
+		if (!$this->adcurveConnection) {
+			$storeId = $this->storeManager->getStore()->getId();
+			$connection = $this->connectionRepository->getByStoreId($storeId);
+			if ($connection->getId()) {
+				$this->adcurveConnection = $connection;
+			} else {
+				$this->adcurveConnection = 'not-available';
+			}
+		}
+		return $this->adcurveConnection;
+	}
+
+	/**
+	 * Get current Adcurve Shop ID
+	 * 
+	 * @return string $shopId
+	 */
+	public function getAdcurveShopId()
+	{
+		$connection = $this->getAdcurveConnection();
+		if ($connection->getAdcurveShopId()) {
+			return $connection->getAdcurveShopId();
+		}
+		return false;
+	}
 
     /**
      * Get the base url for tags
      *
-     * @param null|int $store
-     *
-     * @return string
+     * @return string $tagUrl
      */
-    public function getTagUrl($store = null)
+    public function getTagUrl()
     {
-        if ($this->isTestMode($store)) {
+        if ($this->getAdcurveConnection() && $this->getAdcurveConnection()->getIsTestmode()) {
             $tagUrl = $this->scopeConfig->getValue(self::XPATH_TAG_URL_TEST);
         } else {
             $tagUrl = $this->scopeConfig->getValue(self::XPATH_TAG_URL_LIVE);
         }
-
+		
         return $tagUrl;
     }
 
@@ -124,14 +99,14 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return string
      */
-    public function getRegisterUrl($store = null)
+    public function getRegisterUrl($connection)
     {
-        if ($this->isTestMode()) {
+        if ($connection->getIsTestmode()) {
             $registerUrl = $this->scopeConfig->getValue(self::XPATH_REGISTER_URL_TEST);
         } else {
             $registerUrl = $this->scopeConfig->getValue(self::XPATH_REGISTER_URL_LIVE);
         }
-
+		
         return $registerUrl;
     }
 
@@ -140,18 +115,23 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return bool
      */
-    public function shouldRenderTags($store = null)
+    public function shouldRenderTags()
     {
-        if (!$this->isEnabled($store)) {
+    	if(!$this->getAdcurveConnection()) {
+    		return false;
+    	}
+		
+		$connection = $this->getAdcurveConnection();
+        if (!$connection->getEnabled()) {
             /** If module is disabled, don't render tags */
             return false;
         }
-
-        if (!$this->getShopId()) {
+		
+        if (!$connection->getAdcurveShopId()) {
             /** If no ShopId is set, don't render tags */
             return false;
         }
-
+		
         return true;
     }
 
@@ -172,7 +152,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
             return false;
         }
 		
-        if (!$connection->getAdcurveShopId()) {
+        if (!$connection->getAdcurveToken()) {
             /** If no Adcurve ApiToken is set, can't use API */
             return false;
         }
@@ -181,60 +161,57 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * Return url to register in adcurve
+     * Get Adcurve product data Api Url based on connection
      *
-     * @param null|int $store
+     * @param \Adcurve\Adcurve\Model\Connection $connection
      *
-     * @return string
+     * @return string $apiUrl
      */
-    public function getProductApiUrl($shopId)
+    public function getProductApiUrl($connection)
     {
-        if ($this->isTestMode()) {
+        if ($connection->getIsTestmode()) {
             $apiUrl = $this->scopeConfig->getValue(self::XPATH_API_UPDATE_URL_TEST);
         } else {
             $apiUrl = $this->scopeConfig->getValue(self::XPATH_API_UPDATE_URL_LIVE);
         }
 		
-        $apiUrl = str_replace('{{SHOP_ID}}', $shopId, $apiUrl);
+        $apiUrl = str_replace('{{SHOP_ID}}', $connection->getAdcurveShopId(), $apiUrl);
 		
         return $apiUrl;
     }
-	
+
     /**
-      * Return url  register in adcurve on the base of mode
+	 * Get status request API url based on connection
      *
-     * @param null|int $store
+     * @param \Adcurve\Adcurve\Model\Connection $connection
      *
-     * @return mixed
+     * @return string $apiUrl
      */
-    public function getStatusApiUrl($store = null)
+    public function getStatusApiUrl($connection)
     {
-        if ($this->isTestMode()) {
+        if ($connection->getIsTestmode()) {
             $apiUrl = $this->scopeConfig->getValue(self::XPATH_API_STATUS_URL_TEST);
         } else {
             $apiUrl = $this->scopeConfig->getValue(self::XPATH_API_STATUS_URL_LIVE);
         }
 		
-        $shopId = $this->getShopId($store);
-        $apiUrl = str_replace('{{SHOP_ID}}', $shopId, $apiUrl);
+        $apiUrl = str_replace('{{SHOP_ID}}', $connection->getAdcurveShopId(), $apiUrl);
 		
         return $apiUrl;
     }
-	
+
     /**
-	 * Return support url if api role created failed
+	 * Get support url if api role created failed
      *
-     * @param null|int $store
-     *
-     * @return string
+     * @return string $url
      */
-    public function getApiRoleCreatedFailedUrl($store = null)
+    public function getApiRoleCreatedFailedUrl()
     {
         return $this->scopeConfig->getValue(self::XPATH_API_ROLE_CREATED_FAILED_URL);
     }
-	
+
     /**
-	* Return decrypted api token
+	 * Return decrypted api token
      *
      * @param null|int $store
      *
@@ -244,39 +221,16 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     {
         /** @var Mage_Core_Helper_Data $helper */
         //$helper = Mage::helper('core');
-
+        
+		// @TODO: Create some kind of crypt / decrypt for Adcurve Api token
+		// @TODO: Move this to the connection object preferrably (the getAdcurveToken() fuction )
         return $this->scopeConfig->getValue(self::XPATH_API_TOKEN); //$helper->decrypt($this->scopeConfig->getValue(self::XPATH_API_TOKEN, $store));
     }
-	
-	/**
-	* Return shop attributes to send to adcurve
-     *
-     * @param null|int $store
-     *
-     * @return string
-     */
-    public function getShopAttributes($store = null)
-    {
-        return $this->scopeConfig->getValue(self::XPATH_SHOP_ATTRIBUTES);
-    }
-	
-	/**
-	* Return shop attributes to send to adcurve
-     *
-     * @param null|int $store
-     *
-     * @return string
-     */
-    public function getTestShopId($store = null)
-    {
-        return $this->scopeConfig->getValue(self::XPATH_TEST_SHOP_ID);
-    }
-	
-	
+
     /**
-     * Returns the current version of the Module.
+     * Get the version of the Adcurve_Adcurve module
      *
-     * @return string
+     * @return string $versionNumber
      */
     public function getModuleVersion()
     {

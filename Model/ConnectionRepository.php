@@ -89,6 +89,19 @@ class ConnectionRepository implements ConnectionRepositoryInterface
         return $connection;
     }
 
+	/**
+     * {@inheritdoc}
+     */
+    public function getByStoreId($storeId)
+    {
+        $connection = $this->connectionFactory->create();
+        $connection->load($storeId, 'store_id');
+        if (!$connection->getId()) {
+            throw new NoSuchEntityException(__('Connection with store_id "%1" does not exist.', $storeId));
+        }
+        return $connection;
+    }
+
     /**
      * {@inheritdoc}
      */

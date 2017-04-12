@@ -9,18 +9,17 @@ class StatusRequest extends AbstractRequest
     const STATUS_ERROR_RESULT_FROM_ADCURVE = '4';
 	
     /**
-     * @param null $store
+	 * @param \Adcurve\Adcurve\Model\Connection $connection
      *
      * @return mixed
      * @throws \Magento\Framework\Validator\Exception
      */
-    public function getConnectionStatus($store = null, $connectionId = null)
+    public function getConnectionStatus($connection)
     {
     	if (!$connectionId) {
     		throw new \Magento\Framework\Validator\Exception(__('Connection model is required'));
     	}
 		
-        $this->_setStore($store);
 		$connection = $this->connectionFactory->create()->load($connectionId);
 		$this->_setConnectionModel($connection);
 		
@@ -100,11 +99,11 @@ class StatusRequest extends AbstractRequest
     }
 
     /**
-     * Get the product API URL
+     * Get the product API Url by Adcurve shop ID
      *
-     * @param null $store
+     * @param string $shopId
      *
-     * @return string
+     * @return string $url
      */
     protected function _getApiUrl($shopId)
     {
