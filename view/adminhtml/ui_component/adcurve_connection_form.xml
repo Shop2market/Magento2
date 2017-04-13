@@ -13,9 +13,7 @@
 		<item name="template" xsi:type="string">templates/form/collapsible</item>
 		<item name="buttons" xsi:type="array">
 			<item name="back" xsi:type="string">Adcurve\Adcurve\Block\Adminhtml\Connection\BackButton</item>
-			<item name="delete" xsi:type="string">Adcurve\Adcurve\Block\Adminhtml\Connection\Edit\DeleteButton</item>
 			<item name="save" xsi:type="string">Adcurve\Adcurve\Block\Adminhtml\Connection\Edit\SaveButton</item>
-			<item name="save_and_continue" xsi:type="string">Adcurve\Adcurve\Block\Adminhtml\Connection\Edit\SaveAndContinueButton</item>
 		</item>
 	</argument>
 	<dataSource name="connection_form_data_source">
@@ -26,7 +24,7 @@
 			<argument name="requestFieldName" xsi:type="string">connection_id</argument>
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
-					<item name="submit_url" path="https://app.adcurve.com/integrations/magento/install" xsi:type="url"/>
+					<item name="submit_url" path="*/*/save" xsi:type="url"/>
 				</item>
 			</argument>
 		</argument>
@@ -36,11 +34,37 @@
 			</item>
 		</argument>
 	</dataSource>
+	<fieldset name="Mode">
+		<argument name="data" xsi:type="array">
+			<item name="config" xsi:type="array">
+				<item name="label" xsi:type="string">Mode of the connection to Adcurve</item>
+				<item name="sortOrder" xsi:type="number">10</item>
+			</item>
+		</argument>
+		<field name="production_mode">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">boolean</item>
+					<item name="label" translate="true" xsi:type="string">Production Mode</item>
+					<item name="formElement" xsi:type="string">checkbox</item>
+					<item name="prefer" xsi:type="string">toggle</item>
+					<item name="source" xsi:type="string">Connection</item>
+					<item name="sortOrder" xsi:type="number">11</item>
+					<item name="dataScope" xsi:type="string">enabled</item>
+					<item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+				</item>
+			</argument>
+		</field>
+	</fieldset>
+	
 	<fieldset name="Company">
 		<argument name="data" xsi:type="array">
 			<item name="config" xsi:type="array">
 				<item name="label" xsi:type="string">Company details</item>
-				<item name="sortOrder" xsi:type="number">10</item>
+				<item name="sortOrder" xsi:type="number">20</item>
 			</item>
 		</argument>
 		<field name="company_name">
@@ -95,6 +119,7 @@
 					<item name="dataScope" xsi:type="string">company_city</item>
 					<item name="validation" xsi:type="array">
 						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-alphanum-with-spaces" xsi:type="boolean">true</item>
 					</item>
 				</item>
 			</argument>
@@ -109,6 +134,7 @@
 					<item name="dataScope" xsi:type="string">company_region</item>
 					<item name="validation" xsi:type="array">
 						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-alphanum-with-spaces" xsi:type="boolean">true</item>
 					</item>
 				</item>
 			</argument>
@@ -135,7 +161,7 @@
 		<argument name="data" xsi:type="array">
 			<item name="config" xsi:type="array">
 				<item name="label" xsi:type="string">Contact information</item>
-				<item name="sortOrder" xsi:type="number">20</item>
+				<item name="sortOrder" xsi:type="number">30</item>
 			</item>
 		</argument>
 		<field name="contact_firstname">
@@ -148,6 +174,7 @@
 					<item name="dataScope" xsi:type="string">contact_firstname</item>
 					<item name="validation" xsi:type="array">
 						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-alphanum-with-spaces" xsi:type="boolean">true</item>
 					</item>
 				</item>
 			</argument>
@@ -162,6 +189,7 @@
 					<item name="dataScope" xsi:type="string">contact_lastname</item>
 					<item name="validation" xsi:type="array">
 						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-alphanum-with-spaces" xsi:type="boolean">true</item>
 					</item>
 				</item>
 			</argument>
@@ -176,6 +204,7 @@
 					<item name="dataScope" xsi:type="string">contact_email</item>
 					<item name="validation" xsi:type="array">
 						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-email" xsi:type="boolean">true</item>
 					</item>
 				</item>
 			</argument>
@@ -190,6 +219,7 @@
 					<item name="dataScope" xsi:type="string">contact_telephone</item>
 					<item name="validation" xsi:type="array">
 						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-number" xsi:type="boolean">true</item>
 					</item>
 				</item>
 			</argument>
@@ -200,7 +230,7 @@
 		<argument name="data" xsi:type="array">
 			<item name="config" xsi:type="array">
 				<item name="label" xsi:type="string">Additional information</item>
-				<item name="sortOrder" xsi:type="number">30</item>
+				<item name="sortOrder" xsi:type="number">40</item>
 			</item>
 		</argument>
 		<field name="connection_id">
@@ -274,80 +304,28 @@
 				</item>
 			</argument>
 		</field>
-		<field name="adcurve_shop_id">
+		<field name="soap_username">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="dataType" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">Adcurve Shop ID</item>
-					<item name="formElement" xsi:type="string">input</item>
-					<item name="source" xsi:type="string">Connection</item>
-					<item name="sortOrder" xsi:type="number">50</item>
-					<item name="dataScope" xsi:type="string">adcurve_shop_id</item>
-					<item name="disabled" xsi:type="boolean">true</item>
-				</item>
-			</argument>
-		</field>
-		<field name="adcurve_token">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="dataType" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">Adcurve Token</item>
-					<item name="formElement" xsi:type="string">input</item>
-					<item name="source" xsi:type="string">Connection</item>
-					<item name="sortOrder" xsi:type="number">60</item>
-					<item name="dataScope" xsi:type="string">adcurve_token</item>
-					<item name="disabled" xsi:type="boolean">true</item>
-				</item>
-			</argument>
-		</field>
-		<field name="status">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="dataType" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">Connection status</item>
-					<item name="formElement" xsi:type="string">input</item>
-					<item name="source" xsi:type="string">Connection</item>
-					<item name="sortOrder" xsi:type="number">70</item>
-					<item name="dataScope" xsi:type="string">status</item>
-					<item name="disabled" xsi:type="boolean">true</item>
-				</item>
-			</argument>
-		</field>
-		<field name="suggestion">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="dataType" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">Suggestion</item>
-					<item name="formElement" xsi:type="string">input</item>
-					<item name="source" xsi:type="string">Connection</item>
-					<item name="sortOrder" xsi:type="number">90</item>
-					<item name="dataScope" xsi:type="string">suggestion</item>
-					<item name="disabled" xsi:type="boolean">true</item>
-				</item>
-			</argument>
-		</field>
-		<field name="api_user_info">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="dataType" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">Api User Info</item>
+					<item name="label" translate="true" xsi:type="string">Magento SOAP Username</item>
 					<item name="formElement" xsi:type="string">input</item>
 					<item name="source" xsi:type="string">Connection</item>
 					<item name="sortOrder" xsi:type="number">100</item>
-					<item name="dataScope" xsi:type="string">api_user_info</item>
+					<item name="dataScope" xsi:type="string">soap_username</item>
 					<item name="disabled" xsi:type="boolean">true</item>
 				</item>
 			</argument>
 		</field>
-		<field name="updated_at">
+		<field name="soap_api_key">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="dataType" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">Updated At</item>
+					<item name="label" translate="true" xsi:type="string">Magento SOAP API key</item>
 					<item name="formElement" xsi:type="string">input</item>
 					<item name="source" xsi:type="string">Connection</item>
 					<item name="sortOrder" xsi:type="number">110</item>
-					<item name="dataScope" xsi:type="string">updated_at</item>
+					<item name="dataScope" xsi:type="string">soap_api_key</item>
 					<item name="disabled" xsi:type="boolean">true</item>
 				</item>
 			</argument>

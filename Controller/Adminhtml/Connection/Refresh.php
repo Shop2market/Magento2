@@ -67,7 +67,10 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 				if($this->soapPassword){
 					$connection->setSoapApiKey($this->soapPassword);
 				}
-				$connection->setIsTestmode('1');
+				$connection->setProductionMode(0);
+				$connection->setIsAdcurveReady(0);
+				$connection->setSuggestion(__('More information is required, after filling this information you can register to Adcurve.'));
+				$connection->setStatus(\Adcurve\Adcurve\Model\Connection::STATUS_INITIAL);
 				//$connection->setAdcurveToken('vayqshRlRl1kaCZ6oOzl4Io5hOWn2D6jYe0yH4XbsjOCO0gA0E5wK0k1578dZe61LiejggxE0IM3KLz9w0xF8LvFHi13fXdYsCJkFNx05i3c8E54cJvjlJzj0G_DJ2p1AGw3EA');
 				//$connection->setAdcurveShopId('1952');
 				//@TODO - Add all extra nessecairy data

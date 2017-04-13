@@ -7,9 +7,10 @@ interface ConnectionInterface
 	const STORE_ID 			= 'store_id';
 	const STORE_NAME 		= 'store_name';
 	const STORE_CODE 		= 'store_code';
+	const PRODUCTION_MODE 	= 'production_mode';
+	const IS_ADCURVE_READY 	= 'is_adcurve_ready';
 	const ADCURVE_SHOP_ID 	= 'adcurve_shop_id';
 	const ADCURVE_TOKEN 	= 'adcurve_token';
-	const IS_TESTMODE 		= 'is_testmode';
 	const STATUS 			= 'status';
 	const SUGGESTION 		= 'suggestion';
 	const SOAP_USERNAME 	= 'soap_username';
@@ -41,14 +42,17 @@ interface ConnectionInterface
 	public function getStoreCode();
 	public function setStoreCode($storeCode);
 
+	public function getProductionMode();
+	public function setProductionMode($productionMode);
+
+	public function getIsAdcurveReady();
+	public function setIsAdcurveReady($isAdcurveReady);
+
 	public function getAdcurveShopId();
 	public function setAdcurveShopId($adcurveShopId);
 
 	public function getAdcurveToken();
 	public function setAdcurveToken($adcurveToken);
-
-	public function getIsTestmode();
-	public function setIsTestmode($isTestmode);
 
 	public function getStatus();
 	public function setStatus($status);

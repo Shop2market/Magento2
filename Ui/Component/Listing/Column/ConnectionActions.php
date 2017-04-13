@@ -39,8 +39,8 @@ class ConnectionActions extends \Magento\Ui\Component\Listing\Columns\Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['connection_id'])) {
-                    $item[$this->getData('name')] = [
-                        'setup' => [
+                	if ($item['status'] == 2) {
+						$item[$this->getData('name')]['setup'] = [
                             'href' => $this->urlBuilder->getUrl(
                                 static::URL_PATH_ADCURVE_REGISTER_FORM,
                                 [
@@ -48,28 +48,30 @@ class ConnectionActions extends \Magento\Ui\Component\Listing\Columns\Column
                                 ]
                             ),
                             'label' => __('Setup Adcurve Connection')
-                        ],
-                        'edit' => [
-                            'href' => $this->urlBuilder->getUrl(
-                                static::URL_PATH_EDIT,
-                                [
-                                    'connection_id' => $item['connection_id']
-                                ]
-                            ),
-                            'label' => __('Edit')
-                        ],
-                        'delete' => [
-                            'href' => $this->urlBuilder->getUrl(
-                                static::URL_PATH_DELETE,
-                                [
-                                    'connection_id' => $item['connection_id']
-                                ]
-                            ),
-                            'label' => __('Delete'),
-                            'confirm' => [
-                                'title' => __('Delete "${ $.$data.title }"'),
-                                'message' => __('Are you sure you wan\'t to delete a "${ $.$data.title }" record?')
+                        ];
+					}
+					
+                    $item[$this->getData('name')]['edit'] = [
+                        'href' => $this->urlBuilder->getUrl(
+                            static::URL_PATH_EDIT,
+                            [
+                                'connection_id' => $item['connection_id']
                             ]
+                        ),
+                        'label' => __('Edit')
+                    ];
+					
+                    $item[$this->getData('name')]['delete'] = [
+                        'href' => $this->urlBuilder->getUrl(
+                            static::URL_PATH_DELETE,
+                            [
+                                'connection_id' => $item['connection_id']
+                            ]
+                        ),
+                        'label' => __('Delete'),
+                        'confirm' => [
+                            'title' => __('Delete "${ $.$data.title }"'),
+                            'message' => __('Are you sure you wan\'t to delete a "${ $.$data.title }" record?')
                         ]
                     ];
                 }

@@ -37,21 +37,22 @@ class InstallSchema implements InstallSchemaInterface
 		
 		$adcurveConnectionTable = $setup->getConnection()->newTable($setup->getTable('adcurve_connection'));
         $adcurveConnectionTable->addColumn(
-        	'connection_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, array(
+        	'connection_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, [
         		'identity' 	=> true,
         		'nullable' 	=> false,
         		'primary' 	=> true,
         		'unsigned' 	=> true,
-			), 'Connection ID'
+			], 'Connection ID'
 		);
 		$adcurveConnectionTable->addColumn('enabled', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Enabled');
 		$adcurveConnectionTable->addColumn('store_id', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Store ID');
 		$adcurveConnectionTable->addColumn('store_name', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Store Name');
         $adcurveConnectionTable->addColumn('store_code', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Shop Code');
+		$adcurveConnectionTable->addColumn('production_mode', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, ['nullable' => false, 'default' => 0], 'Production Mode');
+		$adcurveConnectionTable->addColumn('is_adcurve_ready', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, ['nullable' => false, 'default' => 0], 'Adcurve Ready');
 		$adcurveConnectionTable->addColumn('adcurve_shop_id', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Adcurve Shop ID');
 		$adcurveConnectionTable->addColumn('adcurve_token', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Adcurve Token');
-		$adcurveConnectionTable->addColumn('is_testmode', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Is Testmode');
-		$adcurveConnectionTable->addColumn('status', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Status');
+		$adcurveConnectionTable->addColumn('status', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, [], 'Status');
 		$adcurveConnectionTable->addColumn('suggestion', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Suggestion');
 		$adcurveConnectionTable->addColumn('soap_username', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Api User Name');
 		$adcurveConnectionTable->addColumn('soap_api_key', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Api Api Key');

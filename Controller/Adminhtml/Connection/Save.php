@@ -6,6 +6,7 @@ use Magento\Framework\Exception\LocalizedException;
 class Save extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 {
     protected $dataPersistor;
+	protected $connectionFactory;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -14,9 +15,11 @@ class Save extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
-        \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
+        \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor,
+        \Adcurve\Adcurve\Model\ConnectionFactory $connectionFactory
     ) {
         $this->dataPersistor = $dataPersistor;
+		$this->connectionFactory = $connectionFactory;
         parent::__construct($context, $coreRegistry);
     }
 
@@ -31,26 +34,34 @@ class Save extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
         if ($data) {
-            $model = $this->_objectManager->create('Adcurve\Adcurve\Model\Connection');
-			
             $id = $this->getRequest()->getParam('connection_id');
+            $connection = $this->connectionFactory->create()->load($id);
+			
             if ($id) {
-                $model->load($id);
+                $connection->load($id);
             }
 			
-            if (!$model->getId() && $id) {
+            if (!$connection->getId() && $id) {
                 $this->messageManager->addError(__('This Connection no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
             }
-            $model->setData($data);
+			
+			if (!$this->_validateData($data)) {
+				$this->messageManager->addError(__('Data is missing, try to fill in all the required fields.'));
+                return $resultRedirect->setPath('*/*/edit');
+			}
+			
+			$data['suggestion'] = __('All required information is present, please continue by registering on Adcurve (button to the right).');
+			$data['status'] = \Adcurve\Adcurve\Model\Connection::STATUS_PRE_REGISTRATION;
+            $connection->setData($data);
         	
             try {
-                $model->save();
-                $this->messageManager->addSuccess(__('You saved the Connection.'));
+                $connection->save();
+                $this->messageManager->addSuccess(__('Adcurve connection succesfully enriched with required information.'));
                 $this->dataPersistor->clear('adcurve_adcurve_connection');
-        
+        		
                 if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['connection_id' => $model->getId()]);
+                    return $resultRedirect->setPath('*/*/edit', ['connection_id' => $connection->getId()]);
                 }
                 return $resultRedirect->setPath('*/*/');
             } catch (LocalizedException $e) {
@@ -64,4 +75,28 @@ class Save extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
         }
         return $resultRedirect->setPath('*/*/');
     }
+
+	private function _validateData($data)
+	{
+		if (!isset($data['connection_id'])
+			|| !isset($data['store_id'])
+			|| !isset($data['store_id'])
+			|| !isset($data['store_name'])
+			|| !isset($data['store_code'])
+			|| !isset($data['production_mode'])
+			|| !isset($data['contact_firstname'])
+			|| !isset($data['contact_lastname'])
+			|| !isset($data['contact_email'])
+			|| !isset($data['contact_telephone'])
+			|| !isset($data['company_name'])
+			|| !isset($data['company_address'])
+			|| !isset($data['company_zipcode'])
+			|| !isset($data['company_city'])
+			|| !isset($data['company_region'])
+			|| !isset($data['company_country'])
+		) {
+			return false;
+		}
+		return true;
+	}
 }

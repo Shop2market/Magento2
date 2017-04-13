@@ -5,6 +5,13 @@ use Adcurve\Adcurve\Api\Data\ConnectionInterface;
 
 class Connection extends \Magento\Framework\Model\AbstractModel implements ConnectionInterface
 {
+	const STATUS_INITIAL = 1;
+	const STATUS_PRE_REGISTRATION = 2;
+	const STATUS_POST_REGISTRATION = 3;
+	const STATUS_ERROR_CONNECTION_TO_ADCURVE = 4;
+	const STATUS_ERROR_RESULT_FROM_ADCURVE = 5;
+	const STATUS_SUCCESS = 6;
+
 	protected $encryptor;
 
 	public function __construct(
@@ -78,6 +85,26 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 		return $this->setData(self::STORE_CODE, $storeCode);
 	}
 
+	public function getProductionMode()
+	{
+		return $this->getData(self::PRODUCTION_MODE);
+	}
+
+	public function setProductionMode($productionMode)
+	{
+		return $this->setData(self::PRODUCTION_MODE, $productionMode);
+	}
+
+	public function getIsAdcurveReady()
+	{
+		return $this->getData(self::PRODUCTION_MODE);
+	}
+
+	public function setIsAdcurveReady($isAdcurveReady)
+	{
+		return $this->setData(self::IS_ADCURVE_READY, $isAdcurveReady);
+	}
+
 	public function getAdcurveShopId()
 	{
 		return $this->getData(self::ADCURVE_SHOP_ID);
@@ -98,16 +125,6 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	{
 		$data = $this->encryptor->encrypt($adcurveToken);
 		return $this->setData(self::ADCURVE_TOKEN, $data);
-	}
-
-	public function getIsTestmode()
-	{
-		return $this->getData(self::IS_TESTMODE);
-	}
-
-	public function setIsTestmode($isTestmode)
-	{
-		return $this->setData(self::IS_TESTMODE, $isTestmode);
 	}
 
 	public function getStatus()

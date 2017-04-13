@@ -29,38 +29,51 @@ class StatusRequest extends AbstractRequest
         $this->_prepareRequest();
         $result = $this->_sendRequest();
 		
-		/* @TODO: Complete connection status logic.
-		// OLD function logic below for reference
-		$apiStatus = $this->statusRequest->getConnectionStatus($storeId);
+		switch ($result['status']) {
+			case self::STATUS_ERROR_CONNECTION_TO_ADCURVE:
+				$this->_getConnectionModel()->setStatus(\Adcurve\Adcurve\Model\Connection::STATUS_ERROR_CONNECTION_TO_ADCURVE);
+				$this->_getConnectionModel()->setSuggestion(
+					__('Something went wrong with the installation, please contact support')
+				);
+				break;
+			case self::STATUS_ERROR_RESULT_FROM_ADCURVE:
+				$this->_getConnectionModel()->setStatus(\Adcurve\Adcurve\Model\Connection::STATUS_ERROR_RESULT_FROM_ADCURVE);
+				$this->_getConnectionModel()->setSuggestion(
+					__('Connection with Adcurve API not established yet. Please follow this %1 for more information',
+					[$this->configHelper->getApiRoleCreatedFailedUrl()])
+				);
+				break;
+			case self::STATUS_SUCCESS:
+				$this->_getConnectionModel()->setStatus(\Adcurve\Adcurve\Model\Connection::STATUS_SUCCESS);
+				$this->_getConnectionModel()->setSuggestion(
+					__('Connection successfully established. No further action is needed.')
+				);
+				break;
+		}
 		
-        switch ($apiStatus['status']) {
-            case \Adcurve\Adcurve\Model\Rest\StatusRequest::STATUS_ERROR_CONNECTION_TO_ADCURVE:
-                $statusResult['stepsCompleted'] = 1;
-                $message = 'Something went wrong with the installation, please contact support';
-                $statusResult['suggestion'] = __($message);
-                break;
-            case \Adcurve\Adcurve\Model\Rest\StatusRequest::STATUS_ERROR_RESULT_FROM_ADCURVE:
-                $statusResult['stepsCompleted'] = 2;
-                $msgStep2 = 'Connection with AdCurve API not established yet. Please follow this %s for more information';
-                $urlRF = $this->configHelper->getApiRoleCreatedFailedUrl($storeId);
-                $msgStep2D = "<a target='_blank' class='manual-url' href='" . $urlRF . "'>" . __('manual') . "</a>";
-                $statusResult['suggestion'] = __($msgStep2, $msgStep2D);
-                break;
-            case \Adcurve\Adcurve\Model\Rest\StatusRequest::STATUS_SUCCESS:
-                $statusResult['stepsCompleted'] = 3;
-                if ($this->configHelper->isTestMode($storeId) == true) {
-                    $msgStep3 = 'Ready for testing. Please make sure you install the live version';
-                    $msgStep3 .= ' using the registration form bellow to enjoy all the functionality!';
-                    $statusResult['suggestion'] = __($msgStep3);
-                } else {
-                    $msgStep3 = 'Connection successfully established. No further action is needed.';
-                    $statusResult['suggestion'] = __($msgStep3);
-                }
-                break;
+		try{
+			$this->_getConnectionModel()->save();
+		} catch (\Magento\Framework\Exception\LocalizedException $e) {
+            $this->messageManager->addError($e->getMessage());
+        } catch (\Exception $e) {
+            $this->messageManager->addException($e, __('Something went wrong while saving the Connection.'));
         }
-		*/
 		
 		
+		/**
+		 *  @TODO: Re-implement the test mode (including notifications)
+		 * 
+		 * Old logic:
+			if ($this->configHelper->isTestMode($storeId) == true) {
+	            $msgStep3 = 'Ready for testing. Please make sure you install the live version';
+	            $msgStep3 .= ' using the registration form bellow to enjoy all the functionality!';
+	            $statusResult['suggestion'] = __($msgStep3);
+	        } else {
+	            $msgStep3 = 'Connection successfully established. No further action is needed.';
+	            $statusResult['suggestion'] = __($msgStep3);
+	        }
+		 * 
+		 */
 		
         return $result;
     }

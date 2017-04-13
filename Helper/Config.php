@@ -56,7 +56,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 				} else {
 					$this->adcurveConnection = 'n/a';
 				}
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				// No logging here for now.
 				$this->adcurveConnection = 'n/a';
 			}
@@ -90,7 +90,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getTagUrl()
     {
-        if ($this->getAdcurveConnection() && $this->getAdcurveConnection()->getIsTestmode()) {
+        if ($this->getAdcurveConnection() && !$this->getAdcurveConnection()->getProductionMode()) {
             $tagUrl = $this->scopeConfig->getValue(self::XPATH_TAG_URL_TEST);
         } else {
             $tagUrl = $this->scopeConfig->getValue(self::XPATH_TAG_URL_LIVE);
@@ -108,7 +108,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getRegisterUrl($connection)
     {
-        if ($connection->getIsTestmode()) {
+        if (!$connection->getProductionMode()) {
             $registerUrl = $this->scopeConfig->getValue(self::XPATH_REGISTER_URL_TEST);
         } else {
             $registerUrl = $this->scopeConfig->getValue(self::XPATH_REGISTER_URL_LIVE);
@@ -176,7 +176,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getProductApiUrl($connection)
     {
-        if ($connection->getIsTestmode()) {
+        if (!$connection->getProductionMode()) {
             $apiUrl = $this->scopeConfig->getValue(self::XPATH_API_UPDATE_URL_TEST);
         } else {
             $apiUrl = $this->scopeConfig->getValue(self::XPATH_API_UPDATE_URL_LIVE);
@@ -196,7 +196,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getStatusApiUrl($connection)
     {
-        if ($connection->getIsTestmode()) {
+        if (!$connection->getProductionMode()) {
             $apiUrl = $this->scopeConfig->getValue(self::XPATH_API_STATUS_URL_TEST);
         } else {
             $apiUrl = $this->scopeConfig->getValue(self::XPATH_API_STATUS_URL_LIVE);

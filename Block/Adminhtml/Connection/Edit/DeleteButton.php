@@ -7,17 +7,17 @@ use Adcurve\Adcurve\Block\Adminhtml\Connection\GenericButton;
 class DeleteButton extends GenericButton implements ButtonProviderInterface
 {
     /**
-     * @return array
+     * @return array $data
      */
     public function getButtonData()
     {
         $data = [];
         if ($this->getModelId()) {
             $data = [
-                'label' => __('Delete Connection'),
+                'label' => __('Delete connection to Adcurve'),
                 'class' => 'delete',
                 'on_click' => 'deleteConfirm(\'' . __(
-                    'Are you sure you want to do this?'
+                    'Are you sure you want to do this? The connection to Adcurve will be lost, requiring a new registration at the platform.'
                 ) . '\', \'' . $this->getDeleteUrl() . '\')',
                 'sort_order' => 20,
             ];
@@ -28,7 +28,7 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
     /**
      * Get URL for delete button
      *
-     * @return string
+     * @return string $url
      */
     public function getDeleteUrl()
     {

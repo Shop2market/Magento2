@@ -41,44 +41,43 @@
     //    <![CDATA[
     function showForm(id)
     {
-    	require(["jquery"], function($) {
-            var connectionSaveUrl = "<?php echo $block->getAjaxSaveUrl(); ?>";
-            var connectionFormData = JSON.stringify( $('#adcurve_registration_form').serializeArray() );
-            
-            $.ajax({
-            	showLoader: true,
-                url: connectionSaveUrl,
-                type: 'POST',
-                dataType: 'json',
-                data: connectionFormData,
-            	complete: function(response) {
-            		console.log(response.responseText);
-	            },
-                error: function (xhr, status, errorThrown) {
-                	console.log(xhr.responseText);
-                    console.log('Error happens. Try again.');
-                }
-            });
-        });
-    	return false;
+    	// =-=-= For possible future implementation =-=-=
+    	// require(["jquery"], function($) {
+            // var connectionSaveUrl = "<?php // echo $block->getAjaxSaveUrl(); ?>";
+            // var connectionFormData = JSON.stringify( $('#adcurve_registration_form').serializeArray() );
+			// 
+            // $.ajax({
+            	// showLoader: true,
+                // url: connectionSaveUrl,
+                // type: 'POST',
+                // dataType: 'json',
+                // data: connectionFormData,
+            	// complete: function(response) {
+            		// console.log(response.responseText);
+	            // },
+                // error: function (xhr, status, errorThrown) {
+                	// console.log(xhr.responseText);
+                    // console.log('An error occurred. Please try again.');
+                // }
+            // });
+        // });
     	
     	require(['jquery'], function($){
 	        $('#popup_form_terms').show();
-	        return false;
 		});
     }
     
     function confirm() {
         require(['jquery'], function($){
 	        var storeIdValue = $('#shop\\[store_id\\]').val();
-	        if (storeIdValue == "" || storeIdValue == null){
+	        if (storeIdValue == "" || storeIdValue == null) {
 	            return false;
 	        }
 	        
 	        // @TODO: Add validation the Magento form way
-	        if (true || form.validator && form.validator.validate()){
+	        // if (form.validator && form.validator.validate()){
 	            showForm('popup_form_terms');
-	        }
+	        // }
 	        
 	        return false;
 		});
@@ -92,42 +91,10 @@
 	        var storeIdValue = $('#shop\\[store_id\\]').val();
 	        var installation_type = $('#shop\\[installation_type\\]').val();
 	        
-	        if (storeIdValue == "" || storeIdValue == null){
+	        if (storeIdValue == "" || storeIdValue == null) {
 	            return false;
 	        }
 	        $('#adcurve_registration_form').submit();
-	        
-	        /* Redundant contact information save
-	        var c_fname = $('#contact\\[first_name\\]').val();
-	        var c_lname = $('#contact\\[last_name\\]').val();
-	        var c_email = $('#contact\\[email\\]').val();
-	        var c_phone = $('#contact\\[phone\\]').val();
-	        var contact = {first_name:c_fname, last_name:c_lname, email:c_email, phone:c_phone};
-	        */
-			
-	        //var attributesValue = $(document.getElementById('product_attributes')).getValue();
-	        //var saveAttributesUrl = '<?php //echo Mage::helper("adminhtml")->getUrl("adminhtml/adcurveAdminhtml_registration/saveShopAttributes") ?>';
-	        
-	        /*
-	        new Ajax.Request(saveAttributesUrl,
-	            {
-	                method: 'post',
-	                parameters: {
-	                	"id_store": storeIdValue,
-	                	"installation_type": installation_type,
-	                	"shop_attributes": JSON.stringify(attributesValue),
-	                	"contact" : JSON.stringify(contact)
-                	},
-	                onSuccess: function (data) {
-	                    var result = data.responseText.evalJSON(true);
-	                    var failedValidationCount = document.getElementsByClassName('validation-failed').length;
-	                    if (result.status == 'success' && failedValidationCount <= 0) {
-	                        var isUserCreated = createUser();
-	                    }
-	                }
-	        	}
-	        );
-	        */
         });
     }
     //]]>
