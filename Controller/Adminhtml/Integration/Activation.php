@@ -24,16 +24,14 @@ class Activation extends \Magento\Backend\App\Action
     }
 
     /**
-     * Index action
+     * Adcurve Integration Activation
      *
      * @return \Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
-    	var_dump('Activation page, to do: create block with explanation and button to activate!');
-		die();
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__('Adcurve Integration activation'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Adcurve Integration Activation'));
         return $resultPage;
     }
 }

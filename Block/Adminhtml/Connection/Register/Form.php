@@ -215,17 +215,18 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 		);
 		
 		$shopFieldset->addField(
-			'soap_api_key',
+			'integration_access_token',
 			'text',
 			[
 				'name' => 'shop[soap_api_key]',
-				'label' => __('API key'),
-				'title' => __('API key'),
+				'label' => __('Integration Access Token'),
+				'title' => __('Integration Access Token'),
 				'required' => true,
-				'value' => $connection->getSoapApiKey(),
+				'value' => $this->connectionHelper->getIntegrationAccessToken(),
 				'readonly' => true
 			]
 		);
+		
 		
 		$contactFieldset = $form->addFieldset(
             'contact_fieldset',

@@ -14,6 +14,9 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
 	protected $storeManager;
 	protected $backendUrlBuilder;
 	protected $configHelper;
+	protected $integrationService;
+	protected $oauthService;
+	
 	protected $countries;
     protected $apiRoleResources;
 
@@ -21,6 +24,8 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
 		\Magento\Framework\App\Helper\Context $context,
 		\Magento\Store\Model\StoreManagerInterface $storeManager,
 		\Magento\Backend\Model\UrlInterface $backendUrlBuilder,
+		\Magento\Integration\Model\IntegrationService $integrationService,
+		\Magento\Integration\Model\OauthService $oauthService,
 		\Adcurve\Adcurve\Helper\Config $configHelper
 	){
 		parent::__construct($context);
@@ -28,6 +33,24 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
 		$this->storeManager = $storeManager;
 		$this->backendUrlBuilder = $backendUrlBuilder;
 		$this->configHelper = $configHelper;
+		$this->integrationService = $integrationService;
+		$this->_oauthService = $oauthService;
+	}
+	
+	/**
+	 * Get Access tokens of Adcurve Integration
+	 * 
+	 * @return string $accessToken
+	 */
+	public function getIntegrationAccessToken()
+	{
+		$integration = $this->integrationService->findByName('AdcurveIntegration');
+		if (!$integration || !$integration->getStatus() || !$integration->getConsumerId()) {
+			return false;
+		}
+		
+		$accessToken = $this->_oauthService->getAccessToken($integration->getConsumerId());
+		return $accessToken;
 	}
 
     /**
