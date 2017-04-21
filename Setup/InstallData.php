@@ -7,10 +7,21 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 
 class InstallData implements InstallDataInterface
 {
+	/**
+	 * @var ConfigBasedIntegrationManager
+	 */
+    private $integrationManager;
+	
+	public function __construct(
+		\Magento\Integration\Model\ConfigBasedIntegrationManager $integrationManager
+	) {
+		$this->integrationManager = $integrationManager;
+	}
+	
     public function install(
         ModuleDataSetupInterface $setup,
         ModuleContextInterface $context
     ) {
-        /** Nothing here at the moment */
+        $this->integrationManager->processIntegrationConfig(['AdcurveIntegration']);
     }
 }

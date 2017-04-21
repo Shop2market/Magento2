@@ -26,7 +26,7 @@ abstract class Connection extends \Magento\Backend\App\Action
      */
     public function initPage($resultPage)
     {
-        $resultPage->setActiveMenu('Experius_Test::top_level')
+        $resultPage->setActiveMenu('Magento_Backend::marketing')
             ->addBreadcrumb(__('Adcurve'), __('Adcurve'))
             ->addBreadcrumb(__('Connection'), __('Connections'));
         return $resultPage;

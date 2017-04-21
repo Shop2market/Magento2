@@ -36,7 +36,7 @@ class Register
 		$this->connectionHelper = $connectionHelper;
 		$this->statusRequest = $statusRequest;
 	}
-
+	
     /**
      * @return string
      */

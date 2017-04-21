@@ -27,75 +27,315 @@ interface ConnectionInterface
 	const COMPANY_COUNTRY 	= 'company_country';
 	const UPDATED_AT 		= 'updated_at';
 
+ 	/**
+     * Get connection_id
+     * @return string|null
+     */
     public function getConnectionId();
+
+    /**
+     * Set connection_id
+     * @param string $connection_id
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
     public function setConnectionId($connectionId);
 
-	public function getEnabled();
-	public function setEnabled($enabled);
+    /**
+     * Get enabled
+     * @return string|null
+     */
+    public function getEnabled();
 
-	public function getStoreId();
-	public function setStoreId($storeId);
+    /**
+     * Set enabled
+     * @param string $enabled
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setEnabled($enabled);
 
-	public function getStoreName();
-	public function setStoreName($storeName);
+    /**
+     * Get store_id
+     * @return string|null
+     */
+    public function getStoreId();
 
-	public function getStoreCode();
-	public function setStoreCode($storeCode);
+    /**
+     * Set store_id
+     * @param string $store_id
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setStoreId($store_id);
 
-	public function getProductionMode();
-	public function setProductionMode($productionMode);
+    /**
+     * Get store_name
+     * @return string|null
+     */
+    public function getStoreName();
 
-	public function getIsAdcurveReady();
-	public function setIsAdcurveReady($isAdcurveReady);
+    /**
+     * Set store_name
+     * @param string $store_name
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setStoreName($store_name);
 
-	public function getAdcurveShopId();
-	public function setAdcurveShopId($adcurveShopId);
+    /**
+     * Get store_code
+     * @return string|null
+     */
+    public function getStoreCode();
 
-	public function getAdcurveToken();
-	public function setAdcurveToken($adcurveToken);
+    /**
+     * Set store_code
+     * @param string $store_code
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setStoreCode($store_code);
 
-	public function getStatus();
-	public function setStatus($status);
+    /**
+     * Get production_mode
+     * @return string|null
+     */
+    public function getProductionMode();
 
-	public function getSuggestion();
-	public function setSuggestion($suggestion);
+    /**
+     * Set production_mode
+     * @param string $production_mode
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setProductionMode($production_mode);
 
-	public function getSoapUsername();
-	public function setSoapUsername($soapUsername);
+    /**
+     * Get is_adcurve_ready
+     * @return string|null
+     */
+    public function getIsAdcurveReady();
 
-	public function getSoapApiKey();
-	public function setSoapApiKey($soapApiKey);
+    /**
+     * Set is_adcurve_ready
+     * @param string $is_adcurve_ready
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setIsAdcurveReady($is_adcurve_ready);
 
-	public function getContactFirstname();
-	public function setContactFirstname($contactFirstname);
+    /**
+     * Get adcurve_shop_id
+     * @return string|null
+     */
+    public function getAdcurveShopId();
 
-	public function getContactLastname();
-	public function setContactLastname($contactLastname);
+    /**
+     * Set adcurve_shop_id
+     * @param string $adcurve_shop_id
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setAdcurveShopId($adcurve_shop_id);
 
-	public function getContactEmail();
-	public function setContactEmail($contactEmail);
+    /**
+     * Get adcurve_token
+     * @return string|null
+     */
+    public function getAdcurveToken();
 
-	public function getContactTelephone();
-	public function setContactTelephone($contactTelephone);
+    /**
+     * Set adcurve_token
+     * @param string $adcurve_token
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setAdcurveToken($adcurve_token);
 
-	public function getCompanyName();
-	public function setCompanyName($companyName);
+    /**
+     * Get status
+     * @return string|null
+     */
+    public function getStatus();
 
-	public function getCompanyAddress();
-	public function setCompanyAddress($companyAddress);
+    /**
+     * Set status
+     * @param string $status
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setStatus($status);
 
-	public function getCompanyZipcode();
-	public function setCompanyZipcode($companyZipcode);
+    /**
+     * Get suggestion
+     * @return string|null
+     */
+    public function getSuggestion();
 
+    /**
+     * Set suggestion
+     * @param string $suggestion
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setSuggestion($suggestion);
+
+    /**
+     * Get soap_username
+     * @return string|null
+     */
+    public function getSoapUsername();
+
+    /**
+     * Set soap_username
+     * @param string $soap_username
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setSoapUsername($soap_username);
+
+    /**
+     * Get soap_api_key
+     * @return string|null
+     */
+    public function getSoapApiKey();
+
+    /**
+     * Set soap_api_key
+     * @param string $soap_api_key
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setSoapApiKey($soap_api_key);
+
+    /**
+     * Get contact_firstname
+     * @return string|null
+     */
+    public function getContactFirstname();
+
+    /**
+     * Set contact_firstname
+     * @param string $contact_firstname
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setContactFirstname($contact_firstname);
+
+    /**
+     * Get contact_lastname
+     * @return string|null
+     */
+    public function getContactLastname();
+
+    /**
+     * Set contact_lastname
+     * @param string $contact_lastname
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setContactLastname($contact_lastname);
+
+    /**
+     * Get contact_email
+     * @return string|null
+     */
+    public function getContactEmail();
+
+    /**
+     * Set contact_email
+     * @param string $contact_email
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setContactEmail($contact_email);
+
+    /**
+     * Get contact_telephone
+     * @return string|null
+     */
+    public function getContactTelephone();
+
+    /**
+     * Set contact_telephone
+     * @param string $contact_telephone
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setContactTelephone($contact_telephone);
+
+    /**
+     * Get company_name
+     * @return string|null
+     */
+    public function getCompanyName();
+
+    /**
+     * Set company_name
+     * @param string $company_name
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setCompanyName($company_name);
+
+    /**
+     * Get company_address
+     * @return string|null
+     */
+    public function getCompanyAddress();
+
+    /**
+     * Set company_address
+     * @param string $company_address
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setCompanyAddress($company_address);
+
+    /**
+     * Get company_zipcode
+     * @return string|null
+     */
+    public function getCompanyZipcode();
+
+    /**
+     * Set company_zipcode
+     * @param string $company_zipcode
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setCompanyZipcode($company_zipcode);
+	
+	/**
+     * Get company_city
+     * @return string|null
+     */
 	public function getCompanyCity();
-	public function setCompanyCity($companyCity);
 
-	public function getCompanyRegion();
-	public function setCompanyRegion($companyRegion);
+    /**
+     * Set company_city
+     * @param string $company_city
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setCompanyCity($company_city);
 
-	public function getCompanyCountry();
-	public function setCompanyCountry($companyCountry);
+    /**
+     * Get company_region
+     * @return string|null
+     */
+    public function getCompanyRegion();
 
-	public function getUpdatedAt();
-	public function setUpdatedAt($updatedAt);
+    /**
+     * Set company_region
+     * @param string $company_region
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setCompanyRegion($company_region);
+
+    /**
+     * Get company_country
+     * @return string|null
+     */
+    public function getCompanyCountry();
+
+    /**
+     * Set company_country
+     * @param string $company_country
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setCompanyCountry($company_country);
+
+    /**
+     * Get updated_at
+     * @return string|null
+     */
+    public function getUpdatedAt();
+
+    /**
+     * Set updated_at
+     * @param string $updated_at
+     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
+     */
+    public function setUpdatedAt($updated_at);
 }

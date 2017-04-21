@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
 class Edit extends \Adcurve\Adcurve\Controller\Adminhtml\Connection

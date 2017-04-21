@@ -13,7 +13,7 @@
 			</argument>
 		</arguments>
 	</type>
-	<preference for="Adcurve\Adcurve\Api\ConnectionRepositoryInterface" type="Adcurve\Adcurve\Model\ConnectionRepository"/>
-	<preference for="Adcurve\Adcurve\Api\Data\ConnectionInterface" type="Adcurve\Adcurve\Model\Connection"/>
-	<preference for="Adcurve\Adcurve\Api\Data\ConnectionSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<preference for="Adcurve\Adcurve\Api\ConnectionRepositoryInterface" type="Adcurve\Adcurve\Model\ConnectionRepository" />
+	<preference for="Adcurve\Adcurve\Api\Data\ConnectionInterface" type="Adcurve\Adcurve\Model\Connection" />
+	<preference for="Adcurve\Adcurve\Api\Data\ConnectionSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
 </config>

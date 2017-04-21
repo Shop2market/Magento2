@@ -50,7 +50,7 @@
 					<item name="prefer" xsi:type="string">toggle</item>
 					<item name="source" xsi:type="string">Connection</item>
 					<item name="sortOrder" xsi:type="number">11</item>
-					<item name="dataScope" xsi:type="string">enabled</item>
+					<item name="dataScope" xsi:type="string">production_mode</item>
 					<item name="valueMap" xsi:type="array">
                         <item name="true" xsi:type="number">1</item>
                         <item name="false" xsi:type="number">0</item>

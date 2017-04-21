@@ -63,11 +63,11 @@
 					<label>Module enabled</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+				<!-- Deprecated since Magento 2 plugin
 				<field id="test_mode" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20" translate="label" type="select">
 					<label>Test modus</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
-				<!-- Deprecated since Magento 2 plugin
 				<field id="shop_id" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30" translate="label" type="text">
 					<label>Adcurve shop ID</label>
 				</field>

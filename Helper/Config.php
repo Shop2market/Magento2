@@ -3,11 +3,6 @@ namespace Adcurve\Adcurve\Helper;
 
 class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {
-    const XPATH_ENABLED             = 'adcurve/settings/enabled';
-    const XPATH_TEST_MODE           = 'adcurve/settings/test_mode';
-    const XPATH_SHOP_ATTRIBUTES     = 'adcurve/settings/shop_attributes';
-    const XPATH_API_TOKEN           = 'adcurve/settings/token';
-    const XPATH_CONTACT     		= 'adcurve/settings/contact';
     const XPATH_REGISTER_URL_LIVE   = 'adcurve/settings/url_register_live';
     const XPATH_REGISTER_URL_TEST   = 'adcurve/settings/url_register_test';
     const XPATH_TAG_URL_LIVE        = 'adcurve/settings/url_tag_live';
@@ -85,7 +80,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
      * Get the base url for tags
-     *
+     * 
      * @return string $tagUrl
      */
     public function getTagUrl()
@@ -100,11 +95,11 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * Return url to register in adcurve
-     *
-     * @param null|int $store
-     *
-     * @return string
+     * Get Adcurve register url
+     * 
+     * @param \Adcurve\Adcurve\Model\Connection $connection
+     * 
+     * @return string $url
      */
     public function getRegisterUrl($connection)
     {
@@ -118,9 +113,9 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @param null $store
-     *
-     * @return bool
+     * Get wether or not Adcurve tracking tags should render based on the current storeview connection
+	 * 
+     * @return bool $shouldRender
      */
     public function shouldRenderTags()
     {
@@ -130,12 +125,10 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 		
 		$connection = $this->getAdcurveConnection();
         if (!$connection->getEnabled()) {
-            /** If module is disabled, don't render tags */
             return false;
         }
 		
         if (!$connection->getAdcurveShopId()) {
-            /** If no ShopId is set, don't render tags */
             return false;
         }
 		
@@ -144,34 +137,31 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
      * @param \Adcurve\Adcurve\Model\Connection $connection
-     *
+     * 
      * @return bool
      */
     public function isApiConfigured($connection)
     {
         if (!$connection->getEnabled()) {
-            /** If module is disabled, can't use API */
             return false;
         }
 		
         if (!$connection->getAdcurveShopId()) {
-            /** If no Adcurve ShopId is set, can't use API */
             return false;
         }
 		
         if (!$connection->getAdcurveToken()) {
-            /** If no Adcurve ApiToken is set, can't use API */
             return false;
         }
-
+		
         return true;
     }
 
     /**
      * Get Adcurve product data Api Url based on connection
-     *
+     * 
      * @param \Adcurve\Adcurve\Model\Connection $connection
-     *
+     * 
      * @return string $apiUrl
      */
     public function getProductApiUrl($connection)
@@ -189,9 +179,9 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
 	 * Get status request API url based on connection
-     *
+     * 
      * @param \Adcurve\Adcurve\Model\Connection $connection
-     *
+     * 
      * @return string $apiUrl
      */
     public function getStatusApiUrl($connection)
@@ -209,7 +199,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
 	 * Get support url if api role created failed
-     *
+     * 
      * @return string $url
      */
     public function getApiRoleCreatedFailedUrl()
@@ -218,25 +208,8 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-	 * Return decrypted api token
-     *
-     * @param null|int $store
-     *
-     * @return string
-     */
-    public function getApiToken($store = null)
-    {
-        /** @var Mage_Core_Helper_Data $helper */
-        //$helper = Mage::helper('core');
-        
-		// @TODO: Create some kind of crypt / decrypt for Adcurve Api token
-		// @TODO: Move this to the connection object preferrably (the getAdcurveToken() fuction )
-        return $this->scopeConfig->getValue(self::XPATH_API_TOKEN); //$helper->decrypt($this->scopeConfig->getValue(self::XPATH_API_TOKEN, $store));
-    }
-
-    /**
      * Get the version of the Adcurve_Adcurve module
-     *
+     * 
      * @return string $versionNumber
      */
     public function getModuleVersion()

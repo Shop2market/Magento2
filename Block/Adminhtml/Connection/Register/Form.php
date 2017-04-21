@@ -40,7 +40,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
      *
      * @return \Adcurve\Adcurve\Model\Connection
      */
-    public function getModel()
+    public function getConnection()
     {
         return $this->_coreRegistry->registry('adcurve_adcurve_connection');
     }
@@ -54,7 +54,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
      */
     protected function _prepareForm()
     {
-        $model = $this->getModel();
+        $connection = $this->getConnection();
 		$currentUser = $this->authSession->getUser();
 		
         /** @var \Magento\Framework\Data\Form $form */
@@ -73,67 +73,72 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         );
 		
 		$companyFieldset->addField(
-			'company[name]',
+			'company_name',
 			'text',
 			[
 				'name' 	=> 'company[name]',
 				'label' => __('Company name'),
 				'title' => __('Company name'),
 				'required' => true,
-				'value' => $model->getCompanyName()
+				'value' => $connection->getCompanyName(),
+				'readonly' => true
 			]
 		);
 		
 		$companyFieldset->addField(
-			'company[address]',
+			'company_address',
 			'text',
 			[
 				'name' 	=> 'company[address]',
 				'label' => __('Address'),
 				'title' => __('Address'),
 				'required' => true,
-				'value' => $model->getCompanyAddress()
+				'value' => $connection->getCompanyAddress(),
+				'readonly' => true
 			]
 		);
 		
 		$companyFieldset->addField(
-			'company[zipcode]',
+			'company_zipcode',
 			'text',
 			[
 				'name' 	=> 'company[zipcode]',
 				'label' => __('Zipcode'),
 				'title' => __('Zipcode'),
 				'required' => true,
-				'value' => $model->getCompanyZipcode()
+				'value' => $connection->getCompanyZipcode(),
+				'readonly' => true
 			]
 		);
 		
 		$companyFieldset->addField(
-			'company[city]',
+			'company_city',
 			'text',
 			[
 				'name' 	=> 'company[city]',
 				'label' => __('City'),
 				'title' => __('City'),
 				'required' => true,
-				'value' => $model->getCompanyCity()
+				'value' => $connection->getCompanyCity(),
+				'readonly' => true
 			]
 		);
 		
 		$companyFieldset->addField(
-			'company[region]',
+			'company_region',
 			'text',
 			[
 				'name' 	=> 'company[region]',
 				'label' => __('Region'),
 				'title' => __('Region'),
 				'required' => true,
-				'value' => $model->getCompanyRegion()
+				'value' => $connection->getCompanyRegion(),
+				'readonly' => true
 			]
 		);
 		
 		$companyFieldset->addField(
-			'company[country]',
+			'company_country',
 			'select',
 			[
 				'name' 	=> 'company[country]',
@@ -142,7 +147,8 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'required' => true,
 				'class' => 'select',
 				'values' => $this->countryOptions->toOptionArray(),
-				'value' => ($model->getCompanyCountry()) ? $model->getCompanyCountry() : 'NL'
+				'value' => ($connection->getCompanyCountry()) ? $connection->getCompanyCountry() : 'NL',
+				'readonly' => true
 			]
 		);
 		
@@ -152,7 +158,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         );
 		
 		$shopFieldset->addField(
-			'shop[installation_type]',
+			'production_mode',
 			'select',
 			[
 				'name' 	=> 'shop[installation_type]',
@@ -161,59 +167,63 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'required' => true,
 				'class' => 'select',
 				'values' => [
-					['value' => 'live', 'label' => __('Live')],
-					['value' => 'test', 'label' => __('Test')],
+					['value' => 'live', 'label' => __('Production mode')],
+					['value' => 'test', 'label' => __('Test mode')],
 				],
-				'value' => ($model->getIsTestmode()) ? 'test' : 'live'
+				'value' => ($connection->getProductionMode()) ? 'live' : 'test',
+				'readonly' => true
 			]
 		);
 		
 		$shopFieldset->addField(
-			'shop[store_id]',
+			'store_id',
 			'hidden',
 			[
 				'name' 	=> 'shop[store_id]',
 				'label' => __('Store ID'),
 				'title' => __('Store ID'),
 				'required' => true,
-				'value' => $model->getStoreId(),
-				'disabled' => true
+				'value' => $connection->getStoreId(),
+				'readonly' => true
 			]
 		);
 		
 		$shopFieldset->addField(
-			'shop[name]',
+			'store_name',
 			'text',
 			[
 				'name' 	=> 'shop[name]',
 				'label' => __('Name'),
 				'title' => __('Name'),
 				'required' => true,
-				'value' => $model->getStoreName()
+				'value' => $connection->getStoreName(),
+				'readonly' => true
 			]
 		);
 		
 		$shopFieldset->addField(
-			'shop[soap_username]',
+			'soap_username',
 			'text',
 			[
 				'name' => 'shop[soap_username]',
 				'label' => __('API username'),
 				'title' => __('API username'),
 				'required' => true,
-				'value' => $model->getSoapUsername()
+				'value' => $connection->getSoapUsername(),
+				'readonly' => true
 			]
 		);
 		
 		$shopFieldset->addField(
-			'shop[soap_api_key]',
+			'soap_api_key',
 			'text',
 			[
 				'name' => 'shop[soap_api_key]',
 				'label' => __('API key'),
 				'title' => __('API key'),
 				'required' => true,
-				'value' => $model->getSoapApiKey()
+				'value' => $connection->getSoapApiKey(),
+				'readonly' => true
 			]
 		);
 		
@@ -223,51 +233,54 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         );
 		
 		$contactFieldset->addField(
-			'contact[first_name]',
+			'contact_firstname',
 			'text',
 			[
 				'name' => 'contact[first_name]',
 				'label' => __('First name'),
 				'title' => __('First name'),
 				'required' => true,
-				'value' => ($model->getContactFirstname()) ? $model->getContactFirstname() : $currentUser->getData('firstname')
+				'value' => ($connection->getContactFirstname()) ? $connection->getContactFirstname() : $currentUser->getData('firstname'),
+				'readonly' => true
 			]
 		);
 		
 		$contactFieldset->addField(
-			'contact[last_name]',
+			'contact_lastname',
 			'text',
 			[
 				'name' => 'contact[last_name]',
 				'label' => __('Last name'),
 				'title' => __('Last name'),
 				'required' => true,
-				'value' => ($model->getContactLastname()) ? $model->getContactLastname() : $currentUser->getData('lastname')
+				'value' => ($connection->getContactLastname()) ? $connection->getContactLastname() : $currentUser->getData('lastname'),
+				'readonly' => true
 			]
 		);
 		
 		$contactFieldset->addField(
-			'contact[email]',
+			'contact_email',
 			'text',
 			[
 				'name' => 'contact[email]',
 				'label' => __('Email address'),
 				'title' => __('Email address'),
 				'required' => true,
-				'value' => ($model->getContactEmail()) ? $model->getContactEmail() : $currentUser->getData('email'),
-				'validate' => 'email'
+				'value' => ($connection->getContactEmail()) ? $connection->getContactEmail() : $currentUser->getData('email'),
+				'readonly' => true
 			]
 		);
 		
 		$contactFieldset->addField(
-			'contact[phone]',
+			'contact_telephone',
 			'text',
 			[
 				'name' => 'contact[phone]',
 				'label' => __('Telephone'),
 				'title' => __('Telephone'),
 				'required' => true,
-				'value' => $model->getContactTelephone()
+				'value' => $connection->getContactTelephone(),
+				'readonly' => true
 			]
 		);
 		
@@ -277,14 +290,15 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         );
 		
 		$hiddenFieldset->addField(
-			'shop[url]',
+			'shop_url',
 			'text',
 			[
 				'name' 	=> 'shop[url]',
 				'label' => __('Url'),
 				'title' => __('Url'),
 				'required' => true,
-				'value' => $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB, $model->getStoreId()),
+				'value' => $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB, $connection->getStoreId()),
+				'readonly' => true
 			]
 		);
 		
@@ -296,7 +310,8 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'label' => __('Successful registration return url'),
 				'title' => __('Successful registration return url'),
 				'required' => true,
-				'value' => $this->connectionHelper->getSuccessUrl()
+				'value' => $this->connectionHelper->getSuccessUrl(),
+				'readonly' => true
 			]
 		);
 		
@@ -308,7 +323,8 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'label' => __('Failed registration return url'),
 				'title' => __('Failed registration return url'),
 				'required' => true,
-				'value' => $this->connectionHelper->getFailUrl()
+				'value' => $this->connectionHelper->getFailUrl(),
+				'readonly' => true
 			]
 		);
 		
@@ -320,14 +336,18 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'label' => __('WSDL Endpoint'),
 				'title' => __('WSDL Endpoint'),
 				'required' => true,
-				'value' => 'test' // @TODO: Get correct wsdl endpoint url('s) (multiple for Magento 2)
-				// Structure is http://<magento.host>/soap/<optional_store_code>?wsdl&services=<service_name_1>,<service_name_2>
-				// This is saved in the config, but a solution first has to be discussed with the adcurve software team
+				'value' => 'http://boris.mage2.sandbox20.xpdev.nl/rest/default/schema?services=all', 
+				/** 
+				 * @TODO: Get correct wsdl endpoint url('s) (multiple for Magento 2)
+				 * Structure is http://<magento.host>/soap/<optional_store_code>?wsdl&services=<service_name_1>,<service_name_2>
+				 * This is saved in the config, but a solution first has to be discussed with the adcurve software team
+				 */
+				'readonly' => true
 			]
 		);
 		
 		$hiddenFieldset->addField(
-			'shop[attributes][]',
+			'shop_attributes',
 			'multiselect',
 			[
 				'name' => 'shop[attributes][]',
@@ -336,11 +356,12 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'required' => true,
 				'values' => $this->productAttributeOptions->toOptionArray(),
 				'value' => $this->productAttributeOptions->getAllValues(),
-				'class' => 'multiselect'
+				'class' => 'multiselect',
+				'readonly' => true
 			]
 		);
 		
-        $form->setAction($this->configHelper->getRegisterUrl($model));
+        $form->setAction($this->configHelper->getRegisterUrl($connection));
         $form->setUseContainer(true);
         $this->setForm($form);
 		
