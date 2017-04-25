@@ -5,10 +5,6 @@ class ConnectionActions extends \Magento\Ui\Component\Listing\Columns\Column
 {
 
     protected $urlBuilder;
-    const URL_PATH_EDIT 	= 'adcurve_adcurve/connection/edit';
-    const URL_PATH_DELETE 	= 'adcurve_adcurve/connection/delete';
-    const URL_PATH_DETAILS 	= 'adcurve_adcurve/connection/details';
-	const URL_PATH_ADCURVE_REGISTER_FORM = 'adcurve_adcurve/connection/register';
 
     /**
      * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
@@ -39,34 +35,34 @@ class ConnectionActions extends \Magento\Ui\Component\Listing\Columns\Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['connection_id'])) {
-                	if ($item['status'] == 2) {
+                	if ($item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_PRE_REGISTRATION) {
 						$item[$this->getData('name')]['setup'] = [
                             'href' => $this->urlBuilder->getUrl(
-                                static::URL_PATH_ADCURVE_REGISTER_FORM,
-                                [
-                                    'connection_id' => $item['connection_id']
-                                ]
+                                'adcurve_adcurve/connection/register', ['connection_id' => $item['connection_id']]
                             ),
                             'label' => __('Setup Adcurve Connection')
                         ];
 					}
 					
+					if ($item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_POST_REGISTRATION) {
+						$item[$this->getData('name')]['setup'] = [
+                            'href' => $this->urlBuilder->getUrl(
+                                'adcurve_adcurve/connection/validate', ['connection_id' => $item['connection_id']]
+                            ),
+                            'label' => __('Validate Connection')
+                        ];
+					}
+					
                     $item[$this->getData('name')]['edit'] = [
                         'href' => $this->urlBuilder->getUrl(
-                            static::URL_PATH_EDIT,
-                            [
-                                'connection_id' => $item['connection_id']
-                            ]
+                            'adcurve_adcurve/connection/edit', ['connection_id' => $item['connection_id']]
                         ),
                         'label' => __('Edit')
                     ];
 					
                     $item[$this->getData('name')]['delete'] = [
                         'href' => $this->urlBuilder->getUrl(
-                            static::URL_PATH_DELETE,
-                            [
-                                'connection_id' => $item['connection_id']
-                            ]
+                            'adcurve_adcurve/connection/delete', ['connection_id' => $item['connection_id']]
                         ),
                         'label' => __('Delete'),
                         'confirm' => [

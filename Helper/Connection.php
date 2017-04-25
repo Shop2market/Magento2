@@ -38,19 +38,39 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
 	}
 	
 	/**
-	 * Get Access tokens of Adcurve Integration
+	 * Get Access tokens of the Adcurve Integration
 	 * 
 	 * @return string $accessToken
 	 */
 	public function getIntegrationAccessToken()
 	{
+		/** @var \Magento\Integration\Model\Integration $itegration */
 		$integration = $this->integrationService->findByName('AdcurveIntegration');
 		if (!$integration || !$integration->getStatus() || !$integration->getConsumerId()) {
 			return false;
 		}
 		
+		/**
+		 * @var \Magento\Integration\Model\Oauth\Token $accessToken
+		 * 
+		 * For example contains the following data:
+		 * 'type' => string 'access' (length=6)
+		 * 'token' => string 'aaaaaa_token_example_aaaaaaa' (length=32)
+		 * 'secret' => string 'aaaaaa_secret_example_aaaaaa' (length=32)
+		 * 'verifier' => string 'aaaaa_verifier_example_aaaaa' (length=32)
+		 */
 		$accessToken = $this->_oauthService->getAccessToken($integration->getConsumerId());
-		return $accessToken;
+		
+		if (!$accessToken) {
+			return false;
+		}
+		
+		if (!$accessToken->getData('token')) {
+			return false;
+		}
+		
+		// @TODO: Verify if this public token is enough to make all the calls that are required by Adcurve
+		return $accessToken->getData('token');
 	}
 
     /**
@@ -175,27 +195,25 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * Return url to come back after an successfully installation
+     * Return url to come back after a successful Adcurve registration
      *
-     * @param $storeId
+     * @param \Adcurve\Adcurve\Model\Connection $connection
      *
-     * @return mixed
+     * @return string $url
      */
-    public function getSuccessUrl()
+    public function getSuccessUrl($connection)
     {
-    	// @TODO: Create controller for successful registration
-        return $this->backendUrlBuilder->getUrl('adcurve_adcurve/connection/index');
+        return $this->backendUrlBuilder->getUrl('adcurve_adcurve/connection/registration_success', ['connection_id' => $connection->getId()]);
     }
 
     /**
-     * Return url to come back after an failed installation
+     * Return url to come back after a failed Adcurve installation
      *
-     * @return mixed
+     * @return string $url
      */
     public function getFailUrl()
     {
-    	// @TODO: Create controller for failed registration
-        return $this->backendUrlBuilder->getUrl('adcurve_adcurve/connection/index');
+        return $this->backendUrlBuilder->getUrl('adcurve_adcurve/connection/registration_failed');
     }
 
     /**

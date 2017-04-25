@@ -40,7 +40,7 @@ class Index extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 			return $resultRedirect->setPath(self::URL_PATH_ADCURVE_INTEGRATION_ACTIVATION);
 		}
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__('Connection'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Adcurve Connection Management'));
         return $resultPage;
     }
 }

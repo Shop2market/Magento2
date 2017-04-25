@@ -287,7 +287,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 		
 		$hiddenFieldset = $form->addFieldset(
             'hidden_fieldset',
-            ['legend' => __('Hidden information'), 'class' => 'hidden']
+            ['legend' => __('Hidden information')/** TODO: Re-hide all irrelevant automatically filled fields, 'class' => 'hidden' */]
         );
 		
 		$hiddenFieldset->addField(
@@ -311,7 +311,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'label' => __('Successful registration return url'),
 				'title' => __('Successful registration return url'),
 				'required' => true,
-				'value' => $this->connectionHelper->getSuccessUrl(),
+				'value' => $this->connectionHelper->getSuccessUrl($connection),
 				'readonly' => true
 			]
 		);

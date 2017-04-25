@@ -22,28 +22,25 @@ class Edit extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 
     /**
      * Edit action
-     *
+     * 
      * @return \Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
-        // 1. Get ID and create model
         $id = $this->getRequest()->getParam('connection_id');
-        $model = $this->_objectManager->create('Adcurve\Adcurve\Model\Connection');
+        $connection = $this->_objectManager->create('Adcurve\Adcurve\Model\Connection');
         
-        // 2. Initial checking
         if ($id) {
-            $model->load($id);
-            if (!$model->getId()) {
+            $connection->load($id);
+            if (!$connection->getId()) {
                 $this->messageManager->addError(__('This Connection no longer exists.'));
                 /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
                 $resultRedirect = $this->resultRedirectFactory->create();
                 return $resultRedirect->setPath('*/*/');
             }
         }
-        $this->_coreRegistry->register('adcurve_adcurve_connection', $model);
+        $this->_coreRegistry->register('adcurve_adcurve_connection', $connection);
         
-        // 5. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->addBreadcrumb(
@@ -51,7 +48,7 @@ class Edit extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
             $id ? __('Edit Connection') : __('New Connection')
         );
         $resultPage->getConfig()->getTitle()->prepend(__('Connections'));
-        $resultPage->getConfig()->getTitle()->prepend($model->getId() ? $model->getTitle() : __('New Connection'));
+        $resultPage->getConfig()->getTitle()->prepend($connection->getId() ? $connection->getTitle() : __('New Connection'));
         return $resultPage;
     }
 }

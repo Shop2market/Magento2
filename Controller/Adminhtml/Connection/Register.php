@@ -51,8 +51,8 @@ class Register extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 		
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $this->initPage($resultPage)->addBreadcrumb(__('Setup Adcurve Connection'), __('Setup Adcurve Connection'));
-        $resultPage->getConfig()->getTitle()->prepend(__('Setup connection for %1 (%2).', [$connection->getStoreName(), $connection->getStoreCode()]));
+        $this->initPage($resultPage)->addBreadcrumb(__('Register shop to Adcurve'), __('Register shop to Adcurve'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Register %1 (%2) at Adcurve', [$connection->getStoreName(), $connection->getStoreCode()]));
 		
         return $resultPage;
     }

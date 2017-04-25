@@ -3,8 +3,6 @@ namespace Adcurve\Adcurve\Controller\Adminhtml\Integration;
 
 class Activate extends \Magento\Backend\App\Action
 {
-	const URL_PATH_ADCURVE_CONNECTIONS_INDEX = 'adcurve_adcurve/connection/index';
-	
 	protected $resultPageFactory;
 	protected $integrationService;
 	protected $_oauthService;
@@ -57,6 +55,6 @@ class Activate extends \Magento\Backend\App\Action
 		
 		$this->messageManager->addSuccess(__('Adcurve Magento Integration was successfully established.'));
         $resultRedirect = $this->resultRedirectFactory->create();
-		return $resultRedirect->setPath(self::URL_PATH_ADCURVE_CONNECTIONS_INDEX);
+		return $resultRedirect->setPath('adcurve_adcurve/connection/index');
     }
 }
