@@ -44,7 +44,7 @@ class Success extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
         $connection = $this->connectionFactory->create()->load($id);
 		
         if (!$connection->getId() && $id) {
-            $this->messageManager->addError(__('This Connection no longer exists.'));
+            $this->messageManager->addError(__('This Connection entity no longer exists in Magento.'));
             return $resultRedirect->setPath('*/*/');
         }
 		
@@ -54,7 +54,11 @@ class Success extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
         $connection->setAdcurveToken($apiToken);
         try {
             $connection->save();
-            $this->messageManager->addSuccess(__('Adcurve registration successfully completed.'));
+            $this->messageManager->addSuccess(__(
+            	'Adcurve registration successfully completed.<br />
+            	A email has been sent to %1, where you can complete the registration process.',
+            	$connection->getContactEmail()
+			));
     		
             if ($this->getRequest()->getParam('back')) {
                 return $resultRedirect->setPath('*/*/edit', ['connection_id' => $connection->getId()]);
