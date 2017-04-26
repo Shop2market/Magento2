@@ -49,7 +49,6 @@ class InstallSchema implements InstallSchemaInterface
 		$adcurveConnectionTable->addColumn('store_name', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Store Name');
         $adcurveConnectionTable->addColumn('store_code', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Shop Code');
 		$adcurveConnectionTable->addColumn('production_mode', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, ['nullable' => false, 'default' => 0], 'Production Mode');
-		$adcurveConnectionTable->addColumn('is_adcurve_ready', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, ['nullable' => false, 'default' => 0], 'Adcurve Ready');
 		$adcurveConnectionTable->addColumn('adcurve_shop_id', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Adcurve Shop ID');
 		$adcurveConnectionTable->addColumn('adcurve_token', \Magento\Framework\DB\Ddl\Table::TYPE_TEXT, 255, [], 'Adcurve Token');
 		$adcurveConnectionTable->addColumn('status', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, [], 'Status');

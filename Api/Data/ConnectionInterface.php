@@ -8,7 +8,6 @@ interface ConnectionInterface
 	const STORE_NAME 		= 'store_name';
 	const STORE_CODE 		= 'store_code';
 	const PRODUCTION_MODE 	= 'production_mode';
-	const IS_ADCURVE_READY 	= 'is_adcurve_ready';
 	const ADCURVE_SHOP_ID 	= 'adcurve_shop_id';
 	const ADCURVE_TOKEN 	= 'adcurve_token';
 	const STATUS 			= 'status';
@@ -104,19 +103,6 @@ interface ConnectionInterface
      * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
      */
     public function setProductionMode($production_mode);
-
-    /**
-     * Get is_adcurve_ready
-     * @return string|null
-     */
-    public function getIsAdcurveReady();
-
-    /**
-     * Set is_adcurve_ready
-     * @param string $is_adcurve_ready
-     * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
-     */
-    public function setIsAdcurveReady($is_adcurve_ready);
 
     /**
      * Get adcurve_shop_id
