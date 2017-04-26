@@ -111,19 +111,6 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 					[$connection->getStoreName(), $connection->getStoreCode()]
 				));
 			}
-			
-			// @TODO: Manage status of connection to Adcurve somehow
-	        if($connection->getStatus() && $connection->getAdcurveShopId() && $connection->getAdcurveToken()){
-	        	//@TODO - Finish connection check and save the status herefor existing Adcurve connections
-	        	$result = $this->statusRequest->getConnectionStatus($connection);
-				var_dump($result);
-	        	continue;
-			} else{
-				$this->messageManager->addNotice(__(
-					'Registration for <strong>%1 (%2)</strong> is not complete.',
-					[$connection->getStoreName(), $connection->getStoreCode()]
-				));
-			}
 		}
 		
 		return $resultRedirect->setPath('*/*/');

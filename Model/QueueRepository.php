@@ -1,57 +1,57 @@
 <?php
 namespace Adcurve\Adcurve\Model;
 
-use Adcurve\Adcurve\Api\UpdateRepositoryInterface;
-use Adcurve\Adcurve\Api\Data\UpdateSearchResultsInterfaceFactory;
-use Adcurve\Adcurve\Api\Data\UpdateInterfaceFactory;
-use Magento\Framework\Api\DataObjectHelper;
+use Adcurve\Adcurve\Model\ResourceModel\Queue\CollectionFactory as QueueCollectionFactory;
+use Adcurve\Adcurve\Api\Data\QueueInterfaceFactory;
+use Adcurve\Adcurve\Model\ResourceModel\Queue as ResourceQueue;
+use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Framework\Api\SortOrder;
-use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Framework\Reflection\DataObjectProcessor;
-use Adcurve\Adcurve\Model\ResourceModel\Update as ResourceUpdate;
-use Adcurve\Adcurve\Model\ResourceModel\Update\CollectionFactory as UpdateCollectionFactory;
+use Adcurve\Adcurve\Api\Data\QueueSearchResultsInterfaceFactory;
+use Adcurve\Adcurve\Api\QueueRepositoryInterface;
+use Magento\Framework\Api\DataObjectHelper;
+use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Store\Model\StoreManagerInterface;
 
-class UpdateRepository implements UpdateRepositoryInterface
+class QueueRepository implements QueueRepositoryInterface
 {
-    protected $resource;
-    protected $UpdateFactory;
-    protected $UpdateCollectionFactory;
-    protected $searchResultsFactory;
-    protected $dataObjectHelper;
-    protected $dataObjectProcessor;
-    protected $dataUpdateFactory;
 
+    protected $dataObjectHelper;
+    protected $searchResultsFactory;
+    protected $QueueFactory;
+    protected $dataQueueFactory;
     private $storeManager;
+    protected $resource;
+    protected $dataObjectProcessor;
+    protected $QueueCollectionFactory;
 
     /**
-     * @param ResourceUpdate $resource
-     * @param UpdateFactory $updateFactory
-     * @param UpdateInterfaceFactory $dataUpdateFactory
-     * @param UpdateCollectionFactory $updateCollectionFactory
-     * @param UpdateSearchResultsInterfaceFactory $searchResultsFactory
+     * @param ResourceQueue $resource
+     * @param QueueFactory $queueFactory
+     * @param QueueInterfaceFactory $dataQueueFactory
+     * @param QueueCollectionFactory $queueCollectionFactory
+     * @param QueueSearchResultsInterfaceFactory $searchResultsFactory
      * @param DataObjectHelper $dataObjectHelper
      * @param DataObjectProcessor $dataObjectProcessor
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        ResourceUpdate $resource,
-        UpdateFactory $updateFactory,
-        UpdateInterfaceFactory $dataUpdateFactory,
-        UpdateCollectionFactory $updateCollectionFactory,
-        UpdateSearchResultsInterfaceFactory $searchResultsFactory,
+        ResourceQueue $resource,
+        QueueFactory $queueFactory,
+        QueueInterfaceFactory $dataQueueFactory,
+        QueueCollectionFactory $queueCollectionFactory,
+        QueueSearchResultsInterfaceFactory $searchResultsFactory,
         DataObjectHelper $dataObjectHelper,
         DataObjectProcessor $dataObjectProcessor,
         StoreManagerInterface $storeManager
     ) {
         $this->resource = $resource;
-        $this->updateFactory = $updateFactory;
-        $this->updateCollectionFactory = $updateCollectionFactory;
+        $this->queueFactory = $queueFactory;
+        $this->queueCollectionFactory = $queueCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
         $this->dataObjectHelper = $dataObjectHelper;
-        $this->dataUpdateFactory = $dataUpdateFactory;
+        $this->dataQueueFactory = $dataQueueFactory;
         $this->dataObjectProcessor = $dataObjectProcessor;
         $this->storeManager = $storeManager;
     }
@@ -60,36 +60,49 @@ class UpdateRepository implements UpdateRepositoryInterface
      * {@inheritdoc}
      */
     public function save(
-        \Adcurve\Adcurve\Api\Data\UpdateInterface $update
+        \Adcurve\Adcurve\Api\Data\QueueInterface $queue
     ) {
-        /* if (empty($update->getStoreId())) {
+        /* if (empty($queue->getStoreId())) {
             $storeId = $this->storeManager->getStore()->getId();
-            $update->setStoreId($storeId);
+            $queue->setStoreId($storeId);
         } */
         try {
-            $this->resource->save($update);
+            $this->resource->save($queue);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__(
-                'Could not save the update: %1',
+                'Could not save the queue: %1',
                 $exception->getMessage()
             ));
         }
-        return $update;
+        return $queue;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getById($updateId)
+    public function getById($queueId)
     {
-        $update = $this->updateFactory->create();
-        $update->load($updateId);
-        if (!$update->getId()) {
-            throw new NoSuchEntityException(__('Update with id "%1" does not exist.', $updateId));
+        $queue = $this->queueFactory->create();
+        $queue->load($queueId);
+        if (!$queue->getId()) {
+            throw new NoSuchEntityException(__('Queue with id "%1" does not exist.', $queueId));
         }
-        return $update;
+        return $queue;
     }
-
+	
+	/**
+     * {@inheritdoc}
+     */
+    public function getByStoreId($storeId)
+    {
+        $queue = $this->queueFactory->create();
+        $queue->load($storeId, 'store_id');
+        if (!$queue->getId()) {
+            throw new NoSuchEntityException(__('Queue with store_id "%1" does not exist.', $storeId));
+        }
+        return $queue;
+    }
+	
     /**
      * {@inheritdoc}
      */
@@ -99,7 +112,7 @@ class UpdateRepository implements UpdateRepositoryInterface
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
         
-        $collection = $this->updateCollectionFactory->create();
+        $collection = $this->queueCollectionFactory->create();
         foreach ($criteria->getFilterGroups() as $filterGroup) {
             foreach ($filterGroup->getFilters() as $filter) {
                 if ($filter->getField() === 'store_id') {
@@ -125,16 +138,16 @@ class UpdateRepository implements UpdateRepositoryInterface
         $collection->setPageSize($criteria->getPageSize());
         $items = [];
         
-        foreach ($collection as $updateModel) {
-            $updateData = $this->dataUpdateFactory->create();
+        foreach ($collection as $queueModel) {
+            $queueData = $this->dataQueueFactory->create();
             $this->dataObjectHelper->populateWithArray(
-                $updateData,
-                $updateModel->getData(),
-                'Adcurve\Adcurve\Api\Data\UpdateInterface'
+                $queueData,
+                $queueModel->getData(),
+                'Adcurve\Adcurve\Api\Data\QueueInterface'
             );
             $items[] = $this->dataObjectProcessor->buildOutputDataArray(
-                $updateData,
-                'Adcurve\Adcurve\Api\Data\UpdateInterface'
+                $queueData,
+                'Adcurve\Adcurve\Api\Data\QueueInterface'
             );
         }
         $searchResults->setItems($items);
@@ -145,13 +158,13 @@ class UpdateRepository implements UpdateRepositoryInterface
      * {@inheritdoc}
      */
     public function delete(
-        \Adcurve\Adcurve\Api\Data\UpdateInterface $update
+        \Adcurve\Adcurve\Api\Data\QueueInterface $queue
     ) {
         try {
-            $this->resource->delete($update);
+            $this->resource->delete($queue);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__(
-                'Could not delete the Update: %1',
+                'Could not delete the Queue: %1',
                 $exception->getMessage()
             ));
         }
@@ -161,8 +174,8 @@ class UpdateRepository implements UpdateRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function deleteById($updateId)
+    public function deleteById($queueId)
     {
-        return $this->delete($this->getById($updateId));
+        return $this->delete($this->getById($queueId));
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Adcurve\Adcurve\Cron;
 
-class Updates
+class ProcessUpdates
 {
 	/** The maximum amount of time the cron can spend on processing product updates */
     const MAX_PROCESSING_TIME       = 30;

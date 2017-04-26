@@ -3,37 +3,49 @@ namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
 class Delete extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 {
+	protected $connectionFactory;
+	
+	/**
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
+     */
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\Registry $coreRegistry,
+        \Adcurve\Adcurve\Model\ConnectionFactory $connectionFactory
+    ) {
+		$this->connectionFactory = $connectionFactory;
+        parent::__construct($context, $coreRegistry);
+    }
+	
     /**
-     * Delete action
-     *
+     * Delete Adcurve Connection Action
+     * 
      * @return \Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
-        // check if we know what should be deleted
         $id = $this->getRequest()->getParam('connection_id');
-        if ($id) {
-            try {
-                // init model and delete
-                $model = $this->_objectManager->create('Adcurve\Adcurve\Model\Connection');
-                $model->load($id);
-                $model->delete();
-                // display success message
-                $this->messageManager->addSuccess(__('You deleted the Connection.'));
-                // go to grid
-                return $resultRedirect->setPath('*/*/');
-            } catch (\Exception $e) {
-                // display error message
-                $this->messageManager->addError($e->getMessage());
-                // go back to edit form
-                return $resultRedirect->setPath('*/*/edit', ['connection_id' => $id]);
-            }
+        if (!$id) {
+			$this->messageManager->addError(__('We can\'t find a Connection to delete.'));
+        	return $resultRedirect->setPath('*/*/');
+		}
+		$connection = $this->connectionFactory->create()->load($id);
+		
+		if (!$connection->getId() && $id) {
+            $this->messageManager->addError(__('This Connection no longer exists.'));
+            return $resultRedirect->setPath('*/*/');
         }
-        // display error message
-        $this->messageManager->addError(__('We can\'t find a Connection to delete.'));
-        // go to grid
-        return $resultRedirect->setPath('*/*/');
+		
+        try {
+            $connection->delete();
+            $this->messageManager->addSuccess(__('Adcurve Connection successfully removed.'));
+            return $resultRedirect->setPath('*/*/');
+        } catch (\Exception $e) {
+            $this->messageManager->addError($e->getMessage());
+            return $resultRedirect->setPath('*/*/');
+        }
     }
 }

@@ -16,12 +16,12 @@ class InstallSchema implements InstallSchemaInterface
 		
         $adcurveUpdateTable = $setup->getConnection()->newTable($setup->getTable('adcurve_update'));
         $adcurveUpdateTable->addColumn(
-            'update_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, array(
+            'update_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, [
                 'unsigned' => true,
                 'nullable' => false,
                 'primary'  => true,
                 'identity' => true,
-            ), 'Update ID'
+            ], 'Update ID'
         );
         $adcurveUpdateTable->addColumn('product_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, [], 'Product ID');
         $adcurveUpdateTable->addColumn('store_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, [], 'Store ID');
@@ -69,6 +69,19 @@ class InstallSchema implements InstallSchemaInterface
 		$adcurveConnectionTable->addColumn('updated_at', \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP, null, [], 'Updated At');
 		
         $setup->getConnection()->createTable($adcurveConnectionTable);
+		
+		$adcurveQueueTable = $setup->getConnection()->newTable($setup->getTable('adcurve_queue'));
+        $adcurveQueueTable->addColumn(
+            'queue_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, [
+	            'identity' => true,
+	            'nullable' => false,
+	            'primary' => true,
+	            'unsigned' => true
+            ], 'Queue ID'
+        );
+        $adcurveQueueTable->addColumn('store_id', \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, null, [], 'store_id');
+		
+        $setup->getConnection()->createTable($adcurveQueueTable);
 		
         $setup->endSetup();
     }

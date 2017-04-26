@@ -16,6 +16,12 @@
 					<resource id="Adcurve_Adcurve::Connection_update" sortOrder="30" title="Update Connection"/>
 					<resource id="Adcurve_Adcurve::Connection_view" sortOrder="40" title="View Connection"/>
 				</resource>
+				<resource id="Adcurve_Adcurve::Queue" sortOrder="10" title="Queue">
+					<resource id="Adcurve_Adcurve::Queue_save" sortOrder="10" title="Save Queue"/>
+					<resource id="Adcurve_Adcurve::Queue_delete" sortOrder="20" title="Delete Queue"/>
+					<resource id="Adcurve_Adcurve::Queue_update" sortOrder="30" title="Update Queue"/>
+					<resource id="Adcurve_Adcurve::Queue_view" sortOrder="40" title="View Queue"/>
+				</resource>
 			</resource>
 		</resources>
 	</acl>

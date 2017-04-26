@@ -16,4 +16,7 @@
 	<preference for="Adcurve\Adcurve\Api\ConnectionRepositoryInterface" type="Adcurve\Adcurve\Model\ConnectionRepository" />
 	<preference for="Adcurve\Adcurve\Api\Data\ConnectionInterface" type="Adcurve\Adcurve\Model\Connection" />
 	<preference for="Adcurve\Adcurve\Api\Data\ConnectionSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+	<preference for="Adcurve\Adcurve\Api\QueueRepositoryInterface" type="Adcurve\Adcurve\Model\QueueRepository"/>
+	<preference for="Adcurve\Adcurve\Api\Data\QueueInterface" type="Adcurve\Adcurve\Model\Queue"/>
+	<preference for="Adcurve\Adcurve\Api\Data\QueueSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 </config>

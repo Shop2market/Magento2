@@ -17,13 +17,13 @@ class StatusRequest extends AbstractRequest
     public function getConnectionStatus($connection)
     {
     	if (!$connection->getId()) {
-    		throw new \Magento\Framework\Validator\Exception(__('A valid Adcurve Connection model is required'));
+    		return false;
     	}
 		
 		$this->_setConnectionModel($connection);
 		
         if(!$this->configHelper->isApiConfigured($this->_getConnectionModel())){
-        	throw new \Magento\Framework\Validator\Exception(__('API not configured'));
+			return false;
         }
 		
         $this->_prepareRequest();
@@ -46,7 +46,7 @@ class StatusRequest extends AbstractRequest
 			case self::STATUS_SUCCESS:
 				$this->_getConnectionModel()->setStatus(\Adcurve\Adcurve\Model\Connection::STATUS_SUCCESS);
 				$this->_getConnectionModel()->setSuggestion(
-					__('Connection successfully established. No further action is needed.')
+					__('Connection to Adcurve is successfully established. No further action is needed.')
 				);
 				break;
 		}
@@ -58,7 +58,6 @@ class StatusRequest extends AbstractRequest
         } catch (\Exception $e) {
             $this->messageManager->addException($e, __('Something went wrong while saving the Connection.'));
         }
-		
 		
 		/**
 		 *  @TODO: Re-implement the test mode (including notifications)

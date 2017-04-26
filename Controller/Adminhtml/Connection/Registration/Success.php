@@ -48,6 +48,7 @@ class Success extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
             return $resultRedirect->setPath('*/*/');
         }
 		
+		$connection->setEnabled(1);
         $connection->setSuggestion(__('Registration completed. Please validate the connection by testing the connectivity to the right.'));
 		$connection->setStatus(\Adcurve\Adcurve\Model\Connection::STATUS_POST_REGISTRATION);
 		$connection->setAdcurveShopId($shopId);
