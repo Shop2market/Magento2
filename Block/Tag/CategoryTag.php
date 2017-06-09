@@ -3,8 +3,6 @@ namespace Adcurve\Adcurve\Block\Tag;
 
 class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
 {
-	protected $registry;
-	
 	public $configHelper;
 	public $tagHelper;
 	
@@ -19,14 +17,11 @@ class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
         \Magento\Catalog\Model\Layer\Resolver $layerResolver,
         \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository,
         \Magento\Framework\Url\Helper\Data $urlHelper,
-        \Magento\Framework\Registry $registry,
         \Adcurve\Adcurve\Helper\Config $configHelper,
 		\Adcurve\Adcurve\Helper\Tag $tagHelper,
 		\Magento\Catalog\Model\ResourceModel\Category $categoryResource,
 		array $data = []
 	){
-		// @TODO: Solve the mysterious registry DI warning, stating "registry already exists in context object"
-		$this->registry = $registry;
 		$this->configHelper = $configHelper;
 		$this->tagHelper = $tagHelper;
 		$this->categoryResource = $categoryResource;
