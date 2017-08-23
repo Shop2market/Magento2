@@ -10,7 +10,16 @@
         {
             "email": "boris@experius.nl",
             "name": "Boris van Katwijk"
-        }
+        },
+        {
+            "email": "maria@adcurve.com",
+            "name": "Maria Gil"
+        },
+        {
+            "email": "qsmidrees@gmail.com",
+            "name": "Qasim Idrees"
+        },
+
     ],
     "minimum-stability": "dev",
     "require": {},
