@@ -18,9 +18,7 @@
         {
             "email": "qsmidrees@gmail.com",
             "name": "Qasim Idrees War"
-        },
-
-    ],
+        }],
     "minimum-stability": "dev",
     "require": {},
     "type": "magento2-module",
