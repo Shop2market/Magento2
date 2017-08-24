@@ -1,5 +1,5 @@
 {
-    "name": "adcurve/module-adcurve",
+    "name": "adcurve/adcurve",
     "description": "",
     "license": "proprietary",
     "authors": [
@@ -22,25 +22,15 @@
 
     ],
     "minimum-stability": "dev",
-    "require": {
-        "magento/magento-composer-installer": "*"
-    },
+    "require": {},
     "type": "magento2-module",
     "version": "0.1.0",
-    "extra": {
-        "map": [
-            [
-                "*",
-                "Adcurve/Adcurve"
-            ]
-        ]
-    },
     "autoload": {
         "files": [
-            "registration.php"
+            "app/code/Adcurve/Adcurve/registration.php"
         ],
         "psr-4": {
-            "Adcurve\\Adcurve\\": ""
+            "Adcurve\\Adcurve\\": "app/code/Adcurve/Adcurve"
         }
     }
 }

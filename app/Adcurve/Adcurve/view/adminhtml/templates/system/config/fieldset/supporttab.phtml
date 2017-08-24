@@ -1,0 +1,65 @@
+<?php
+/**
+ * @var \Adcurve\Adcurve\Block\System\Config\Fieldset\SupportTab $block
+ */
+?>
+<?php $_newTicketUrl          = $block->getNewTicketUrl(); ?>
+<?php $_installationManualUrl = $block->getInstallationManualUrl(); ?>
+<?php $_changelogUrl          = $block->getChangelogUrl(); ?>
+<?php $_kbUrl                 = $block->getKbUrl(); ?>
+<?php $_version               = $block->configHelper->getModuleVersion(); ?>
+
+<?php $_documentation		  = $block->getDocumentationUrl()?>
+<?php $_publishers            = $block->getPublishersUrl(); ?>
+<?php $_features              = $block->getFeaturesUrl(); ?>
+<?php $_pricing               = $block->getPricingUrl(); ?>
+<?php $_email                 = $block->getContactEmail(); ?>
+<?php $_phone                 = $block->getContactPhone(); ?>
+<span style="font-size:18px;"><strong><?php echo sprintf(__('Adcurve plugin %s'), $_version); ?></strong></span>
+<table id="supportWrap" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <div>
+                <strong><?php echo __('Adcurve introduction'); ?></strong>
+                <p>
+                    <?php echo __('Maximize the ROI of your Product Ads! Do you want to advertise your products at multiple channels in just a few minutes? Do you like to connect to channels and generate perfect channel feeds? Are you curious about the actual ROI of your product ads? Would you like to know how to optimize the profit of your ads?'); ?>
+                </p>
+                <p>
+                    <?php echo __('The Adcurve App helps you to connect your store to advertising channels in just a few clicks. After installation, Adcurve will provide you with tips and tools to optimize the ROI of your ads.'); ?>
+                </p>
+			</div>
+			<br />
+			<div>
+                <strong><?php echo __('Links for more information'); ?></strong>
+                <ul style="list-style:none;">
+                    <li><a target="_blank" href="<?php echo $_publishers; ?>" title="<?php echo $_publishers; ?>"><?php echo $_publishers; ?></a></li>
+                    <li><a target="_blank" href="<?php echo $_features; ?>" title="<?php echo $_features; ?>"><?php echo $_features; ?></a></li>
+                    <li><a target="_blank" href="<?php echo $_pricing; ?>" title="<?php echo $_pricing; ?>"><?php echo $_pricing; ?></a></li>
+                </ul> 
+            </div>
+        </td>
+        <td>&nbsp;</td>
+        <td class="value">
+            <div>
+                <strong><?php echo __('Documentation'); ?></strong>
+                <p><?php echo sprintf(__('Please click <a href="%s" target="_blank">here</a> to find more support documentation.'), $_documentation); ?></p>
+            </div>
+            <br />
+            <div>
+                <strong><?php echo __('Version compatibility'); ?></strong>
+                <ul style="list-style:none;">
+                    <li><?php echo __('Magento Community Edition version'); ?>: <span class="version">v2.1</span> </li>
+                    <li><?php echo __('Magento Enterprise Edition version') ; ?>: <span class="version">v2.1</span> </li>
+                </ul>
+            <div>
+            <br />
+            <div>
+                <strong><?php echo __('Contact adcurve'); ?></strong>
+				<ul style="list-style:none;">
+                    <li><?php echo __('Email'); ?>: <a href="mailto:<?php echo $_email; ?>"><?php echo $_email; ?></a></li>
+                    <li><?php echo __('Phone'); ?>: <?php echo $_phone; ?></li>
+                </ul>
+            <div>
+        </td>
+    </tr>
+</table>
