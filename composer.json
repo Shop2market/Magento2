@@ -34,7 +34,7 @@
                 "Adcurve/Adcurve"
             ]
         ]
-    }
+    },
     "autoload": {
         "files": [
             "registration.php"
