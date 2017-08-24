@@ -17,7 +17,7 @@
         },
         {
             "email": "qsmidrees@gmail.com",
-            "name": "Qasim Idrees"
+            "name": "Qasim Idrees War"
         },
 
     ],
@@ -34,7 +34,7 @@
                 "Adcurve/Adcurve"
             ]
         ]
-    }
+    },
     "autoload": {
         "files": [
             "registration.php"
