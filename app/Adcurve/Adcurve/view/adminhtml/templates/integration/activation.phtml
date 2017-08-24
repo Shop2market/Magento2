@@ -1,0 +1,27 @@
+<?php //** @TODO: Move styling to correct place (css file include) */ ?>
+<style type="text/css">
+	.adcurve-activation-wrapper {
+		display: block;
+		margin: 0 auto;
+		width: 500px;
+	}
+	button.adcurve-integration-activate {
+		display: block;
+		margin: 0 auto;
+	}
+</style>
+<div class="adcurve-activation-wrapper">
+	<div class="explanatory-text">
+		<?php echo __('Adcurve must be able to connect to this Magento installation for it to work.'); ?><br />
+		<br />
+		<?php echo __('By activating the Integration for Magento 2 you allow Adcurve to connect to this Magento installation.'); ?><br />
+		<br />
+		<?php echo __('After the Integration was succesfully tested, the real connection and registration for each store view can begin.'); ?>
+	</div>
+	<br /><br />
+	<a href="<?php echo $block->getActivationUrl(); ?>">
+		<button class="primary adcurve-integration-activate">
+			<span><?php echo __('Start Adcurve Integration'); ?></span>
+		</button>
+	</a>
+</div>

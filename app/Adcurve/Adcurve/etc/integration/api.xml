@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<integrations>
+	<integration name="AdcurveIntegration">
+		<resources>
+			<resource name="Magento_Customer::customer" />
+			<resource name="Magento_Log::online" />
+			<resource name="Magento_Sales::sales" />
+			<resource name="Magento_Sales::sales_operation" />
+			<resource name="Magento_Sales::sales_order" />
+			<resource name="Magento_Sales::actions" />
+			<resource name="Magento_Sales::reorder" />
+		</resources>
+	</integration>
+</integrations>
