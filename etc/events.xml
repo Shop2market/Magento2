@@ -3,7 +3,27 @@
 	<event name="catalog_product_save_after">
 		<observer instance="Adcurve\Adcurve\Observer\Catalog\ProductSaveAfter" name="adcurve_adcurve_observer_catalog_productsaveafter_catalog_product_save_after"/>
 	</event>
-	<event name="catalog_product_delete_after_done">
+	<event name="catalog_product_delete_before">
 		<observer instance="Adcurve\Adcurve\Observer\Catalog\ProductDeleteAfterDone" name="adcurve_adcurve_observer_catalog_productdeleteafterdone_catalog_product_delete_after_done"/>
 	</event>
+	
+	
+	<event name="catalog_product_stock_item_mass_change">
+		<observer instance="Adcurve\Adcurve\Observer\Catalog\ProductStockItemMassChange" name="adcurve_adcurve_observer_catalog_product_stock_item_mass_change"/>
+	</event>
+	<event name="cataloginventory_stock_revert_products_sale">
+		<observer instance="Adcurve\Adcurve\Observer\Catalog\ProductStockRevertSale" name="adcurve_adcurve_observer_cataloginventory_stock_revert_products_sale"/>
+	</event>
+	<event name="sales_order_item_cancel">
+		<observer instance="Adcurve\Adcurve\Observer\Order\ItemCancel" name="adcurve_adcurve_observer_sales_order_item_cancel"/>
+	</event>
+	<event name="checkout_submit_all_after">
+		<observer instance="Adcurve\Adcurve\Observer\Checkout\SubmitAll" name="adcurve_adcurve_observer_checkout_submit_all_after"/>
+	</event>
+	
+	
+	<event name="admin_system_config_changed_section_adcurve">
+        <observer name="custom_admin_system_config_changed_section_adcurve" instance="Adcurve\Adcurve\Observer\Config\ConfigObserver"/>
+    </event>
+	
 </config>

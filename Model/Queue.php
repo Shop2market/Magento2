@@ -7,6 +7,9 @@ use Adcurve\Adcurve\Api\Data\QueueInterface;
 
 class Queue extends \Magento\Framework\Model\AbstractModel implements QueueInterface
 {
+    const QUEUE_STATUS_NEW         = 'new';
+    const QUEUE_STATUS_UPDATE 	   = 'update';
+    const QUEUE_STATUS_COMPLETE    = 'complete';
 
     /**
      * @return void
@@ -30,10 +33,8 @@ class Queue extends \Magento\Framework\Model\AbstractModel implements QueueInter
      * @param string $queueId
      * @return Adcurve\Adcurve\Api\Data\QueueInterface
      */
-    public function setQueueId($queueId, $queue_id)
+    public function setQueueId($queue_id)
     {
-        return $this->setData(self::QUEUE_ID, $queueId);
-
         return $this->setData(self::QUEUE_ID, $queue_id);
     }
 
@@ -55,4 +56,44 @@ class Queue extends \Magento\Framework\Model\AbstractModel implements QueueInter
     {
         return $this->setData(self::STORE_ID, $store_id);
     }
+
+
+    /**
+     * Get page_no
+     * @return string
+     */
+    public function getPageNo()
+    {
+        return $this->getData(self::PAGE_NO);
+    }
+
+    /**
+     * Set page_no
+     * @param string $page_no
+     * @return Adcurve\Adcurve\Api\Data\QueueInterface
+     */
+    public function setPageNo($page_no)
+    {
+        return $this->setData(self::PAGE_NO, $page_no);
+    }
+
+    /**
+     * Get status
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->getData(self::STATUS);
+    }
+
+    /**
+     * Set status
+     * @param string status
+     * @return Adcurve\Adcurve\Api\Data\QueueInterface
+     */
+    public function setStatus($status)
+    {
+        return $this->setData(self::STATUS, $status);
+    }
+
 }

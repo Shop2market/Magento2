@@ -26,7 +26,8 @@ class ProductDeleteAfterDone implements \Magento\Framework\Event\ObserverInterfa
     ) {
     	$origData = $observer->getEvent()->getProduct()->getOrigData();
 		
-		foreach($this->storeManager->getStores() as $store){
+		foreach ($this->storeManager->getStores() as $store) {
+			
 			$configurableId = $this->productHelper->getConfigurableproductId($origData['entity_id'], $origData['type_id']);
 			$preparedData = [
 				'entity_id' 		=> $origData['entity_id'],
@@ -36,7 +37,8 @@ class ProductDeleteAfterDone implements \Magento\Framework\Event\ObserverInterfa
 				'simple_id' 		=> $origData['entity_id'],
 				'configurable_id' 	=> $configurableId
 			];
-			$this->productHelper->saveUpdateForAdcurve($preparedData);
+				
+			$this->productHelper->saveUpdateForAdcurveProductDelete($preparedData);
 		}
     }
 }

@@ -80,7 +80,7 @@ class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInt
     public function getProductData($key = null)
     {
     	$serializedData = $this->getData('product_data');
-		if(!$serializedData){
+		if (!$serializedData) {
 			return false;
 		}
         $productData = unserialize($serializedData);
@@ -142,7 +142,7 @@ class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInt
     {
         $this->setRetryCount($this->getRetryCount() + 1);
 		
-        if($save){
+        if ($save) {
             $this->save();
         }
 		

@@ -1,4 +1,4 @@
-<?php if($block->configHelper->shouldRenderTags()): ?>
+<?php if ($block->configHelper->shouldRenderTags()): ?>
     <!-- Start of Adcurve cart tag -->
     <script type="text/javascript">
         window.s2m_configuration = new Object();
@@ -7,7 +7,7 @@
         window.s2m_configuration.s2m_email_hash = "<?php echo $block->tagHelper->getCustomerEmailHash(); ?>";
         window.s2m_configuration.s2m_cart_items = [];
         <?php $count = 0; ?>
-        <?php foreach($block->getItems() as $item): ?>
+        <?php foreach ($block->getItems() as $item): ?>
             <?php
                 $_productPriceInclTax = $block->tagHelper->getProductPriceInclTax($item->getProduct());
                 $_productPriceExclTax = $block->tagHelper->getProductPriceExclTax($item->getProduct());
@@ -19,7 +19,7 @@
             cart_item.s2m_amount_1 = "<?php echo $_productPriceInclTax; ?>";
             cart_item.s2m_amount_2 = "<?php echo $_productPriceExclTax; ?>";
             window.s2m_configuration.s2m_cart_items.push(cart_item);
-            <?php $count++; if($count == 5){ break; } ?>
+            <?php $count++; if ($count == 5) { break; } ?>
         <?php endforeach; ?>
     </script>
     <!-- End of Adcurve cart tag -->

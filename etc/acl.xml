@@ -22,6 +22,7 @@
 					<resource id="Adcurve_Adcurve::Queue_update" sortOrder="30" title="Update Queue"/>
 					<resource id="Adcurve_Adcurve::Queue_view" sortOrder="40" title="View Queue"/>
 				</resource>
+
 			</resource>
 		</resources>
 	</acl>

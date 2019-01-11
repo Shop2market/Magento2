@@ -33,6 +33,8 @@ class Save extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+		
+		
         if (!$data) {
         	$this->messageManager->addError(__('Something went wrong with saving the data, please try again.'));
         	return $resultRedirect->setPath('*/*/');
@@ -53,8 +55,11 @@ class Save extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 		
 		$data['suggestion'] = __('All required information is present, please continue by registering on Adcurve (button to the right).');
 		$data['status'] = \Adcurve\Adcurve\Model\Connection::STATUS_PRE_REGISTRATION;
-        $connection->setData($data);
-    	
+        //by default
+		$data['production_mode']=1;
+		
+		$connection->setData($data);
+		
         try {
             $connection->save();
             $this->messageManager->addSuccess(__('Adcurve connection succesfully enriched with required information.'));

@@ -44,27 +44,27 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
     	$storeList = $this->_storeManager->getStores();
 		
 		$roleCreated = $this->adminUser->createAdcurveRole();
-		if($roleCreated){
+		if ($roleCreated) {
 			$this->messageManager->addSuccess(__('<strong>Adcurve</strong> API role was successfully created.'));
 		}
 		
 		$this->soapPassword = false;
 		$userCreated = $this->adminUser->createAdcurveUser();
-		if($userCreated && $userCreated['created'] == true){
+		if ($userCreated && $userCreated['created'] == true) {
 			$this->soapPassword = $userCreated['password'];
 			$this->messageManager->addSuccess(__('<strong>Adcurve</strong> API user was successfully created.'));
 		}
 		
-		foreach($storeList as $store){
+		foreach ($storeList as $store) {
 			$connection = $this->connectionFactory->create();
 	        $connection->load($store->getId(), 'store_id');
 			
-			if(!$connection->getId()){
+			if (!$connection->getId()) {
 				$connection->setStoreId($store->getId());
 				$connection->setStoreName($store->getName());
 				$connection->setStoreCode($store->getCode());
 				$connection->setSoapUsername('Adcurve');
-				if($this->soapPassword){
+				if ($this->soapPassword) {
 					$connection->setSoapApiKey($this->soapPassword);
 				}
 				$connection->setProductionMode(0);
@@ -86,7 +86,7 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 	                	[$store->getName(), $store->getCode()]
 					));
 	            }
-			} elseif(!$connection->getSoapApiKey() && $this->soapPassword){
+			} elseif (!$connection->getSoapApiKey() && $this->soapPassword) {
 				$connection->setSoapApiKey($this->soapPassword);
 				try {
 					$connection->save();
@@ -103,7 +103,7 @@ class Refresh extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 					));
 	            }
 			} else{
-				if(!$this->soapPassword && $connection->getSoapApiKey()){
+				if (!$this->soapPassword && $connection->getSoapApiKey()) {
 					$this->soapPassword = $connection->getSoapApiKey();
 				}
 				$this->messageManager->addSuccess(__(

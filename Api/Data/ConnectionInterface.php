@@ -25,6 +25,7 @@ interface ConnectionInterface
 	const COMPANY_REGION 	= 'company_region';
 	const COMPANY_COUNTRY 	= 'company_country';
 	const UPDATED_AT 		= 'updated_at';
+	const IS_ADCURVE_READY  = 'is_adcurve_ready';
 
  	/**
      * Get connection_id

@@ -1,9 +1,7 @@
 <?php
 namespace Adcurve\Adcurve\Block\System\Config\Fieldset;
 
-class SupportTab
-	extends \Magento\Backend\Block\Template
-	implements \Magento\Framework\Data\Form\Element\Renderer\RendererInterface
+class SupportTab extends \Magento\Backend\Block\Template implements \Magento\Framework\Data\Form\Element\Renderer\RendererInterface
 {
     const NEW_TICKET_URL_XPATH 			= 'adcurve/support/new_ticket_url';
     const INSTALLATION_MANUAL_URL_XPATH = 'adcurve/support/installation_guide_url';

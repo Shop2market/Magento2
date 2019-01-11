@@ -157,7 +157,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             ['legend' => __('Shop information'), 'class' => 'fieldset-wide']
         );
 		
-		$shopFieldset->addField(
+		/*$shopFieldset->addField(
 			'production_mode',
 			'select',
 			[
@@ -173,7 +173,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'value' => ($connection->getProductionMode()) ? 'live' : 'test',
 				'readonly' => true
 			]
-		);
+		);*/
 		
 		$shopFieldset->addField(
 			'store_id',
@@ -361,6 +361,36 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'readonly' => true
 			]
 		);
+		/*
+		$attributes=$this->productAttributeOptions->toOptionArray();
+		$attrNonExcluded=array();
+		
+		$attrExcluded = "";
+		$arrExc = array();
+		if (strlen($attrExcluded) > 0) {
+			$arrExc = explode(",", $attrExcluded);
+		}
+				
+		
+		foreach ($attributes as $item){
+			
+				$value=$item["value"];
+				$label=$item["label"];
+				if (!in_array($value, $arrExc)) {
+					$attrNonExcluded[str_replace("'","",$value)] = str_replace("'","",$label);
+				}
+		}
+		
+		$form->addField('attribute_backup', 'hidden',
+		array(
+		 'name'      => 'attribute_backup',
+		 'id'        => 'attribute_backup',
+		 'class'     => 'required-entry',
+		 'required'  => true,
+		 'value' =>json_encode($attrNonExcluded),
+		 'readonly'  => true,
+		));*/
+				
 		
         $form->setAction($this->configHelper->getRegisterUrl($connection));
         $form->setUseContainer(true);
@@ -368,4 +398,5 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 		
         return parent::_prepareForm();
     }
+	
 }

@@ -50,7 +50,7 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
      */
     public function getOrderInfo()
     {
-        if(empty($this->orderInfo)){
+        if (empty($this->orderInfo)) {
             $order = $this->_getOrder();
             $this->orderInfo = [
                 'trans_id'              => $order->getIncrementId(),
@@ -113,7 +113,7 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
      */
     protected function _getIsCustomerNew()
     {
-        switch($this->onepageModel->getCheckoutMethod()){
+        switch ($this->onepageModel->getCheckoutMethod()) {
             case \Magento\Checkout\Model\Type\Onepage::METHOD_GUEST:
                 $isNew = '';
                 break;

@@ -24,12 +24,13 @@ class ProductSaveAfter implements \Magento\Framework\Event\ObserverInterface
         $product = $observer->getEvent()->getProduct();
 		
 		// TO DO: add website scope support
-		if($product->getStoreId() == 0){ // Update all storeviews when global scope is edited
-			foreach($product->getStoreIds() as $storeId){
+		if ($product->getStoreId() == 0) { // Update all storeviews when global scope is edited
+			foreach ($product->getStoreIds() as $storeId) {
 				$preparedData = $this->productHelper->getProductData($product, $storeId);
+				
 				$this->productHelper->saveUpdateForAdcurve($preparedData);
 			}
-		} else{
+		} else {
 			$preparedData = $this->productHelper->getProductData($product, $product->getStoreId());
 			$this->productHelper->saveUpdateForAdcurve($preparedData);
 		}

@@ -37,7 +37,7 @@ class AdminUser
         $role = $this->roleFactory->create();
 		
 		$role->load('Adcurve', 'role_name');
-		if($role->getId()){
+		if ($role->getId()) {
 			return false;
 		}
 		
@@ -70,7 +70,7 @@ class AdminUser
 		$user = $this->userFactory->create();
 		
 		$user->load('Adcurve', 'username');
-		if($user->getId()){
+		if ($user->getId()) {
 			return ['created' => false, 'password' => false];
 		}
 		

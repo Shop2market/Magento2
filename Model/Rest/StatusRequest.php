@@ -22,7 +22,7 @@ class StatusRequest extends AbstractRequest
 		
 		$this->_setConnectionModel($connection);
 		
-        if(!$this->configHelper->isApiConfigured($this->_getConnectionModel())){
+        if (!$this->configHelper->isApiConfigured($this->_getConnectionModel())) {
 			return false;
         }
 		

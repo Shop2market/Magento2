@@ -34,7 +34,7 @@ class Attributes implements OptionSourceInterface
 				->addFieldToFilter('frontend_label', ['neq' => '']);
 			
 			$options = [];
-			foreach($attributeCollection as $attribute){
+			foreach ($attributeCollection as $attribute) {
 				$options[] = [
 					'value' => $attribute->getAttributecode(),
 					'label' => $attribute->getFrontendLabel()

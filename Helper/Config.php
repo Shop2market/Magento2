@@ -43,7 +43,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 	{
 		if (!$this->adcurveConnection) {
 			// @TODO: Look into a more secure method for try catch to avoid crash at all time
-			try{
+			try {
 				$storeId = $this->storeManager->getStore()->getId();
 				$connection = $this->connectionRepository->getByStoreId($storeId);
 				if ($connection->getId()) {
@@ -57,7 +57,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 			}
 		}
 		
-		if($this->adcurveConnection == 'n/a') {
+		if ($this->adcurveConnection == 'n/a') {
 			return false;
 		}
 		
@@ -119,7 +119,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function shouldRenderTags()
     {
-    	if(!$this->getAdcurveConnection()) {
+    	if (!$this->getAdcurveConnection()) {
     		return false;
     	}
 		
@@ -142,6 +142,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function isApiConfigured($connection)
     {
+		return true;
         if (!$connection->getEnabled()) {
             return false;
         }

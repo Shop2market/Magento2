@@ -1,34 +1,22 @@
 {
-    "name": "adcurve/adcurve",
+    "name": "adcurve/module-adcurve",
     "description": "",
+    "type": "magento2-module",
     "license": "proprietary",
     "authors": [
         {
-            "email": "info@mage2gen.com",
-            "name": "Mage2Gen"
-        },
-        {
-            "email": "boris@experius.nl",
-            "name": "Boris van Katwijk"
-        },
-        {
-            "email": "maria@adcurve.com",
-            "name": "Maria Gil"
-        },
-        {
-            "email": "qsmidrees@gmail.com",
-            "name": "Qasim Idrees War"
-        }],
+            "email": "sam@adcurve.com",
+            "name": "Sam"
+        }
+    ],
     "minimum-stability": "dev",
     "require": {},
-    "type": "magento2-module",
-    "version": "0.1.0",
     "autoload": {
-        "files": [
-            "registration.php"
-        ],
         "psr-4": {
             "Adcurve\\Adcurve\\": ""
-        }
+        },
+        "files": [
+            "registration.php"
+        ]
     }
 }

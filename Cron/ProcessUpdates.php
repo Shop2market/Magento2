@@ -47,6 +47,7 @@ class ProcessUpdates
      */
     public function execute()
     {
+		
         $this->logger->addInfo("Cronjob Adcurve Updates is executed.");
 		
 		$stores = $this->storeManager->getStores();
@@ -55,7 +56,7 @@ class ProcessUpdates
         	
 			$connection = $this->connectionRepository->getByStoreId($store->getId());
 			
-            if(!$this->configHelper->isApiConfigured($connection)) {
+            if (!$this->configHelper->isApiConfigured($connection)) {
                 continue;
             }
 			
@@ -108,10 +109,11 @@ class ProcessUpdates
 		
         /** Only get the array values because the API can't handle associative arrays */
         $productData = array_values($productData);
-		
+	
         $error = false;
         try {
             /** Send the batch to Adcurve, an empty response is given on succes */
+			$connection = $this->connectionRepository->getByStoreId($storeId);
             $response = $this->updateRequest->sendData($productData, $connection);
         } catch (Exception $e) {
             $this->logger->addError($e->getMessage());

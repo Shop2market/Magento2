@@ -65,7 +65,7 @@ abstract class AbstractRequest
     {
     	$this->_setConnectionModel($connection);
 		
-        if(!$this->configHelper->isApiConfigured($this->_getConnectionModel())){
+        if (!$this->configHelper->isApiConfigured($this->_getConnectionModel())) {
         	throw new \Magento\Framework\Validator\Exception(__('API not configured'));
         }
 		
@@ -100,7 +100,7 @@ abstract class AbstractRequest
 		//$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		
         // Check for errors
-        if($response === false){
+        if ($response === false) {
         	throw new \Magento\Framework\Validator\Exception(curl_error($this->_getCurl()));
         }
 

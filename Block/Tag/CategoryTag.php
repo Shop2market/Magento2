@@ -53,7 +53,7 @@ class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
         array_shift($categoryIds); // Shift off Default Website root category
         $this->categoryInfo = [];
 		$i = 0;
-        foreach($categoryIds as $categoryId){
+        foreach ($categoryIds as $categoryId) {
             $categoryName = $this->categoryResource->getAttributeRawValue($categoryId, 'name', $storeId);
             $this->categoryInfo[$i] = $categoryName;
 			$i++;
@@ -67,7 +67,7 @@ class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
      */
     public function getCategoryPath()
     {
-    	if(!$this->categoryInfo){
+    	if (!$this->categoryInfo) {
     		$this->setCategoryInfo();
 		}
 		
@@ -81,15 +81,15 @@ class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
 	 */
 	public function getParentCategoryName()
 	{
-		if(!$this->categoryInfo){
+		if (!$this->categoryInfo) {
     		$this->setCategoryInfo();
 		}
 		
-		if(empty($this->categoryInfo)){
+		if (empty($this->categoryInfo)) {
 			return '';
 		}
 		
-		if(count($this->categoryInfo) > 1){
+		if (count($this->categoryInfo) > 1) {
 			$workingArray = $this->categoryInfo;
 			array_pop($workingArray);
 			return end($workingArray);
@@ -105,11 +105,11 @@ class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
      */
     public function getCategoryName()
     {
-    	if(!$this->categoryInfo){
+    	if (!$this->categoryInfo) {
     		$this->setCategoryInfo();
 		}
 		
-		if(empty($this->categoryInfo)){
+		if (empty($this->categoryInfo)) {
 			return '';
 		}
 		

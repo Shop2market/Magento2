@@ -30,4 +30,16 @@
 			<resource ref="Adcurve_Adcurve::Connection_delete"/>
 		</resources>
 	</route>
+	<route url="/V1/adcurve/createOrder/" method="POST">
+        <service class="Adcurve\Adcurve\Api\CreateOrderInterface" method="createOrder"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/adcurve/addProduct" method="POST">
+        <service class="Adcurve\Adcurve\Api\CartProductAddInterface" method="addProduct"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 </routes>

@@ -1,4 +1,4 @@
-<?php if($block->configHelper->shouldRenderTags()): ?>
+<?php if ($block->configHelper->shouldRenderTags()): ?>
     <?php
         $_shopId        = $block->configHelper->getAdcurveShopId();
         $_baseUrl       = $block->configHelper->getTagUrl();
@@ -21,7 +21,7 @@
             orderInfo.coupon_code  = "<?php echo $orderInfo['coupon_code']; ?>";
             s2m_shop.set_order_info( orderInfo );
 
-            <?php foreach($itemsInfo as $itemInfo): ?>
+            <?php foreach ($itemsInfo as $itemInfo): ?>
                 var itemInfo1 = new Object();
                 itemInfo1.trans_id      = "<?php echo $orderInfo['trans_id']; ?>";
                 itemInfo1.item_id       = "<?php echo $itemInfo['product_id']; ?>";

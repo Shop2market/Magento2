@@ -89,7 +89,7 @@ class QueueRepository implements QueueRepositoryInterface
         }
         return $queue;
     }
-	
+
 	/**
      * {@inheritdoc}
      */
@@ -102,7 +102,19 @@ class QueueRepository implements QueueRepositoryInterface
         }
         return $queue;
     }
-	
+  	/**
+       * {@inheritdoc}
+       */
+      public function getByStatus($status)
+      {
+          $queue = $this->queueFactory->create();
+          $queue->load($status, 'status');
+          if (!$queue->getId()) {
+              throw new NoSuchEntityException(__('Queue with status "%1" does not exist.', $status));
+          }
+          return $queue;
+      }
+
     /**
      * {@inheritdoc}
      */
@@ -111,7 +123,7 @@ class QueueRepository implements QueueRepositoryInterface
     ) {
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
-        
+
         $collection = $this->queueCollectionFactory->create();
         foreach ($criteria->getFilterGroups() as $filterGroup) {
             foreach ($filterGroup->getFilters() as $filter) {
@@ -137,7 +149,7 @@ class QueueRepository implements QueueRepositoryInterface
         $collection->setCurPage($criteria->getCurrentPage());
         $collection->setPageSize($criteria->getPageSize());
         $items = [];
-        
+
         foreach ($collection as $queueModel) {
             $queueData = $this->dataQueueFactory->create();
             $this->dataObjectHelper->populateWithArray(

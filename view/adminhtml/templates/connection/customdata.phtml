@@ -1,0 +1,363 @@
+<div class="fieldset-wrapper-title" >
+        <strong  class="title">
+            <span >Exclude Attributes</span>
+        </strong>
+</div>
+<?php
+$attributes = $this->getAttributesArray();
+$AllValues=$this->getAllValues();
+$arrExc_encoded =$this->getExcludedAttributes();
+$arrExc=array();
+if (isset($arrExc_encoded))
+$arrExc=json_decode($arrExc_encoded);
+
+$attrNonExcluded=array();
+foreach ($attributes as $item):
+        $value=$item["value"];
+		$label=$item["label"];
+		if (!in_array($value, $arrExc)) {
+
+            $attrNonExcluded[str_replace("'","",$value)] = str_replace("'","",$label);
+        }
+		
+endforeach; 
+?>
+
+<div class="admin__field field field-shop_attributes  required _required" data-ui-id="adminhtml-connection-register-form-0-fieldset-element-form-field-shop-attributes">
+                    <label class="label admin__field-label" for="shop_attributes" data-ui-id="adminhtml-connection-register-form-0-fieldset-element-select-shop-attributes-label"><span>Exclude Attributes</span></label>
+            <div class="admin__field-control control">
+
+<table >
+    <tr>
+        <td width="50" style=" padding-right: 5px;">
+    <strong><?php echo __('Included')?></strong>
+    <br />
+    <input type="text" value="" name="search_attributes"  id="search_attributes" onkeyup="startSearch(this.value)" placeholder="Enter search term..." /><button name="reset_attributes" onclick="resetAttributeOptions(); emptySearchBox();" ><?php echo __('Reset')?></button>
+    <select id="adcurve_attributes" name="include" class=" select multiselect" size="11" multiple="multiple"  style="width: 222px;"  >
+    <?php foreach ($attrNonExcluded as $value => $label): ?>
+        <?php if (!in_array($value, $arrExc)) {  ?>
+            <option value="<?php echo $value; ?>"><?php echo $label; ?></option>
+        <?php } ?>    
+    <?php endforeach; ?>    
+    </select>
+</td>
+<td>&nbsp;</td>
+<td width="50"><br /><br /><br />
+    <!-- <button class="up-arrow" value="Up" name="up"   onclick=" moveSelectedOptionsToUp()"><span><span><span><?php //echo $this->__('Up')?></span></span></span></button>
+    <button class="down-arrow" value="Down" name="down"  onclick=" moveSelectedOptionsToDown()" ><span><span><span><?php //echo $this->__('Down')?></span></span></span></button> -->
+    <br /><br />
+    <button class="right-arrow" value="Exclude" name="select" onclick=" moveSelectedOptionsToNext()"><span></span></button>
+
+	<br /><br />
+    <button class="left-arrow" value="Include" name="select" onclick=" moveSelectedOptionsToBack()"><span></span></button>
+
+   <input type="hidden" value='<?php echo json_encode($attrNonExcluded); ?>' name="attribute_backup" id="attribute_backup" />
+   <input data-form-part="adcurve_connection_form" type="hidden" value='<?php echo json_encode($arrExc); ?>' name="excluded_attributes" id="excluded_attributes" />
+
+	
+	</td>
+<td width="50" style=" padding-left: 10px;">
+    <strong><?php echo __('Excluded')?></strong>
+    <select  id="adcurve_settings_exclude" name="exclude" class=" select multiselect" size="12" multiple="multiple" style="width: 222px;">
+    <?php foreach ($attributes as $item2): ?>
+        <?php 
+		$value=$item2["value"];
+		$label=$item2["label"];
+		
+		if (in_array($value, $arrExc)) {  ?>
+            <option value="<?php echo $value; ?>"><?php echo $label; ?></option>
+        <?php } ?>    
+    <?php endforeach; ?>    
+    </select>
+</td>
+</tr>
+</table>
+
+
+</div>
+</div>
+
+
+
+<br /><br />
+<!--
+<button id="adcurve_submit_button" class="save primary a-right" onclick="confirm();">
+    <span><?php //echo __('Submit information and register to Adcurve'); ?></span>
+</button>-->
+<?php //** @TODO: Move styling to correct place (css file include) */ ?>
+<style type="text/css">
+
+button.right-arrow span {
+    background-image: url(<?php echo $this->getViewFileUrl('Adcurve_Adcurve::images/arrow-right.gif'); ?>);
+    padding-left: 20px;
+	background-repeat: no-repeat !important;
+}
+
+button.left-arrow span {
+    background-image: url(<?php echo $this->getViewFileUrl('Adcurve_Adcurve::images/arrow-left.gif'); ?>);
+    padding-left: 20px;
+	background-repeat: no-repeat !important;
+}
+button span {
+    line-height: 1.35em;
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+}
+button:active {
+    background: #f77c16 url(images/btn_on_bg.gif) repeat-x 0 0;
+}
+button, .form-button {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ed6502 #a04300 #a04300 #ed6502;
+    background: #ffac47 url(images/btn_bg.gif) repeat-x 0 100%;
+    color: #fff;
+    font: bold 12px arial, helvetica, sans-serif;
+    cursor: pointer;
+    text-align: center !important;
+    white-space: nowrap;
+}
+
+
+
+	#popup_form_terms {
+		border: 1px solid #535353;
+		box-shadow: 6px 6px 3px #9a9a9a;
+		background-color: #ebebeb;
+		display: none;
+		height: 280px;
+		left: 20%;
+		padding: 15px;
+		position: fixed;
+		top: 33%;
+		width: 515px;
+		z-index: 1;
+	}
+	#popup_form_terms ol li {
+		margin-left: 20px;
+	}
+	#popup_form_terms button {
+		display: inline-block;
+		float: right;
+	}
+	#adcurve_submit_button {
+		display: block;
+		margin: 0 auto;
+	}
+</style>
+<div id="popup_form_terms">
+	<span class="admin__legend"><?php echo __('Thanks for your registration in Adcurve!'); ?></span>
+	<span>
+		<?php echo __('Adcurve helps you to advertise your products and to make your ads profitable.'); ?>
+		<?php echo __('Adcurve also offers the option to insert orders in Magento.'); ?>
+		<?php echo __('In order to do that, we ask you to grant access to:'); ?>
+	</span>
+	<ol>
+		<li><?php echo __('Read product information to advertise your products and boost your sales'); ?></li>
+		<li><?php echo __('Read order information to calculate the profitability of your ads'); ?></li>
+		<li><?php echo __('Create a Integration user to insert orders in Magento from marketplaces'); ?></li>
+	</ol>
+	<button id="accepted" class="save primary" onclick="processForm();"><span><span><?php echo __('Accept');?></span></span></button>
+</div>
+<script type="text/javascript">
+    //    <![CDATA[
+    function confirm() {
+        require(['jquery'], function($){
+            $('#popup_form_terms').show();
+		});
+    }
+    
+    function processForm(){
+    	require(['jquery'], function($){
+	        $('#adcurve_registration_form').submit();
+        });
+    }
+    //]]>
+</script>
+
+<script type="text/javascript">
+    
+
+function moveSelectedOptionsToNext() {
+	
+	document.getElementById('excluded_attributes').value='';
+	
+    var srcSelect = document.getElementById('adcurve_attributes');
+    var options   = srcSelect.options;
+    var opt;
+    var optionsBackup = document.getElementById('attribute_backup').value;
+    var optObj = JSON.parse(optionsBackup);
+
+    var destSelect = document.getElementById('adcurve_settings_exclude');
+    var iLen=options.length;
+	
+	var excluded_attributes=[];
+    
+    for (var i=0; i<iLen; i++) {
+        opt = options[i];
+        if (opt.selected) {
+            option = document.createElement('option');
+            option.text  = opt.text;
+            option.value = opt.value;
+            option.index = 1;
+            destSelect.add(option, destSelect[0]);
+			
+			excluded_attributes[i]=opt.value;
+        }
+    }
+
+    for (var i = iLen-1 ; i >= 0; i--) {
+        opt = options[i];
+        if (opt.selected) {
+            delete optObj[opt.value];
+            opt.remove();
+
+        }
+    }
+
+    document.getElementById('attribute_backup').value = JSON.stringify(optObj);
+	document.getElementById('excluded_attributes').value = JSON.stringify(excluded_attributes);
+	
+}
+
+
+function moveSelectedOptionsToBack() {
+	document.getElementById('excluded_attributes').value='';
+    var srcSelect = document.getElementById('adcurve_settings_exclude');
+    var options   = srcSelect.options;
+    var opt ;
+    var optionsBackup = document.getElementById('attribute_backup').value;
+    var optObj = JSON.parse(optionsBackup);
+
+    if ( optObj == null) {
+        optObj = {};
+    }
+    
+    var destSelect = document.getElementById('adcurve_attributes');
+    var iLen=options.length;
+	var excluded_attributes=[];
+    for (var i=0; i<iLen; i++) {
+        opt = options[i];
+
+        if (opt.selected) {
+            optObj[opt.value] = opt.text;
+            option = document.createElement('option');
+            option.text  = opt.text;
+            option.value = opt.value;
+            destSelect.add(option, destSelect[0]);
+        }
+		else
+		 excluded_attributes[i]=opt.value;
+    }
+
+    for (var i = iLen-1; i >= 0; i--) {
+        opt = options[i];
+
+        if (opt.selected) {
+            opt.remove();
+			
+        }
+    }
+	
+                                         
+    document.getElementById('attribute_backup').value = JSON.stringify(optObj);
+	document.getElementById('excluded_attributes').value = JSON.stringify(excluded_attributes);
+	
+}
+
+function moveSelectedOptionsToUp() {
+    var srcSelect = document.getElementById('adcurve_settings_exclude');
+    var options   = srcSelect.options;
+    var opt ;
+
+    for (var i=0; i < options.length; i++) {
+        opt = options[i];
+
+        if (opt.selected) {
+            prevOption = options[i-1];
+            poText  = prevOption.text;
+            poValue = prevOption.value;
+            prevOption.text  = opt.text;
+            prevOption.value = opt.value;
+            prevOption.selected = true;
+            opt.text  = poText;
+            opt.value = poValue;
+            opt.selected = false;
+        }
+    }
+}
+
+function moveSelectedOptionsToDown() {
+    var srcSelect = document.getElementById('adcurve_settings_exclude');
+    var options   = srcSelect.options;
+    var opt ;
+
+    for (var i=options.length -1; i >=0; i--) {
+        opt = options[i];
+
+        if (opt.selected) {
+            nextOption = options[i+1];
+            poText  = nextOption.text;
+            poValue = nextOption.value;
+            nextOption.text  = opt.text;
+            nextOption.value = opt.value;
+            nextOption.selected = true;
+            opt.text  = poText;
+            opt.value = poValue;
+            opt.selected = false;
+        }
+    }
+
+}
+
+function startSearch(s)
+{
+    resetAttributeOptions();
+    var list = document.getElementById('adcurve_attributes');
+    var options = list.options;
+
+    for (var i=options.length -1; i >= 0; i--) {
+        opt = options[i];
+        str = opt.text;
+        str = str.toLowerCase();
+        isIncluded = str.startsWith(s.toLowerCase());
+
+        if (!isIncluded) {
+            list.remove(i);
+        }
+    }
+}
+
+function resetAttributeOptions()
+{
+    removeAllOptions();
+    var list = document.getElementById('attribute_backup').value;
+    var destSelect = document.getElementById('adcurve_attributes');
+    var options = JSON.parse(list, (value, text) => { 
+        if (value != "") {
+            option = document.createElement('option');
+            option.text  = text;
+            option.value = value;
+            destSelect.add(option);
+        }
+    });
+
+ 
+}
+
+function removeAllOptions()
+{
+    var list = document.getElementById('adcurve_attributes');
+    var options = list.options;
+
+    for (var i=options.length -1; i >= 0; i--) {
+        list.remove(i);
+    }
+}
+
+function emptySearchBox()
+{
+    document.getElementById('search_attributes').value ='';
+}
+
+</script>

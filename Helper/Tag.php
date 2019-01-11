@@ -55,7 +55,7 @@ class Tag extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getProductPriceInclTax(\Magento\Catalog\Model\Product $product)
     {
-    	if($product){
+    	if ($product) {
 			return $this->taxgimmickHelper->getTaxPrice($product, $product->getFinalPrice(), true);
     	}
 		return false;
@@ -70,7 +70,7 @@ class Tag extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getProductPriceExclTax(\Magento\Catalog\Model\Product $product)
     {
-    	if($product){
+    	if ($product) {
 			return $this->taxgimmickHelper->getTaxPrice($product, $product->getFinalPrice(), false);
     	}
 		return false;

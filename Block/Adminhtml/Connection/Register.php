@@ -1,9 +1,7 @@
 <?php
 namespace Adcurve\Adcurve\Block\Adminhtml\Connection;
 
-class Register
-	extends \Magento\Backend\Block\Template
-	implements \Magento\Framework\Data\Form\Element\Renderer\RendererInterface
+class Register extends \Magento\Backend\Block\Template implements \Magento\Framework\Data\Form\Element\Renderer\RendererInterface
 {
     const API_WSDL_ENDPOINT 		= 'soap/default?wsdl_list=1';
     const INSTALLATION_TYPE_TEST 	= 'test';
@@ -15,6 +13,10 @@ class Register
 	public $configHelper;
 	public $connectionHelper;
 	protected $statusRequest;
+	protected $_attributeFactory;
+	protected $_attributeTypeFactory;
+	protected $productAttributeOptions;
+	protected $connectionRepository;
 
 	/**
      * Constructor
@@ -29,12 +31,20 @@ class Register
 		\Adcurve\Adcurve\Helper\Config $configHelper,
 		\Adcurve\Adcurve\Helper\Connection $connectionHelper,
 		\Adcurve\Adcurve\Model\Rest\StatusRequest $statusRequest,
+		\Magento\Catalog\Model\ResourceModel\Eav\Attribute $attributeFactory,
+		\Magento\Eav\Model\Entity\TypeFactory $attributeTypeFactory,
+		\Adcurve\Adcurve\Model\ConnectionRepository $connectionRepository,
+		\Adcurve\Adcurve\Ui\Component\Listing\Column\Connection\Attributes $productAttributeOptions,
 		array $data = []
 	){
 		parent::__construct($context, $data);
 		$this->configHelper = $configHelper;
 		$this->connectionHelper = $connectionHelper;
 		$this->statusRequest = $statusRequest;
+		$this->_attributeFactory = $attributeFactory;
+		$this->_attributeTypeFactory=$attributeTypeFactory;
+		$this->productAttributeOptions = $productAttributeOptions;
+		$this->connectionRepository = $connectionRepository;
 	}
 	
     /**
@@ -47,9 +57,14 @@ class Register
     
     public function getStoreInstalltionTypeStatus($storeId)
     {
-        if($this->configHelper->isTestMode($storeId) == true
-        	&& $this->configHelper->isApiConfigured($storeId)
-		){
+		
+		$connection = $this->connectionRepository->getByStoreId($storeId);
+						
+						
+        /*if ($this->configHelper->isTestMode($storeId) == true
+        	&& $this->configHelper->isApiConfigured($connection)
+		)*/
+		if ($this->configHelper->isApiConfigured($connection)) {
             return '<span class="installation-type-status">'.__('TEST').'</span>';
         }
 		
@@ -88,4 +103,18 @@ class Register
 	{
 		return $this->_urlBuilder->getUrl(self::URL_PATH_ADCURVE_CONNECTION_SAVE);
 	}
+	
+
+	public function getAttributesArray()
+    {
+		$attributesToSkip=$this->productAttributeOptions->toOptionArray();
+        return $attributesToSkip;
+    }
+	
+	public function getAllValues(){
+		
+		$allValues=$this->productAttributeOptions->getAllValues();
+		return $allValues;
+	}
+	
 }

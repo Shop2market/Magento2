@@ -11,7 +11,6 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 	const STATUS_ERROR_CONNECTION_TO_ADCURVE = 4;
 	const STATUS_ERROR_RESULT_FROM_ADCURVE = 5;
 	const STATUS_SUCCESS = 6;
-	const IS_ADCURVE_READY = 0;
 
 	protected $encryptor;
 
@@ -93,6 +92,7 @@ class Connection extends \Magento\Framework\Model\AbstractModel implements Conne
 
 	public function setProductionMode($productionMode)
 	{
+		$productionMode=1;
 		return $this->setData(self::PRODUCTION_MODE, $productionMode);
 	}
 

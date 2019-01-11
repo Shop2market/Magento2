@@ -1,4 +1,4 @@
-<?php if($block->configHelper->shouldRenderTags()): ?>
+<?php if ($block->configHelper->shouldRenderTags()): ?>
     <?php
         $_shopId    = $block->configHelper->getAdcurveShopId();
         $_baseUrl   = $block->configHelper->getTagUrl();
@@ -13,7 +13,7 @@
             __s2m_js.type = 'text/javascript'; __s2m_js.async = true;
             __s2m_js.src = __s2m_host_prefix + __s2m_link;
             __s2m_js.onerror = function(){
-                if( typeof( __s2mPixel ) === "undefined" &&
+                if ( typeof( __s2mPixel ) === "undefined" &&
                     typeof( window.OnS2MPixelFail ) === "function" ){OnS2MPixelFail();}
             }
             var __s2m_script = document.getElementsByTagName('script')[0];
