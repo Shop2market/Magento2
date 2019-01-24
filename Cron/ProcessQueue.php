@@ -36,7 +36,7 @@ class ProcessQueue
 					);
 
 			foreach ($queueCollection as $queue) {
-				$this->productQueue->queueAllProducts($queue->getId(), $queue->getStoreId()));
+				$this->productQueue->queueAllProducts($queue->getId(), $queue->getStoreId());
 				/*
 				$queueToDelete = $this->queueFactory->create()->load($queue->getId());
 				try {
