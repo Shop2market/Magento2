@@ -24,7 +24,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
             [
                 'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                 'length' => 255,
-		'comments'=> 'Excluded Attributes',
+		'comment'=> 'Excluded Attributes',
 		'nullable' => true
             ]
 			);
