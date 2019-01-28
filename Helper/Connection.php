@@ -142,4 +142,16 @@ class Connection extends \Magento\Framework\App\Helper\AbstractHelper
     	//@TODO: make web url website dependant
         return $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
     }
+     /**
+     * Return url of website
+     *
+     * @return string
+     */
+    public function getWsdlEndpointUrl($store = null)
+    {
+    	//@TODO: make web url website dependant
+        return $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB).'soap/?wsdl_list=1';
+        //rest/default/schema?services=all
+        //soap/?wsdl_list=1
+    }
 }

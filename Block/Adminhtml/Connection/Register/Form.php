@@ -337,7 +337,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 				'label' => __('WSDL Endpoint'),
 				'title' => __('WSDL Endpoint'),
 				'required' => true,
-				'value' => 'http://boris.mage2.sandbox20.xpdev.nl/rest/default/schema?services=all', 
+				'value' => $this->connectionHelper->getWsdlEndpointUrl(),
 				/** 
 				 * @TODO: Get correct wsdl endpoint url('s) (multiple for Magento 2)
 				 * Structure is http://<magento.host>/soap/<optional_store_code>?wsdl&services=<service_name_1>,<service_name_2>
