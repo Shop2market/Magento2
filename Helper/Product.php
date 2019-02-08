@@ -5,7 +5,7 @@ use Adcurve\Adcurve\Model\ResourceModel\Connection\CollectionFactory as Connecti
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\Module\ModuleListInterface;
-use Psr\Log\LoggerInterface as Logger;
+
 class Product extends \Magento\Framework\App\Helper\AbstractHelper
 {
 	protected $productData;
@@ -46,16 +46,6 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 	 * @var \Magento\Tax\Api\TaxCalculationInterface
 	 */
 	protected $taxCalculation;
-
-	/**
-	 * @var \Magento\Framework\App\Config\ScopeConfigInterface
-	 */
-	protected $scopeConfig;
-	
-	/**
-     * @var Logger
-     */
-    protected $logger;
 	
 	protected $irrelevantAttributes = array(
 		/** General attributes */
@@ -111,10 +101,8 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		ConnectionCollectionFactory $connectionCollectionFactory,
 		\Magento\Catalog\Model\ResourceModel\Eav\Attribute $attributeFactory,
 		\Magento\Tax\Helper\Data $taxHelper,
-		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
 		\Magento\Tax\Api\TaxCalculationInterface $taxCalculation,
-		Configurable $configurable,
-		Logger $logger
+		Configurable $configurable
 	){
 		parent::__construct($context);
 		
@@ -132,7 +120,6 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		$this->productHelper = $catalogHelper;
 		$this->_attributeFactory = $attributeFactory;
 		$this->_taxHelper = $taxHelper;
-		$this->logger = $logger;
 		$this->productFactory = $productFactory;
 		
 		//$this->productHelper = $productHelper;
@@ -148,7 +135,6 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 		$this->_configurable=$configurable;
 		$this->configHelper=$configHelper;
 		$this->_moduleList = $moduleList;
-		$this->scopeConfig = $scopeConfig;
 		$this->taxCalculation = $taxCalculation;
 		
 	}

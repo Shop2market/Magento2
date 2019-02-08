@@ -10,6 +10,7 @@ class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
 	
 	protected $categoryInfo;
 	protected $_productCollection;
+	protected $registry;
 	
 	public function __construct(
 		\Magento\Catalog\Block\Product\Context $context,
@@ -20,12 +21,13 @@ class CategoryTag extends \Magento\Catalog\Block\Product\ListProduct
         \Adcurve\Adcurve\Helper\Config $configHelper,
 		\Adcurve\Adcurve\Helper\Tag $tagHelper,
 		\Magento\Catalog\Model\ResourceModel\Category $categoryResource,
+		\Magento\Framework\Registry $registry,
 		array $data = []
 	){
 		$this->configHelper = $configHelper;
 		$this->tagHelper = $tagHelper;
 		$this->categoryResource = $categoryResource;
-		
+		$this->registry = $registry;
 		parent::__construct($context, $postDataHelper, $layerResolver, $categoryRepository, $urlHelper, $data);
 	}
 	
