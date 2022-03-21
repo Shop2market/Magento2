@@ -1,6 +1,6 @@
 {
     "name": "adcurve/module-adcurve",
-    "description": "",
+    "description": "Adcurve",
     "type": "magento2-module",
     "license": "proprietary",
     "authors": [
