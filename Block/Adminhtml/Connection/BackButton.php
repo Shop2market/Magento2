@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Block\Adminhtml\Connection;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;

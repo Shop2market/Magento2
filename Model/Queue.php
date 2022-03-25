@@ -1,15 +1,14 @@
 <?php
 
-
 namespace Adcurve\Adcurve\Model;
 
 use Adcurve\Adcurve\Api\Data\QueueInterface;
 
 class Queue extends \Magento\Framework\Model\AbstractModel implements QueueInterface
 {
-    const QUEUE_STATUS_NEW         = 'new';
-    const QUEUE_STATUS_UPDATE 	   = 'update';
-    const QUEUE_STATUS_COMPLETE    = 'complete';
+    public const QUEUE_STATUS_NEW         = 'new';
+    public const QUEUE_STATUS_UPDATE      = 'update';
+    public const QUEUE_STATUS_COMPLETE    = 'complete';
 
     /**
      * @return void
@@ -95,5 +94,4 @@ class Queue extends \Magento\Framework\Model\AbstractModel implements QueueInter
     {
         return $this->setData(self::STATUS, $status);
     }
-
 }

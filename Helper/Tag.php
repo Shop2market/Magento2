@@ -1,24 +1,25 @@
 <?php
+
 namespace Adcurve\Adcurve\Helper;
 
 class Tag extends \Magento\Framework\App\Helper\AbstractHelper
 {
-	protected $customerSession;
-	protected $taxgimmickHelper;
-	
-	public function __construct(
-		\Magento\Framework\App\Helper\Context $context,
-		\Magento\Customer\Model\Session $customerSession,
-		\Adcurve\Adcurve\Helper\Taxgimmick $taxgimmickHelper,
-		array $data = []
-	){
-		parent::__construct($context);
-		
-		$this->customerSession = $customerSession;
-		// \Magento\Catalog\Helper\Data contains the original function but did not calculate tax correctly
-		$this->taxgimmickHelper = $taxgimmickHelper;
-	}
-	
+    protected $customerSession;
+    protected $taxgimmickHelper;
+
+    public function __construct(
+        \Magento\Framework\App\Helper\Context $context,
+        \Magento\Customer\Model\Session $customerSession,
+        \Adcurve\Adcurve\Helper\Taxgimmick $taxgimmickHelper,
+        array $data = []
+    ) {
+        parent::__construct($context);
+
+        $this->customerSession = $customerSession;
+        // \Magento\Catalog\Helper\Data contains the original function but did not calculate tax correctly
+        $this->taxgimmickHelper = $taxgimmickHelper;
+    }
+
     /**
      * Return customer id logged in, if is not logged in return empty
      *
@@ -26,7 +27,7 @@ class Tag extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getCustomerId()
     {
-        if (!$this->customerSession->isLoggedIn()){
+        if (!$this->customerSession->isLoggedIn()) {
             return '';
         }
         return $this->customerSession->getCustomer()->getId();
@@ -39,7 +40,7 @@ class Tag extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getCustomerEmailHash()
     {
-        if (!$this->customerSession->isLoggedIn()){
+        if (!$this->customerSession->isLoggedIn()) {
             return '';
         }
         $email = $this->customerSession->getCustomer()->getData('email');
@@ -55,10 +56,10 @@ class Tag extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getProductPriceInclTax(\Magento\Catalog\Model\Product $product)
     {
-    	if ($product) {
-			return $this->taxgimmickHelper->getTaxPrice($product, $product->getFinalPrice(), true);
-    	}
-		return false;
+        if ($product) {
+            return $this->taxgimmickHelper->getTaxPrice($product, $product->getFinalPrice(), true);
+        }
+        return false;
     }
 
     /**
@@ -70,9 +71,9 @@ class Tag extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getProductPriceExclTax(\Magento\Catalog\Model\Product $product)
     {
-    	if ($product) {
-			return $this->taxgimmickHelper->getTaxPrice($product, $product->getFinalPrice(), false);
-    	}
-		return false;
+        if ($product) {
+            return $this->taxgimmickHelper->getTaxPrice($product, $product->getFinalPrice(), false);
+        }
+        return false;
     }
 }

@@ -23,6 +23,8 @@
 	#popup_form_terms button {
 		display: inline-block;
 		float: right;
+		
+		margin-top: 10px;
 	}
 	#adcurve_submit_button {
 		display: block;
@@ -32,15 +34,13 @@
 <div id="popup_form_terms">
 	<span class="admin__legend"><?php echo __('Thanks for your registration in Adcurve!'); ?></span>
 	<span>
-		<?php echo __('Adcurve helps you to advertise your products and to make your ads profitable.'); ?>
-		<?php echo __('Adcurve also offers the option to insert orders in Magento.'); ?>
-		<?php echo __('In order to do that, we ask you to grant access to:'); ?>
+		<?php echo __('To complete the registration the AdCurve extension will take the following actions:'); ?>
 	</span>
 	<ol>
-		<li><?php echo __('Read product information to advertise your products and boost your sales'); ?></li>
-		<li><?php echo __('Read order information to calculate the profitability of your ads'); ?></li>
-		<li><?php echo __('Create a Integration user to insert orders in Magento from marketplaces'); ?></li>
+		<li><?php echo __('Read product information and upload it to AdCurve so that it can be used to create product feeds'); ?></li>
+		<li><?php echo __('Read order information to create analytics and track sales'); ?></li>
 	</ol>
+    <span><?php echo __('On clicking \'Accept\' you\'ll be redirected to the AdCurve app to complete creating your AdCurve account. If you encounter any problems, please contact us at support@adcurve.com.'); ?></span>
 	<button id="accepted" class="save primary" onclick="processForm();"><span><span><?php echo __('Accept');?></span></span></button>
 </div>
 <script type="text/javascript">

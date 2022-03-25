@@ -1,11 +1,12 @@
 <?php
+
 namespace Adcurve\Adcurve\Controller\Adminhtml\Integration;
 
 class Activation extends \Magento\Backend\App\Action
 {
-	const URL_PATH_ADCURVE_INTEGRATION_ACTIVATE = 'adcurve_adcurve/integration/activate';
-	
-	protected $resultPageFactory;
+    public const URL_PATH_ADCURVE_INTEGRATION_ACTIVATE = 'adcurve_adcurve/integration/activate';
+
+    protected $resultPageFactory;
 
     /**
      * Constructor
@@ -19,7 +20,7 @@ class Activation extends \Magento\Backend\App\Action
         \Magento\Integration\Model\IntegrationService $integrationService
     ) {
         $this->resultPageFactory = $resultPageFactory;
-		$this->integrationService = $integrationService;
+        $this->integrationService = $integrationService;
         parent::__construct($context);
     }
 

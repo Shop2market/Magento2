@@ -1,9 +1,9 @@
 <?php
+
 namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
 class Edit extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 {
-
     protected $resultPageFactory;
 
     /**
@@ -22,14 +22,14 @@ class Edit extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 
     /**
      * Edit action
-     * 
+     *
      * @return \Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
         $id = $this->getRequest()->getParam('connection_id');
         $connection = $this->_objectManager->create('Adcurve\Adcurve\Model\Connection');
-        
+
         if ($id) {
             $connection->load($id);
             if (!$connection->getId()) {
@@ -40,7 +40,7 @@ class Edit extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
             }
         }
         $this->_coreRegistry->register('adcurve_adcurve_connection', $connection);
-        
+
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->addBreadcrumb(

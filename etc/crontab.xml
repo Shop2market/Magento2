@@ -7,5 +7,8 @@
 		<job instance="Adcurve\Adcurve\Cron\ProcessQueue" method="execute" name="adcurve_adcurve_processqueue">
 			<schedule>* * * * *</schedule>
 		</job>
+		<job instance="Adcurve\Adcurve\Cron\SyncAllStoresProducts" method="execute" name="adcurve_adcurve_sync_allstores_products">
+			<schedule>0 1 * * *</schedule>
+		</job>
 	</group>
 </config>

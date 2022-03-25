@@ -30,7 +30,7 @@
 			<resource ref="Adcurve_Adcurve::Connection_delete"/>
 		</resources>
 	</route>
-	<route url="/V1/adcurve/createOrder/" method="POST">
+    <!-- <route url="/V1/adcurve/createOrder/" method="POST">
         <service class="Adcurve\Adcurve\Api\CreateOrderInterface" method="createOrder"/>
         <resources>
             <resource ref="anonymous"/>
@@ -41,5 +41,5 @@
         <resources>
             <resource ref="anonymous"/>
         </resources>
-    </route>
+    </route> -->
 </routes>

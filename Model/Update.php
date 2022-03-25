@@ -1,31 +1,31 @@
 <?php
+
 namespace Adcurve\Adcurve\Model;
 
 use Adcurve\Adcurve\Api\Data\UpdateInterface;
 
 class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInterface
 {
-	const PRODUCT_UPDATE_STATUS_NEW         = 'new';
-	const PRODUCT_UPDATE_STATUS_UPDATE 	    = 'update';
-    const PRODUCT_UPDATE_STATUS_COMPLETE    = 'complete';
-    const PRODUCT_UPDATE_STATUS_ERROR       = 'error';
-    const PRODUCT_UPDATE_STATUS_HOLD        = 'hold';
-	
-	protected $dateTime;
-	
-	public function __construct(
-    	\Magento\Framework\Model\Context $context,
+    public const PRODUCT_UPDATE_STATUS_NEW         = 'new';
+    public const PRODUCT_UPDATE_STATUS_UPDATE      = 'update';
+    public const PRODUCT_UPDATE_STATUS_COMPLETE    = 'complete';
+    public const PRODUCT_UPDATE_STATUS_ERROR       = 'error';
+    public const PRODUCT_UPDATE_STATUS_HOLD        = 'hold';
+
+    protected $dateTime;
+
+    public function __construct(
+        \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-		\Magento\Framework\Stdlib\DateTime\DateTime $dateTime,
+        \Magento\Framework\Stdlib\DateTime\DateTime $dateTime,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-	)
-    {
-    	parent::__construct($context, $registry, $resource, $resourceCollection, $data);
-		$this->dateTime = $dateTime;
-	}
-	
+    ) {
+        parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+        $this->dateTime = $dateTime;
+    }
+
     /**
      * @return void
      */
@@ -71,23 +71,23 @@ class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInt
     {
         return $this->setData(self::STATUS, $status);
     }
-	
-	/**
+
+    /**
      * Get the unserialized info
      * @param string|null $key
      * @return mixed
      */
     public function getProductData($key = null)
     {
-    	$serializedData = $this->getData('product_data');
-		if (!$serializedData) {
-			return false;
-		}
+        $serializedData = $this->getData('product_data');
+        if (!$serializedData) {
+            return false;
+        }
         $productData = unserialize($serializedData);
         if ($key && isset($productData[$key])) {
             return $productData[$key];
         }
-		
+
         return $productData;
     }
 
@@ -101,8 +101,8 @@ class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInt
         $this->setData('product_data', serialize($productData));
         return $this;
     }
-	
-	/**
+
+    /**
      * Complete the update
      *
      * @throws Exception
@@ -110,8 +110,8 @@ class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInt
     public function complete()
     {
         $this->setStatus(self::PRODUCT_UPDATE_STATUS_COMPLETE);
-		$currentDateTime = $this->dateTime->gmtDate();
-		$this->setExportedAt($currentDateTime);
+        $currentDateTime = $this->dateTime->gmtDate();
+        $this->setExportedAt($currentDateTime);
         $this->save();
     }
 
@@ -141,11 +141,11 @@ class Update extends \Magento\Framework\Model\AbstractModel implements UpdateInt
     public function incrementRetryCount($save = false)
     {
         $this->setRetryCount($this->getRetryCount() + 1);
-		
+
         if ($save) {
             $this->save();
         }
-		
+
         return $this;
     }
 }

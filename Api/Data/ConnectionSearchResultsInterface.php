@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Api\Data;
 
 interface ConnectionSearchResultsInterface extends \Magento\Framework\Api\SearchResultsInterface
@@ -7,7 +8,7 @@ interface ConnectionSearchResultsInterface extends \Magento\Framework\Api\Search
      * Get Connection list.
      * @return \Adcurve\Adcurve\Api\Data\ConnectionInterface[]
      */
-    
+
     public function getItems();
 
     /**
@@ -15,6 +16,6 @@ interface ConnectionSearchResultsInterface extends \Magento\Framework\Api\Search
      * @param \Adcurve\Adcurve\Api\Data\ConnectionInterface[] $items
      * @return $this
      */
-    
+
     public function setItems(array $items);
 }

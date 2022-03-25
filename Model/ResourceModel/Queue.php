@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Model\ResourceModel;
 
 class Queue extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
