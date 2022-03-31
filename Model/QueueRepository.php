@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Model;
 
 use Adcurve\Adcurve\Model\ResourceModel\Queue\CollectionFactory as QueueCollectionFactory;
@@ -16,7 +17,6 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class QueueRepository implements QueueRepositoryInterface
 {
-
     protected $dataObjectHelper;
     protected $searchResultsFactory;
     protected $QueueFactory;
@@ -90,7 +90,7 @@ class QueueRepository implements QueueRepositoryInterface
         return $queue;
     }
 
-	/**
+    /**
      * {@inheritdoc}
      */
     public function getByStoreId($storeId)
@@ -102,18 +102,18 @@ class QueueRepository implements QueueRepositoryInterface
         }
         return $queue;
     }
-  	/**
+    /**
        * {@inheritdoc}
        */
-      public function getByStatus($status)
-      {
-          $queue = $this->queueFactory->create();
-          $queue->load($status, 'status');
-          if (!$queue->getId()) {
-              throw new NoSuchEntityException(__('Queue with status "%1" does not exist.', $status));
-          }
-          return $queue;
-      }
+    public function getByStatus($status)
+    {
+        $queue = $this->queueFactory->create();
+        $queue->load($status, 'status');
+        if (!$queue->getId()) {
+            throw new NoSuchEntityException(__('Queue with status "%1" does not exist.', $status));
+        }
+        return $queue;
+    }
 
     /**
      * {@inheritdoc}

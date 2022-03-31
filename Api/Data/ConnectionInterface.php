@@ -1,33 +1,35 @@
 <?php
+
 namespace Adcurve\Adcurve\Api\Data;
 
 interface ConnectionInterface
 {
-    const ENABLED 			= 'enabled';
-	const STORE_ID 			= 'store_id';
-	const STORE_NAME 		= 'store_name';
-	const STORE_CODE 		= 'store_code';
-	const PRODUCTION_MODE 	= 'production_mode';
-	const ADCURVE_SHOP_ID 	= 'adcurve_shop_id';
-	const ADCURVE_TOKEN 	= 'adcurve_token';
-	const STATUS 			= 'status';
-	const SUGGESTION 		= 'suggestion';
-	const SOAP_USERNAME 	= 'soap_username';
-	const SOAP_API_KEY 		= 'soap_api_key';
-	const CONTACT_FIRSTNAME = 'contact_firstname';
-	const CONTACT_LASTNAME 	= 'contact_lastname';
-	const CONTACT_EMAIL 	= 'contact_email';
-	const CONTACT_TELEPHONE = 'contact_telephone';
-	const COMPANY_NAME 		= 'company_name';
-	const COMPANY_ADDRESS 	= 'company_address';
-	const COMPANY_ZIPCODE 	= 'company_zipcode';
-	const COMPANY_CITY 		= 'company_city';
-	const COMPANY_REGION 	= 'company_region';
-	const COMPANY_COUNTRY 	= 'company_country';
-	const UPDATED_AT 		= 'updated_at';
-	const IS_ADCURVE_READY  = 'is_adcurve_ready';
+    public const CONNECTION_ID     = 'connection_id';
+    public const ENABLED           = 'enabled';
+    public const STORE_ID          = 'store_id';
+    public const STORE_NAME        = 'store_name';
+    public const STORE_CODE        = 'store_code';
+    public const PRODUCTION_MODE   = 'production_mode';
+    public const ADCURVE_SHOP_ID   = 'adcurve_shop_id';
+    public const ADCURVE_TOKEN     = 'adcurve_token';
+    public const STATUS            = 'status';
+    public const SUGGESTION        = 'suggestion';
+    public const SOAP_USERNAME     = 'soap_username';
+    public const SOAP_API_KEY      = 'soap_api_key';
+    public const CONTACT_FIRSTNAME = 'contact_firstname';
+    public const CONTACT_LASTNAME  = 'contact_lastname';
+    public const CONTACT_EMAIL     = 'contact_email';
+    public const CONTACT_TELEPHONE = 'contact_telephone';
+    public const COMPANY_NAME      = 'company_name';
+    public const COMPANY_ADDRESS   = 'company_address';
+    public const COMPANY_ZIPCODE   = 'company_zipcode';
+    public const COMPANY_CITY      = 'company_city';
+    public const COMPANY_REGION    = 'company_region';
+    public const COMPANY_COUNTRY   = 'company_country';
+    public const UPDATED_AT        = 'updated_at';
+    public const IS_ADCURVE_READY  = 'is_adcurve_ready';
 
- 	/**
+    /**
      * Get connection_id
      * @return string|null
      */
@@ -273,12 +275,12 @@ interface ConnectionInterface
      * @return Adcurve\Adcurve\Api\Data\ConnectionInterface
      */
     public function setCompanyZipcode($company_zipcode);
-	
-	/**
+
+    /**
      * Get company_city
      * @return string|null
      */
-	public function getCompanyCity();
+    public function getCompanyCity();
 
     /**
      * Set company_city

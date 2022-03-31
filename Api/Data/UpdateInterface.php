@@ -1,10 +1,11 @@
 <?php
+
 namespace Adcurve\Adcurve\Api\Data;
 
 interface UpdateInterface
 {
-    const STATUS = 'status';
-    const UPDATE_ID = 'update_id';
+    public const STATUS = 'status';
+    public const UPDATE_ID = 'update_id';
 
     /**
      * Get update_id

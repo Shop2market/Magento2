@@ -1,12 +1,13 @@
 <?php
+
 namespace Adcurve\Adcurve\Api\Data;
 
 interface QueueInterface
 {
-    const QUEUE_ID = 'queue_id';
-    const STORE_ID = 'store_id';
-    const PAGE_NO  = 'page_no';
-    const STATUS   = 'status';
+    public const QUEUE_ID = 'queue_id';
+    public const STORE_ID = 'store_id';
+    public const PAGE_NO  = 'page_no';
+    public const STATUS   = 'status';
 
     /**
      * Get queue_id

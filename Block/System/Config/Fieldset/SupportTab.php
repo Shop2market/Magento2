@@ -1,37 +1,38 @@
 <?php
+
 namespace Adcurve\Adcurve\Block\System\Config\Fieldset;
 
 class SupportTab extends \Magento\Backend\Block\Template implements \Magento\Framework\Data\Form\Element\Renderer\RendererInterface
 {
-    const NEW_TICKET_URL_XPATH 			= 'adcurve/support/new_ticket_url';
-    const INSTALLATION_MANUAL_URL_XPATH = 'adcurve/support/installation_guide_url';
-    const KB_URL_XPATH 					= 'adcurve/support/adcurve_kb_url';
-    const RELEASE_NOTES_URL_XPATH       = 'adcurve/support/release_notes_url';
-    const PUBLISHERS_URL_XPATH 			= 'adcurve/support/publishers';
-    const FEATURES_URL_XPATH   			= 'adcurve/support/features';
-    const PRICING_URL_XPATH	   			= 'adcurve/support/pricing';
-    const DOCUMENTATION_URL_XPATH 		= 'adcurve/support/documentation';
-    const EMAIL_CONTACT 				= 'adcurve/support/email';
-    const PHONE_CONTACT 				= 'adcurve/support/phone';
-	
-	public $configHelper;
+    public const NEW_TICKET_URL_XPATH          = 'adcurve/support/new_ticket_url';
+    public const INSTALLATION_MANUAL_URL_XPATH = 'adcurve/support/installation_guide_url';
+    public const KB_URL_XPATH                  = 'adcurve/support/adcurve_kb_url';
+    public const RELEASE_NOTES_URL_XPATH       = 'adcurve/support/release_notes_url';
+    public const PUBLISHERS_URL_XPATH          = 'adcurve/support/publishers';
+    public const FEATURES_URL_XPATH            = 'adcurve/support/features';
+    public const PRICING_URL_XPATH             = 'adcurve/support/pricing';
+    public const DOCUMENTATION_URL_XPATH       = 'adcurve/support/documentation';
+    public const EMAIL_CONTACT                 = 'adcurve/support/email';
+    public const PHONE_CONTACT                 = 'adcurve/support/phone';
+
+    public $configHelper;
     protected $_template = 'Adcurve_Adcurve::system/config/fieldset/supporttab.phtml';
 
-	/**
+    /**
      * Constructor
      *
      * @param \Magento\Framework\App\Helper\Context
-	 * @param \Magento\Framework\App\Config\ScopeConfigInterface
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface
      */
-	public function __construct(
-		\Magento\Backend\Block\Template\Context $context,
-		\Adcurve\Adcurve\Helper\Config $configHelper,
-		array $data = []
-	){
-		parent::__construct($context, $data);
-		
-		$this->configHelper = $configHelper;
-	}
+    public function __construct(
+        \Magento\Backend\Block\Template\Context $context,
+        \Adcurve\Adcurve\Helper\Config $configHelper,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
+
+        $this->configHelper = $configHelper;
+    }
 
     /**
      * Returns the URL to get more information about publisher.
@@ -78,7 +79,7 @@ class SupportTab extends \Magento\Backend\Block\Template implements \Magento\Fra
 
         return $url;
     }
-	
+
     /**
      * Returns the URL to get more information about contact email.
      *
@@ -90,7 +91,7 @@ class SupportTab extends \Magento\Backend\Block\Template implements \Magento\Fra
 
         return $url;
     }
-	
+
     /**
      * Returns the URL to get more information about contact phone.
      *

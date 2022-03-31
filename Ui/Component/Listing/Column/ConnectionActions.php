@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Ui\Component\Listing\Column;
 
 class ConnectionActions extends \Magento\Ui\Component\Listing\Columns\Column
@@ -34,47 +35,52 @@ class ConnectionActions extends \Magento\Ui\Component\Listing\Columns\Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['connection_id'])) {
-                	if ($item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_PRE_REGISTRATION) {
-						$item[$this->getData('name')]['register'] = [
+                    if ($item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_PRE_REGISTRATION) {
+                        $item[$this->getData('name')]['register'] = [
                             'href' => $this->urlBuilder->getUrl(
-                                'adcurve_adcurve/connection/register', ['connection_id' => $item['connection_id']]
+                                'adcurve_adcurve/connection/register',
+                                ['connection_id' => $item['connection_id']]
                             ),
                             'label' => __('Register to Adcurve')
                         ];
-					}
-					
-					if (
-						$item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_POST_REGISTRATION
-						|| $item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_ERROR_CONNECTION_TO_ADCURVE
-						|| $item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_ERROR_RESULT_FROM_ADCURVE
-					) {
-						$item[$this->getData('name')]['validate_connection'] = [
+                    }
+
+                    if (
+                        $item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_POST_REGISTRATION
+                        || $item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_ERROR_CONNECTION_TO_ADCURVE
+                        || $item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_ERROR_RESULT_FROM_ADCURVE
+                    ) {
+                        $item[$this->getData('name')]['validate_connection'] = [
                             'href' => $this->urlBuilder->getUrl(
-                                'adcurve_adcurve/connection/validate', ['connection_id' => $item['connection_id']]
+                                'adcurve_adcurve/connection/validate',
+                                ['connection_id' => $item['connection_id']]
                             ),
                             'label' => __('Validate Connection')
                         ];
-					}
-					
-					if ($item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_SUCCESS) {
-						$item[$this->getData('name')]['queue_products'] = [
+                    }
+
+                    if ($item['status'] == \Adcurve\Adcurve\Model\Connection::STATUS_SUCCESS) {
+                        $item[$this->getData('name')]['queue_products'] = [
                             'href' => $this->urlBuilder->getUrl(
-                                'adcurve_adcurve/connection/products_queueall', ['store_id' => $item['store_id']]
+                                'adcurve_adcurve/connection/products_queueall',
+                                ['store_id' => $item['store_id']]
                             ),
                             'label' => __('Queue complete sync')
                         ];
-					}
-					
+                    }
+
                     $item[$this->getData('name')]['edit'] = [
                         'href' => $this->urlBuilder->getUrl(
-                            'adcurve_adcurve/connection/edit', ['connection_id' => $item['connection_id']]
+                            'adcurve_adcurve/connection/edit',
+                            ['connection_id' => $item['connection_id']]
                         ),
                         'label' => __('Edit')
                     ];
-					
+
                     $item[$this->getData('name')]['delete'] = [
                         'href' => $this->urlBuilder->getUrl(
-                            'adcurve_adcurve/connection/delete', ['connection_id' => $item['connection_id']]
+                            'adcurve_adcurve/connection/delete',
+                            ['connection_id' => $item['connection_id']]
                         ),
                         'label' => __('Delete'),
                         'confirm' => [
@@ -85,7 +91,7 @@ class ConnectionActions extends \Magento\Ui\Component\Listing\Columns\Column
                 }
             }
         }
-        
+
         return $dataSource;
     }
 }

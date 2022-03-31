@@ -1,11 +1,12 @@
 <?php
+
 namespace Adcurve\Adcurve\Controller\Adminhtml\Connection;
 
 class Index extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
 {
-	const URL_PATH_ADCURVE_INTEGRATION_ACTIVATION = 'adcurve_adcurve/integration/activation';
-	
-	protected $resultPageFactory;
+    public const URL_PATH_ADCURVE_INTEGRATION_ACTIVATION = 'adcurve_adcurve/integration/activation';
+
+    protected $resultPageFactory;
 
     /**
      * Constructor
@@ -20,7 +21,7 @@ class Index extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
         \Magento\Integration\Model\IntegrationService $integrationService
     ) {
         $this->resultPageFactory = $resultPageFactory;
-		$this->integrationService = $integrationService;
+        $this->integrationService = $integrationService;
         parent::__construct($context, $coreRegistry);
     }
 
@@ -31,14 +32,14 @@ class Index extends \Adcurve\Adcurve\Controller\Adminhtml\Connection
      */
     public function execute()
     {
-    	/** @var \Magento\Integration\Model\Integration $integration */
-    	$integration = $this->integrationService->findByName('AdcurveIntegration');
-		if (!$integration->getStatus()) {
-			$this->messageManager->addError(__('Adcurve Integration Service needs to be activated first.'));
-			/** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
-			$resultRedirect = $this->resultRedirectFactory->create();
-			return $resultRedirect->setPath(self::URL_PATH_ADCURVE_INTEGRATION_ACTIVATION);
-		}
+        /** @var \Magento\Integration\Model\Integration $integration */
+        $integration = $this->integrationService->findByName('AdcurveIntegration');
+        if (!$integration->getStatus()) {
+            $this->messageManager->addError(__('Adcurve Integration Service needs to be activated first.'));
+            /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+            $resultRedirect = $this->resultRedirectFactory->create();
+            return $resultRedirect->setPath(self::URL_PATH_ADCURVE_INTEGRATION_ACTIVATION);
+        }
         $resultPage = $this->resultPageFactory->create();
         $resultPage->getConfig()->getTitle()->prepend(__('Adcurve Connection Management'));
         return $resultPage;

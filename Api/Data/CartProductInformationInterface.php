@@ -1,20 +1,21 @@
 <?php
+
 namespace Adcurve\Adcurve\Api\Data;
 
 interface CartProductInformationInterface
 {
-    const PRODUCT_ID = 'product_id';
-    const SKU = 'sku';
-	const QTY = 'qty';
+    public const PRODUCT_ID = 'product_id';
+    public const SKU = 'sku';
+    public const QTY = 'qty';
 
-	/**
+    /**
      * Gets the product_id.
      *
      * @api
      * @return int
      */
     public function getProductId();
- 
+
     /**
      * Sets the product_id.
      *
@@ -23,17 +24,15 @@ interface CartProductInformationInterface
      * @return void
      */
     public function setProductId($product_id);
-	
-	
-	
-	/**
+
+    /**
      * Gets the sku.
      *
      * @api
      * @return string
      */
     public function getSku();
- 
+
     /**
      * Sets the sku.
      *
@@ -41,7 +40,7 @@ interface CartProductInformationInterface
      * @param int $sku
      */
     public function setSku($sku);
- 
+
     /**
      * Gets the quantity.
      *
@@ -49,7 +48,7 @@ interface CartProductInformationInterface
      * @return int
      */
     public function getQty();
- 
+
     /**
      * Sets the quantity.
      *
@@ -58,5 +57,4 @@ interface CartProductInformationInterface
      * @return void
      */
     public function setQty($qty);
-	
 }

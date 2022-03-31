@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Model;
 
 use Adcurve\Adcurve\Api\Data\ConnectionInterfaceFactory;
@@ -89,7 +90,7 @@ class ConnectionRepository implements ConnectionRepositoryInterface
         return $connection;
     }
 
-	/**
+    /**
      * {@inheritdoc}
      */
     public function getByStoreId($storeId)
@@ -110,7 +111,7 @@ class ConnectionRepository implements ConnectionRepositoryInterface
     ) {
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
-        
+
         $collection = $this->connectionCollectionFactory->create();
         foreach ($criteria->getFilterGroups() as $filterGroup) {
             foreach ($filterGroup->getFilters() as $filter) {
@@ -136,7 +137,7 @@ class ConnectionRepository implements ConnectionRepositoryInterface
         $collection->setCurPage($criteria->getCurrentPage());
         $collection->setPageSize($criteria->getPageSize());
         $items = [];
-        
+
         foreach ($collection as $connectionModel) {
             $connectionData = $this->dataConnectionFactory->create();
             $this->dataObjectHelper->populateWithArray(

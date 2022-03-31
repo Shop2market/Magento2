@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;

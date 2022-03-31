@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Model;
 
 use Adcurve\Adcurve\Api\UpdateRepositoryInterface;
@@ -98,7 +99,7 @@ class UpdateRepository implements UpdateRepositoryInterface
     ) {
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
-        
+
         $collection = $this->updateCollectionFactory->create();
         foreach ($criteria->getFilterGroups() as $filterGroup) {
             foreach ($filterGroup->getFilters() as $filter) {
@@ -124,7 +125,7 @@ class UpdateRepository implements UpdateRepositoryInterface
         $collection->setCurPage($criteria->getCurrentPage());
         $collection->setPageSize($criteria->getPageSize());
         $items = [];
-        
+
         foreach ($collection as $updateModel) {
             $updateData = $this->dataUpdateFactory->create();
             $this->dataObjectHelper->populateWithArray(

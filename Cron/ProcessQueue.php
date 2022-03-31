@@ -1,10 +1,12 @@
 <?php
+
 namespace Adcurve\Adcurve\Cron;
 
 class ProcessQueue
 {
-	protected $queueFactory;
-	protected $productQueue;
+    protected $queueFactory;
+    protected $productQueue;
+    protected $logger;
 
     /**
      * Constructor
@@ -12,11 +14,13 @@ class ProcessQueue
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-    	\Adcurve\Adcurve\Model\QueueFactory $queueFactory,
-    	\Adcurve\Adcurve\Model\Connection\ProductQueue $productQueue
-	){
+        \Adcurve\Adcurve\Model\QueueFactory $queueFactory,
+        \Adcurve\Adcurve\Model\Connection\ProductQueue $productQueue,
+        \Psr\Log\LoggerInterface $logger
+    ) {
         $this->queueFactory = $queueFactory;
-				$this->productQueue = $productQueue;
+        $this->productQueue = $productQueue;
+        $this->logger = $logger;
     }
 
     /**
@@ -26,26 +30,16 @@ class ProcessQueue
      */
     public function execute()
     {
-    	$queue = $this->queueFactory->create();
-
-			$queueCollection = $queue->getCollection()
-					->addAttributeToFilter(
-							[
-									['attribute'=>'status','neq'=> \Adcurve\Adcurve\Model\Update::QUEUE_STATUS_NEW]
-							]
-					);
-
-			foreach ($queueCollection as $queue) {
-				$this->productQueue->queueAllProducts($queue->getId(), $queue->getStoreId());
-				/*
-				$queueToDelete = $this->queueFactory->create()->load($queue->getId());
-				try {
-					$queueToDelete->delete();
-					unset($queueToDelete);
-				} catch (\Exception $e) {
-		            $this->messageManager->addException($e, __('Something went wrong while trying to sync all products.'));
-		        }
-				*/
-			}
+        $queue = $this->queueFactory->create();
+        $queueCollection = $queue->getCollection()
+                            ->addFieldToFilter(
+                                'status',
+                                ['neq' => \Adcurve\Adcurve\Model\Queue::QUEUE_STATUS_COMPLETE]
+                            );
+        $this->logger->Info("ProcessQueue 1 Collection SQL Dumps:");
+        $this->logger->info($queueCollection->getSelect()->__toString());
+        foreach ($queueCollection as $queue) {
+            $this->productQueue->queueAllProducts($queue->getId(), $queue->getStoreId());
+        }
     }
 }

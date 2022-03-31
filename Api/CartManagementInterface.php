@@ -1,7 +1,9 @@
 <?php
+
 namespace Adcurve\Adcurve\Api;
- 
-interface CartManagementInterface {
+
+interface CartManagementInterface
+{
     /**
      * Updates the specified cart with the specified products.
      *

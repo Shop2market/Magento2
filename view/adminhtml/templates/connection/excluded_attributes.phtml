@@ -5,13 +5,13 @@
 </div>
 <?php
 $attributes = $this->getAttributesArray();
-$AllValues=$this->getAllValues();
-$arrExc_encoded =$this->getExcludedAttributes();
-$arrExc=array();
+$AllValues = $this->getAllValues();
+$arrExc_encoded = $this->getExcludedAttributes();
+$arrExc = array();
 if (isset($arrExc_encoded))
-$arrExc=json_decode($arrExc_encoded);
+$arrExc = json_decode($arrExc_encoded);
 
-$attrNonExcluded=array();
+$attrNonExcluded = array();
 foreach ($attributes as $item):
         $value=$item["value"];
 		$label=$item["label"];
@@ -27,7 +27,7 @@ endforeach;
 ?>
 
 <div class="admin__field field field-shop_attributes  required _required" data-ui-id="adminhtml-connection-register-form-0-fieldset-element-form-field-shop-attributes">
-                    <label class="label admin__field-label" for="shop_attributes" data-ui-id="adminhtml-connection-register-form-0-fieldset-element-select-shop-attributes-label"><span>Exclude Attributes</span></label>
+                    <label class="label admin__field-label" for="shop_attributes" data-ui-id="adminhtml-connection-register-form-0-fieldset-element-select-shop-attributes-label"><span>Optional: select any product attributes that you do not want to be included in the data sent to AdCurve</span></label>
             <div class="admin__field-control control">
 
 <table >
@@ -64,13 +64,13 @@ endforeach;
     <select  id="adcurve_settings_exclude" name="exclude" class=" select multiselect" size="12" multiple="multiple" style="width: 222px;">
     <?php foreach ($attributes as $item2): ?>
         <?php 
-		$value=$item2["value"];
-		$label=$item2["label"];
+		$value = $item2["value"];
+		$label = $item2["label"];
 		if (is_array($arrExc)) {	
 			if (in_array($value, $arrExc)) {  ?>
-            			<option value="<?php echo $value; ?>"><?php echo $label; ?></option>
+            	<option value="<?php echo $value; ?>"><?php echo $label; ?></option>
 			<?php } ?>
-        	<?php } ?>    
+        <?php } ?>    
     <?php endforeach; ?>    
     </select>
 </td>
@@ -151,13 +151,13 @@ button, .form-button {
 </style>
 <div id="popup_form_terms">
 	<span class="admin__legend"><?php echo __('Thanks for your registration in Adcurve!'); ?></span>
-	<span>
-		<?php echo __('To complete the registration the AdCurve extension will take the following actions:'); ?>
-	</span>
-	<ol>
-		<li><?php echo __('Read product information and upload it to AdCurve so that it can be used to create product feeds'); ?></li>
-		<li><?php echo __('Read order information to create analytics and track sales'); ?></li>
-	</ol>
+    <span>
+        <?php echo __('To complete the registration the AdCurve extension will take the following actions:'); ?>
+    </span>
+    <ol>
+        <li><?php echo __('Read product information and upload it to AdCurve so that it can be used to create product feeds'); ?></li>
+        <li><?php echo __('Read order information to create analytics and track sales'); ?></li>
+    </ol>
     <span><?php echo __('On clicking \'Accept\' you\'ll be redirected to the AdCurve app to complete creating your AdCurve account. If you encounter any problems, please contact us at support@adcurve.com.'); ?></span>
 	<button id="accepted" class="save primary" onclick="processForm();"><span><span><?php echo __('Accept');?></span></span></button>
 </div>

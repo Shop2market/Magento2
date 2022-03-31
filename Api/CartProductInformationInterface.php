@@ -1,10 +1,12 @@
 <?php
+
 namespace Adcurve\Adcurve\Api;
- 
+
 /**
  * Interface for tracking cart product updates.
  */
-interface CartProductInformationInterface {
+interface CartProductInformationInterface
+{
     /**
      * Gets the sku.
      *
@@ -12,7 +14,7 @@ interface CartProductInformationInterface {
      * @return string
      */
     public function getSku();
- 
+
     /**
      * Sets the sku.
      *
@@ -20,7 +22,7 @@ interface CartProductInformationInterface {
      * @param int $sku
      */
     public function setSku($sku);
- 
+
     /**
      * Gets the quantity.
      *
@@ -28,7 +30,7 @@ interface CartProductInformationInterface {
      * @return string
      */
     public function getQty();
- 
+
     /**
      * Sets the quantity.
      *

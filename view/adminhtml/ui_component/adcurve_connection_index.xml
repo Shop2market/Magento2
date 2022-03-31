@@ -1,14 +1,18 @@
 <?xml version="1.0" ?>
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
-	<argument name="context" xsi:type="configurableObject">
+	<!-- <argument name="context" xsi:type="configurableObject">
 		<argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\Context</argument>
 		<argument name="namespace" xsi:type="string">adcurve_connection_index</argument>
-	</argument>
+	</argument> -->
 	<argument name="data" xsi:type="array">
 		<item name="js_config" xsi:type="array">
 			<item name="provider" xsi:type="string">adcurve_connection_index.adcurve_connection_grid_data_source</item>
-			<item name="deps" xsi:type="string">adcurve_connection_index.adcurve_connection_grid_data_source</item>
+			<!-- commented for ver gt 2.3.1 -->
+			<!-- <item name="deps" xsi:type="string">adcurve_connection_index.adcurve_connection_grid_data_source</item> -->
+			<!-- END commented for ver gt 2.3.1 -->
 		</item>
+		<!-- commented for ver gt 2.3.1 -->
+		<!--
 		<item name="spinner" xsi:type="string">adcurve_connection_columns</item>
 		<item name="buttons" xsi:type="array">
 			<item name="refresh" xsi:type="array">
@@ -16,9 +20,25 @@
 				<item name="label" xsi:type="string">Refresh stores</item>
 				<item name="url" xsi:type="string">*/*/refresh</item>
 			</item>
-		</item>
+		</item> -->
+		<!-- END commented for ver gt 2.3.1 -->
 	</argument>
-	<dataSource name="adcurve_connection_grid_data_source">
+	<!-- added for ver gt 2.3.1 -->
+	<settings>
+        <buttons>
+            <button name="refresh">
+                <url path="*/*/refresh"/>
+                <class>primary</class>
+                <label translate="true">Refresh stores</label>
+            </button>
+        </buttons>
+        <spinner>adcurve_connection_columns</spinner>
+        <deps>
+            <dep>adcurve_connection_index.adcurve_connection_grid_data_source</dep>
+        </deps>
+    </settings>
+    <!-- END added for ver gt 2.3.1 -->
+	<dataSource name="adcurve_connection_grid_data_source" >
 		<argument name="dataProvider" xsi:type="configurableObject">
 			<argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
 			<argument name="name" xsi:type="string">adcurve_connection_grid_data_source</argument>
@@ -118,20 +138,34 @@
 		</column>
 		<column name="enabled">
 			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Adcurve\Adcurve\Ui\Component\Listing\Column\Enabled</item>
 				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">text</item>
+					<item name="filter" xsi:type="string">select</item>
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="sortable" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
 					<item name="label" translate="true" xsi:type="string">Enabled</item>
 				</item>
 			</argument>
 		</column>
-		<column name="status">
+		<column name="status" >
 			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Adcurve\Adcurve\Ui\Component\Listing\Column\Status</item>
 				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">text</item>
+					<item name="filter" xsi:type="string">select</item>
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="sortable" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
 					<item name="label" translate="true" xsi:type="string">Status</item>
 				</item>
 			</argument>
 		</column>
+		
+
 		<column name="adcurve_shop_id">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
@@ -144,7 +178,7 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">Suggestion</item>
+					<item name="label" translate="true" xsi:type="string">Comments</item>
 				</item>
 			</argument>
 		</column>
@@ -152,6 +186,9 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="indexField" xsi:type="string">connection_id</item>
+					<item name="label" translate="true" xsi:type="string">Actions</item>
+					<item name="bodyTmpl" xsi:type="string">Adcurve_Adcurve/grid/cells/actions</item>
+
 				</item>
 			</argument>
 		</actionsColumn>

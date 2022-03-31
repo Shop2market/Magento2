@@ -1,9 +1,9 @@
 <?php
+
 namespace Adcurve\Adcurve\Model\ResourceModel\Connection;
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
-
     /**
      * Define resource model
      *

@@ -1,27 +1,30 @@
 <?php
+
 namespace Adcurve\Adcurve\Observer\Catalog;
 
 class ProductStockItemMassChange implements \Magento\Framework\Event\ObserverInterface
 {
-	protected $productHelper;
-	protected $_productloader;  
-	protected $configHelper;
-	
-	public function __construct(
-		\Adcurve\Adcurve\Helper\Product $productHelper,
-		\Adcurve\Adcurve\Helper\Config $configHelper,
-		\Magento\Catalog\Model\ProductFactory $_productloader,
-		\Magento\Store\Model\StoreManagerInterface $storeManager,
-		\Adcurve\Adcurve\Model\QueueFactory $queueFactory
-	)
-	{
-		$this->productHelper = $productHelper;
-		$this->_configHelper=$configHelper;
-		$this->_productloader = $_productloader;
-		$this->_storeManager = $storeManager;
-		$this->queueFactory = $queueFactory;
-	}
-	
+    protected $productHelper;
+    protected $_productloader;
+    protected $_configHelper;
+    protected $_logger;
+
+    public function __construct(
+        \Adcurve\Adcurve\Helper\Product $productHelper,
+        \Adcurve\Adcurve\Helper\Config $configHelper,
+        \Magento\Catalog\Model\ProductFactory $_productloader,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Adcurve\Adcurve\Model\QueueFactory $queueFactory,
+        \Psr\Log\LoggerInterface $logger
+    ) {
+        $this->productHelper = $productHelper;
+        $this->_configHelper = $configHelper;
+        $this->_productloader = $_productloader;
+        $this->_storeManager = $storeManager;
+        $this->queueFactory = $queueFactory;
+        $this->_logger = $logger;
+    }
+
     /**
      * Execute observer
      *
@@ -31,44 +34,34 @@ class ProductStockItemMassChange implements \Magento\Framework\Event\ObserverInt
     public function execute(
         \Magento\Framework\Event\Observer $observer
     ) {
-		
-		
-		$productIds = $observer->getEvent()->getProducts();
+        $productIds = $observer->getEvent()->getProducts();
 
         if (count($productIds) > 0) {
-        
             foreach ($productIds as $productId) {
-            
-				$product=$this->getLoadProduct($productId);
-			
-				// TO DO: add website scope support
-				if ($product->getStoreId() == 0) { // Update all storeviews when global scope is edited
-				
-					$this->_addProductsToBatch($productId, 0);
-					
-				} else{	
-				
-					$this->_addProductsToBatch($productId,$product->getStoreId());
-				}
- 
+                $product = $this->getLoadProduct($productId);
+
+                // TO DO: add website scope support
+                if ($product->getStoreId() == 0) { // Update all storeviews when global scope is edited
+                    $this->_addProductsToBatch($productId, 0);
+                } else {
+                    $this->_addProductsToBatch($productId, $product->getStoreId());
+                }
             }
         }
-		
-	
     }
-	/**
+    /**
      * Load product from product id
      *
      * @param int $productId
      *
      *
      */
-	public function getLoadProduct($productId)
+    public function getLoadProduct($productId)
     {
         return $this->_productloader->create()->load($productId);
     }
-	
-	/**
+
+    /**
      * Add a products to batch that need to be processed for the given storeview
      *
      * @param int $productId
@@ -77,90 +70,69 @@ class ProductStockItemMassChange implements \Magento\Framework\Event\ObserverInt
      *
      */
     protected function _addProductsToBatch($productId, $storeId = 0)
-    {    
-        /** @var Adcurve_Adcurve_Helper_Product $helper */
-		$helper = $this->productHelper;
-
+    {
         $product = $this->getLoadProduct($productId);
-        if (!$helper->isProductValidForExport($product)) {
+        if (!$this->productHelper->isProductValidForExport($product)) {
             /** If product is not valid for export, skip */
             return;
         }
-        
-        if ($storeId == 0) {        
+
+        if ($storeId == 0) {
             $storeIds = $product->getStoreIds();
-            
-            if (count($storeIds) == 0) {        
-				$storeList = $this->_storeManager->getStores();
-               
+
+            if (count($storeIds) == 0) {
+                $storeList = $this->_storeManager->getStores();
+
                 /** @var Mage_Core_Model_Store $storeObject */
                 foreach ($storeList as $storeObject) {
-                
                     if ($storeObject->getId() == 0) {
                         continue;
                     }
-                    
-                    $storeIds[] = $storeObject->getId();                    
+
+                    $storeIds[] = $storeObject->getId();
                 }
             }
-            
+
             if (count($storeIds) > 0) {
-            
                 foreach ($storeIds as $storeId) {
-                
                     try {
                         if ($storeId == 0) {
                             continue;
                         }
-                        
+
                         if (!in_array($storeId, $product->getStoreIds())) {
-                            return;
+                            continue;
                         }
-                        
-                        if (!$this->_configHelper->isApiConfigured($storeId)) {
+
+                        $connection = $this->_configHelper->getAdcurveConnectionByStore($storeId);
+                        if (!$this->_configHelper->isApiConfigured($connection)) {
                             /** If the api is not configured, don't process this storeview */
                             continue;
                         }
-                        
-                        /** @var Adcurve_Adcurve_Model_Product_Batches $batch */
-                        //$batch = Mage::getModel('adcurve_adcurve/product_batches');
-                        /** Create and save the product update entity */
-                        //$batch->setStoreId($storeId)
-                        //    ->save();
-							
-						$preparedData = $this->productHelper->getProductData($product, $storeId);
-						$this->productHelper->saveUpdateForAdcurve($preparedData);	
 
-                            
-                    } catch (Exception $e) {
-                        Mage::logException($e);
+                        $preparedData = $this->productHelper->getProductData($product, $storeId);
+                        $this->productHelper->saveUpdateForAdcurve($preparedData);
+                    } catch (\Exception $e) {
+                        $this->_logger->addError($e->getMessage());
                     }
                 }
             }
         } else {
-        
             try {
                 if (!in_array($storeId, $product->getStoreIds())) {
                     return;
                 }
-                
-                if (!$this->_configHelper->isApiConfigured($storeId)) {
+
+                $connection = $this->_configHelper->getAdcurveConnectionByStore($storeId);
+                if (!$this->_configHelper->isApiConfigured($connection)) {
+                    /** If the api is not configured, don't process this storeview */
                     return;
                 }
-                
-                /** @var Adcurve_Adcurve_Model_Product_Batches $batch */
-                //$batch = Mage::getModel('adcurve_adcurve/product_batches');
-                /** Create and save the product update entity */
-                //$batch->setProductId($productId)
-                //    ->setStoreId($storeId)
-                //    ->save();
-					
-				$preparedData = $this->productHelper->getProductData($product, $storeId);
-				$this->productHelper->saveUpdateForAdcurve($preparedData);	
-	
-                    
-            } catch (Exception $e) {
-                Mage::logException($e);
+
+                $preparedData = $this->productHelper->getProductData($product, $storeId);
+                $this->productHelper->saveUpdateForAdcurve($preparedData);
+            } catch (\Exception $e) {
+                $this->_logger->addError($e->getMessage());
             }
         }
     }

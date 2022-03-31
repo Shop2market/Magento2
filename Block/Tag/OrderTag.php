@@ -1,13 +1,14 @@
 <?php
+
 namespace Adcurve\Adcurve\Block\Tag;
 
 class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
 {
-    const ORDER_TRANS_TYPE = 'Order';
-	
-	protected $checkoutSession;
-	protected $onepageModel;
-	
+    public const ORDER_TRANS_TYPE = 'Order';
+
+    protected $checkoutSession;
+    protected $onepageModel;
+
     protected $orderInfo;
     protected $itemsInfo;
     protected $customerInfo;
@@ -15,21 +16,21 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
      * @var \Magento\Sales\Model\Order
      */
     protected $_order;
-	
-	public function __construct(
-		\Magento\Framework\View\Element\Template\Context $context,
-		\Adcurve\Adcurve\Helper\Config $configHelper,
-		\Adcurve\Adcurve\Helper\Tag $tagHelper,
-		\Magento\Checkout\Model\Session $checkoutSession,
-		\Magento\Checkout\Model\Type\Onepage $onepageModel,
-		array $data = []
-	){
-		$this->checkoutSession = $checkoutSession;
-		$this->onepageModel = $onepageModel;
-		
-		parent::__construct($context, $configHelper, $tagHelper, $data);
-	}
-	
+
+    public function __construct(
+        \Magento\Framework\View\Element\Template\Context $context,
+        \Adcurve\Adcurve\Helper\Config $configHelper,
+        \Adcurve\Adcurve\Helper\Tag $tagHelper,
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Checkout\Model\Type\Onepage $onepageModel,
+        array $data = []
+    ) {
+        $this->checkoutSession = $checkoutSession;
+        $this->onepageModel = $onepageModel;
+
+        parent::__construct($context, $configHelper, $tagHelper, $data);
+    }
+
     /**
      * Return the most recently placed order
      *
@@ -42,7 +43,7 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
         }
         return $this->_order;
     }
-	
+
     /**
      * Get all order info to tag
      *
@@ -63,7 +64,7 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
         }
         return $this->orderInfo;
     }
-	
+
     /**
      * Return all order item info to tag
      *
@@ -73,7 +74,7 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
     {
         if (empty($this->itemsInfo)) {
             $order = $this->_getOrder();
-			
+
             /** @var \Magento\Sales\Model\Order\Item $item */
             foreach ($order->getAllItems() as $item) {
                 $this->itemsInfo[] = [
@@ -87,7 +88,7 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
         }
         return $this->itemsInfo;
     }
-	
+
     /**
      * Return all customer info to tag
      *
@@ -105,7 +106,7 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
         }
         return $this->customerInfo;
     }
-	
+
     /**
      * Return if the customer is new or not
      *
@@ -126,7 +127,7 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
         }
         return $isNew;
     }
-	
+
     /**
      * Return order info in get params format
      *
@@ -143,7 +144,7 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
             . "&coupon_code="   . $orderInfo['coupon_code'];
         return $result;
     }
-	
+
     /**
      * Get items info in GET parameter format
      *
@@ -165,7 +166,7 @@ class OrderTag extends \Adcurve\Adcurve\Block\Tag\AbstractTag
 
         return $result;
     }
-	
+
     /**
      * Get customer info in GET parameter format
      *
