@@ -229,16 +229,6 @@
 		</field>
 		
 		
-		<container name="adcurve_exclude_attributes" >
-			<argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="sortOrder" xsi:type="number">1</item>
-                </item>
-            </argument>
-			<htmlContent name="html_content">
-				<argument name="block" xsi:type="object">Adcurve\Adcurve\Block\Adminhtml\Connection\CustomData</argument>
-			</htmlContent>
-		</container>
 			
 	</fieldset>
 	
@@ -249,6 +239,18 @@
 				<item name="sortOrder" xsi:type="number">40</item>
 			</item>
 		</argument>
+
+		<container name="adcurve_exclude_attributes" >
+			<argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+			<htmlContent name="html_content">
+				<argument name="block" xsi:type="object">Adcurve\Adcurve\Block\Adminhtml\Connection\ExcludedAttributes</argument>
+			</htmlContent>
+		</container>
+		
 		<field name="connection_id">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">

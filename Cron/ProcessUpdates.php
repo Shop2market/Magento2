@@ -1,43 +1,44 @@
 <?php
+
 namespace Adcurve\Adcurve\Cron;
 
 class ProcessUpdates
 {
-	/** The maximum amount of time the cron can spend on processing product updates */
-    const MAX_PROCESSING_TIME       = 30;
+    /** The maximum amount of time the cron can spend on processing product updates */
+    public const MAX_PROCESSING_TIME       = 30;
 
     /** The maximum number of product updates allowed in one request as determined by Adcurve */
-    const MAX_UPDATES_PER_REQUEST   = 200;
+    public const MAX_UPDATES_PER_REQUEST   = 200;
 
     protected $logger;
-	protected $storeManager;
-	protected $updateCollection;
-	protected $updateRequest;
-	protected $configHelper;
+    protected $storeManager;
+    protected $updateCollection;
+    protected $updateRequest;
+    protected $configHelper;
 
     /**
      * Constructor
      *
      * @param \Psr\Log\LoggerInterface $logger
-	 * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-	 * @param \Adcurve\Adcurve\Model\UpdateFactory $updateFactory
-	 * @param \Adcurve\Adcurve\Model\Rest\UpdateRequest $updateRequest
-	 * @param \Adcurve\Adcurve\Helper\Config $configHelper
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Adcurve\Adcurve\Model\UpdateFactory $updateFactory
+     * @param \Adcurve\Adcurve\Model\Rest\UpdateRequest $updateRequest
+     * @param \Adcurve\Adcurve\Helper\Config $configHelper
      */
     public function __construct(
-    	\Psr\Log\LoggerInterface $logger,
-    	\Magento\Store\Model\StoreManagerInterface $storeManager,
-    	\Adcurve\Adcurve\Model\UpdateFactory $updateFactory,
-    	\Adcurve\Adcurve\Model\Rest\UpdateRequest $updateRequest,
-    	\Adcurve\Adcurve\Helper\Config $configHelper,
-    	\Adcurve\Adcurve\Model\ConnectionRepository $connectionRepository
-	){
+        \Psr\Log\LoggerInterface $logger,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Adcurve\Adcurve\Model\UpdateFactory $updateFactory,
+        \Adcurve\Adcurve\Model\Rest\UpdateRequest $updateRequest,
+        \Adcurve\Adcurve\Helper\Config $configHelper,
+        \Adcurve\Adcurve\Model\ConnectionRepository $connectionRepository
+    ) {
         $this->logger = $logger;
-		$this->storeManager = $storeManager;
-		$this->updateFactory = $updateFactory;
-		$this->updateRequest = $updateRequest;
-		$this->configHelper = $configHelper;
-		$this->connectionRepository = $connectionRepository;
+        $this->storeManager = $storeManager;
+        $this->updateFactory = $updateFactory;
+        $this->updateRequest = $updateRequest;
+        $this->configHelper = $configHelper;
+        $this->connectionRepository = $connectionRepository;
     }
 
     /**
@@ -47,36 +48,28 @@ class ProcessUpdates
      */
     public function execute()
     {
-		
-        $this->logger->addInfo("Cronjob Adcurve Updates is executed.");
-		
-		$stores = $this->storeManager->getStores();
+        $this->logger->Info("Cronjob Adcurve Updates is executed.");
+
+        $stores = $this->storeManager->getStores();
         $startTime = microtime(true);
         foreach ($stores as $store) {
-        	
-			$connection = $this->connectionRepository->getByStoreId($store->getId());
-			
+            $connection = $this->connectionRepository->getByStoreId($store->getId());
             if (!$this->configHelper->isApiConfigured($connection)) {
                 continue;
             }
-			
             $updateCollection = $this->_getUpdateCollection($store->getId());
-			
             if ($updateCollection->getSize() < 1) {
                 continue;
             }
-			
             /** Set the page size to the max number of updates allowed in one request */
             $updateCollection->setPageSize(self::MAX_UPDATES_PER_REQUEST);
             $lastPageNumber = $updateCollection->getLastPageNumber();
-			
             /** Loop through all page numbers */
             for ($i = 1; $i <= $lastPageNumber; $i++) {
                 if ($startTime + self::MAX_PROCESSING_TIME <= microtime(true)) {
                     /** If we've exceeded the maximum processing time, break from both loops */
                     break(2);
                 }
-				
                 $updateCollection->setCurPage($i);
                 $updateCollection->load();
                 $this->processUpdatesBatch($updateCollection, $store->getId());
@@ -94,9 +87,9 @@ class ProcessUpdates
      * @return $this
      */
     public function processUpdatesBatch(
-    	\Adcurve\Adcurve\Model\ResourceModel\Update\Collection $updateCollection,
-    	$storeId = null
-	){
+        \Adcurve\Adcurve\Model\ResourceModel\Update\Collection $updateCollection,
+        $storeId = null
+    ) {
         /** @var array $productData A list of all product data to be synced */
         $productData = array();
         foreach ($updateCollection as $update) {
@@ -104,25 +97,25 @@ class ProcessUpdates
             if (!isset($data['entity_id'])) {
                 $data['entity_id'] = $update->getProductId();
             }
-			$productData[] = $data;
+            $productData[] = $data;
         }
-		
+
         /** Only get the array values because the API can't handle associative arrays */
         $productData = array_values($productData);
-	
+
         $error = false;
         try {
             /** Send the batch to Adcurve, an empty response is given on succes */
-			$connection = $this->connectionRepository->getByStoreId($storeId);
+            $connection = $this->connectionRepository->getByStoreId($storeId);
             $response = $this->updateRequest->sendData($productData, $connection);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());
             $error = true;
             foreach ($updateCollection as $update) {
                 $update->error($e->getMessage());
             }
         }
-		
+
         if ($error === false) {
             foreach ($updateCollection as $update) {
                 $update->complete();
@@ -140,7 +133,7 @@ class ProcessUpdates
      */
     protected function _getUpdateCollection($storeId = 0)
     {
-    	$update = $this->updateFactory->create();
+        $update = $this->updateFactory->create();
         $updateCollection = $update->getCollection()
             ->addFieldToFilter(
                 array('status', 'status', 'status'),
@@ -148,11 +141,14 @@ class ProcessUpdates
                     array('eq' => \Adcurve\Adcurve\Model\Update::PRODUCT_UPDATE_STATUS_NEW),
                     array('eq' => \Adcurve\Adcurve\Model\Update::PRODUCT_UPDATE_STATUS_ERROR),
                     array('eq' => \Adcurve\Adcurve\Model\Update::PRODUCT_UPDATE_STATUS_UPDATE),
-                ))
+                )
+            )
             ->addFieldToFilter('retry_count', array('lt' => 5))
             //->addFieldToFilter('exported_at', array('null' => true)) //Redundant filter, may be activated..
             ->addFieldToFilter('store_id', array('eq' => $storeId))
-			->setOrder('update_id', 'ASC');
+            ->setOrder('update_id', 'ASC');
+        //$this->logger->Info("ProcessUpdatesQueue Collection SQL Dumps:");
+        //$this->logger->Info($updateCollection->getSelect()->__toString());
         return $updateCollection;
     }
 }

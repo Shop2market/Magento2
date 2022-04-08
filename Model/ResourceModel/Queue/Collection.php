@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Model\ResourceModel\Queue;
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection

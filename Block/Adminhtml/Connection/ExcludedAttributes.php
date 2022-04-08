@@ -2,14 +2,14 @@
 
 namespace Adcurve\Adcurve\Block\Adminhtml\Connection;
 
-class CustomData extends \Magento\Backend\Block\Template
+class ExcludedAttributes extends \Magento\Backend\Block\Template
 {
     /**
      * Block template.
      *
      * @var string
      */
-    protected $_template = 'connection/customdata.phtml';
+    protected $_template = 'connection/excluded_attributes.phtml';
     protected $productAttributeOptions;
     private $_objectManager;
 

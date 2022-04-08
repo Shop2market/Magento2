@@ -1,38 +1,39 @@
 <?php
+
 namespace Adcurve\Adcurve\Helper;
 
-use \Magento\Catalog\Api\CategoryRepositoryInterface;
-use \Magento\Catalog\Api\ProductRepositoryInterface;
-use \Magento\Framework\Exception\NoSuchEntityException;
-use \Magento\Framework\Pricing\PriceCurrencyInterface;
-use \Magento\Tax\Api\Data\TaxClassKeyInterface;
-use \Magento\Customer\Model\Session as CustomerSession;
-use \Magento\Tax\Model\Config;
+use Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Pricing\PriceCurrencyInterface;
+use Magento\Tax\Api\Data\TaxClassKeyInterface;
+use Magento\Customer\Model\Session as CustomerSession;
+use Magento\Tax\Model\Config;
 
 class Taxgimmick extends \Magento\Catalog\Helper\Data
 {
-	const PRICE_SCOPE_GLOBAL = 0;
+    public const PRICE_SCOPE_GLOBAL = 0;
 
-    const PRICE_SCOPE_WEBSITE = 1;
+    public const PRICE_SCOPE_WEBSITE = 1;
 
-    const XML_PATH_PRICE_SCOPE = 'catalog/price/scope';
+    public const XML_PATH_PRICE_SCOPE = 'catalog/price/scope';
 
-    const CONFIG_USE_STATIC_URLS = 'cms/wysiwyg/use_static_urls_in_catalog';
+    public const CONFIG_USE_STATIC_URLS = 'cms/wysiwyg/use_static_urls_in_catalog';
 
-    const CONFIG_PARSE_URL_DIRECTIVES = 'catalog/frontend/parse_url_directives';
+    public const CONFIG_PARSE_URL_DIRECTIVES = 'catalog/frontend/parse_url_directives';
 
-    const XML_PATH_DISPLAY_PRODUCT_COUNT = 'catalog/layered_navigation/display_product_count';
+    public const XML_PATH_DISPLAY_PRODUCT_COUNT = 'catalog/layered_navigation/display_product_count';
 
     /**
      * Cache context
      */
-    const CONTEXT_CATALOG_SORT_DIRECTION = 'catalog_sort_direction';
+    public const CONTEXT_CATALOG_SORT_DIRECTION = 'catalog_sort_direction';
 
-    const CONTEXT_CATALOG_SORT_ORDER = 'catalog_sort_order';
+    public const CONTEXT_CATALOG_SORT_ORDER = 'catalog_sort_order';
 
-    const CONTEXT_CATALOG_DISPLAY_MODE = 'catalog_mode';
+    public const CONTEXT_CATALOG_DISPLAY_MODE = 'catalog_mode';
 
-    const CONTEXT_CATALOG_LIMIT = 'catalog_limit';
+    public const CONTEXT_CATALOG_LIMIT = 'catalog_limit';
 
     /**
      * Breadcrumb Path cache
@@ -239,31 +240,32 @@ class Taxgimmick extends \Magento\Catalog\Helper\Data
         $this->customerGroupRepository = $customerGroupRepository;
         $this->addressFactory = $addressFactory;
         $this->regionFactory = $regionFactory;
-        parent::__construct($context,
-			$storeManager,
-			$catalogSession,
-			$string,
-			$catalogCategory,
-			$catalogProduct,
-			$coreRegistry,
-			$templateFilterFactory,
-        	$templateFilterModel,
-			$taxClassKeyFactory,
-			$taxConfig,
-			$quoteDetailsFactory,
-			$quoteDetailsItemFactory,
-			$taxCalculationService,
-			$customerSession,
-			$priceCurrency,
-			$productRepository,
-			$categoryRepository,
-			$customerGroupRepository,
-			$addressFactory,
-			$regionFactory
-		);
+        parent::__construct(
+            $context,
+            $storeManager,
+            $catalogSession,
+            $string,
+            $catalogCategory,
+            $catalogProduct,
+            $coreRegistry,
+            $templateFilterFactory,
+            $templateFilterModel,
+            $taxClassKeyFactory,
+            $taxConfig,
+            $quoteDetailsFactory,
+            $quoteDetailsItemFactory,
+            $taxCalculationService,
+            $customerSession,
+            $priceCurrency,
+            $productRepository,
+            $categoryRepository,
+            $customerGroupRepository,
+            $addressFactory,
+            $regionFactory
+        );
     }
-	
-	/**
+
+    /**
      * @param array $taxAddress
      * @return \Magento\Customer\Api\Data\AddressInterface|null
      */
@@ -282,8 +284,8 @@ class Taxgimmick extends \Magento\Catalog\Helper\Data
         }
         return $addressDataObject;
     }
-	
-	/**
+
+    /**
      * Get product price with all tax settings processing
      *
      * @param   \Magento\Catalog\Model\Product $product

@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Model\Connection;
 
 use Magento\Framework\App\Request\DataPersistorInterface;
@@ -50,14 +51,14 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             $this->loadedData[$model->getId()] = $model->getData();
         }
         $data = $this->dataPersistor->get('adcurve_adcurve_connection');
-        
+
         if (!empty($data)) {
             $model = $this->collection->getNewEmptyItem();
             $model->setData($data);
             $this->loadedData[$model->getId()] = $model->getData();
             $this->dataPersistor->clear('adcurve_adcurve_connection');
         }
-        
+
         return $this->loadedData;
     }
 }

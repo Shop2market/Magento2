@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Model\Rest;
 
 class UpdateRequest extends AbstractRequest
@@ -14,7 +15,7 @@ class UpdateRequest extends AbstractRequest
     {
         return $this->configHelper->getProductApiUrl($shopId);
     }
-	
+
     /**
      * Response is always empty, so no processing nor a return
      *

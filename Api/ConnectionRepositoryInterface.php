@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
@@ -11,7 +12,7 @@ interface ConnectionRepositoryInterface
      * @return \Adcurve\Adcurve\Api\Data\ConnectionInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    
+
     public function save(
         \Adcurve\Adcurve\Api\Data\ConnectionInterface $connection
     );
@@ -22,7 +23,7 @@ interface ConnectionRepositoryInterface
      * @return \Adcurve\Adcurve\Api\Data\ConnectionInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    
+
     public function getById($connectionId);
 
     /**
@@ -31,7 +32,7 @@ interface ConnectionRepositoryInterface
      * @return \Adcurve\Adcurve\Api\Data\ConnectionSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    
+
     public function getList(
         \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
     );
@@ -42,7 +43,7 @@ interface ConnectionRepositoryInterface
      * @return bool true on success
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    
+
     public function delete(
         \Adcurve\Adcurve\Api\Data\ConnectionInterface $connection
     );
@@ -54,6 +55,6 @@ interface ConnectionRepositoryInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    
+
     public function deleteById($connectionId);
 }

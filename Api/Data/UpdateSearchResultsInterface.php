@@ -1,4 +1,5 @@
 <?php
+
 namespace Adcurve\Adcurve\Api\Data;
 
 interface UpdateSearchResultsInterface extends \Magento\Framework\Api\SearchResultsInterface

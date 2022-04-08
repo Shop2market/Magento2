@@ -1,13 +1,14 @@
 <?php
+
 namespace Adcurve\Adcurve\Model\Rest;
 
 abstract class AbstractRequest
 {
-	protected $configHelper;
+    protected $configHelper;
     protected $_curl;
     protected $_data;
     protected $_store = null;
-	protected $_connectionModel;
+    protected $_connectionModel;
     protected $_curlOpt = array(
         CURLOPT_POST => true,
         CURLOPT_RETURNTRANSFER => true,
@@ -17,11 +18,11 @@ abstract class AbstractRequest
         ),
     );
 
-	public function __construct(
-		\Adcurve\Adcurve\Helper\Config $configHelper
-	){
-		$this->configHelper = $configHelper;
-	}
+    public function __construct(
+        \Adcurve\Adcurve\Helper\Config $configHelper
+    ) {
+        $this->configHelper = $configHelper;
+    }
 
     protected function _getData()
     {
@@ -35,15 +36,15 @@ abstract class AbstractRequest
         return $this;
     }
 
-	/**
-	 * @return \Adcurve\Adcurve\Model\Connection
-	 */
-	protected function _getConnectionModel()
-	{
-		return $this->_connectionModel;
-	}
+    /**
+     * @return \Adcurve\Adcurve\Model\Connection
+     */
+    protected function _getConnectionModel()
+    {
+        return $this->_connectionModel;
+    }
 
-	/**
+    /**
      * @param $connection
      *
      * @return $this
@@ -63,17 +64,17 @@ abstract class AbstractRequest
      */
     public function sendData($data, $connection)
     {
-    	$this->_setConnectionModel($connection);
-		
+        $this->_setConnectionModel($connection);
+
         if (!$this->configHelper->isApiConfigured($this->_getConnectionModel())) {
-        	throw new \Magento\Framework\Validator\Exception(__('API not configured'));
+            throw new \Magento\Framework\Validator\Exception(__('API not configured'));
         }
-		
+
         $this->_setData($data);
-		
+
         $this->_prepareRequest();
         $this->_sendRequest();
-		
+
         return $this;
     }
 
@@ -83,7 +84,6 @@ abstract class AbstractRequest
     protected function _prepareRequest()
     {
         curl_setopt_array($this->_getCurl(), $this->_getCurlOptions());
-
         return $this;
     }
 
@@ -95,29 +95,29 @@ abstract class AbstractRequest
     {
         $curl = $this->_getCurl();
         $response = curl_exec($curl);
-		
-		// Httpcode can be used to debug
-		//$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		
+
+        // Httpcode can be used to debug
+        //$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
         // Check for errors
         if ($response === false) {
-        	throw new \Magento\Framework\Validator\Exception(curl_error($this->_getCurl()));
+            throw new \Magento\Framework\Validator\Exception(curl_error($this->_getCurl()));
         }
 
         return $this->_processResponse($response);
     }
 
-	/**
+    /**
      * @return resource
      */
     protected function _getCurl()
     {
         if (!$this->_curl) {
             $apiUrl = $this->_getApiUrl($this->_getConnectionModel());
-			
+
             $this->_curl = curl_init($apiUrl);
         }
-		
+
         return $this->_curl;
     }
 
@@ -127,10 +127,9 @@ abstract class AbstractRequest
     protected function _getCurlOptions()
     {
         $apiToken = $this->_getConnectionModel()->getAdcurveToken();
-		
         $this->_curlOpt[CURLOPT_HTTPHEADER][]   = 'X-Api-Key: ' . $apiToken;
         $this->_curlOpt[CURLOPT_POSTFIELDS]     = json_encode($this->_getData());
-		
+
         return $this->_curlOpt;
     }
 
@@ -146,8 +145,8 @@ abstract class AbstractRequest
     /**
      * Get the API Url based on Adcurve shop ID
      *
-	 * @param \Adcurve\Adcurve\Model\Connection $connection
-	 * 
+     * @param \Adcurve\Adcurve\Model\Connection $connection
+     *
      * @return string $apiUrl
      */
     abstract protected function _getApiUrl($connection);

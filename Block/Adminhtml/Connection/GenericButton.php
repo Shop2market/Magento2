@@ -1,11 +1,11 @@
 <?php
+
 namespace Adcurve\Adcurve\Block\Adminhtml\Connection;
 
 use Magento\Backend\Block\Widget\Context;
 
 abstract class GenericButton
 {
-
     protected $context;
 
     /**

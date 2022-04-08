@@ -1,10 +1,10 @@
 <?php
+
 namespace Adcurve\Adcurve\Controller\Adminhtml;
 
 abstract class Connection extends \Magento\Backend\App\Action
 {
-    const ADMIN_RESOURCE = 'Adcurve_Adcurve::connection';
-	
+    public const ADMIN_RESOURCE = 'Adcurve_Adcurve::connection';
     protected $_coreRegistry;
 
     /**
