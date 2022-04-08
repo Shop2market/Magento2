@@ -1,6 +1,6 @@
 {
     "name": "adcurve/module-adcurve",
-    "description": "",
+    "description": "A Magneto Module for integrating your store with AdCurve",
     "type": "magento2-module",
     "license": "proprietary",
     "authors": [
